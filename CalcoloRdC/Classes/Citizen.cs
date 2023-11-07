@@ -52,16 +52,18 @@ namespace Classes
         }
         public int ResidencePIL { get { return _residencePIL; } }
 
-        public Citizen(bool hasServiced, bool isStudent, bool hasDebt, int age, int scoreMaturita, float averageUniversityGrade, int childCount, int residencePIL)
+        public Citizen(bool hasServiced, bool isStudent, bool hasDebt,bool hasIncome, int age, int scoreMaturita, float averageUniversityGrade, int childCount, int residencePIL)
         {
             _hasServiced = hasServiced;
             _isStudent = isStudent;
             _hasDebt = hasDebt;
+            _hasIncome = hasIncome;
             _age = age;
             _gradeMaturita = scoreMaturita;
             _averageUniversityGrade = averageUniversityGrade;
             _childCount = childCount;
             _residencePIL = residencePIL;
+
         }
 
 
