@@ -11,12 +11,17 @@ namespace Classes
         private bool _hasServiced;
         private bool _isStudent;
         private bool _hasDebt;
+        private bool _hasIncome;
         private int _age;
         private int _gradeMaturita;
         private float _averageUniversityGrade;
         private int _childCount;
         private int _residencePIL;
 
+        public bool HasIncome
+        {
+            get { return _hasIncome; }
+        }
         public bool HasServiced
         {
             get { return _hasServiced; }
