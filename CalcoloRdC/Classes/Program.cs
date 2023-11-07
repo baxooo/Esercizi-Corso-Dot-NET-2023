@@ -54,8 +54,6 @@ namespace Classes
                 score += 30;
             else score += 15;
 
-
-
             switch (citizen.ChildCount)
             {
                 case 0:
