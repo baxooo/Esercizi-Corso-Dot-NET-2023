@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Classes.PersonTypes;
 
 namespace Classes
 {
@@ -7,12 +8,12 @@ namespace Classes
     {
         static void Main(string[] args)
         {
-            Citizen citizen1 = new Citizen(false, true, false,false, 21, 95, 29, 0, 737084);
-            Citizen citizen2 = new Citizen(true, true, false,false, 24, 98, 30, 1, 6001000);
-            Citizen citizen3 = new Citizen(false, true, false,true, 35, 88, 30, 2, 7004800);
-            Citizen citizen4 = new Citizen(true, false, false,false, 71, 95, 21, 0, 9008000);
-            Citizen citizen5 = new Citizen(true, false, false, true, 44, 68, 18, 2, 100000001);
-            Citizen citizen6 = new Citizen(false, false, false, true, 41, 75, 22, 3, 1800300);
+            Citizen citizen1 = new Student("Aronne", "Piperno", 21, false, false, 95, 29, 0, 737084);
+            Citizen citizen2 = new Citizen("Marco", "Rossi", 24, false, false, 2, 6001000);
+            Citizen citizen3 = new UniversityStudent("Giulia", "Trentini", 35, false, true, 91, 2, 7004800, 30);
+            Citizen citizen4 = new Citizen("Marcello", "Martana", 71, false, false, 0, 100000001);
+            Citizen citizen5 = new Military("Nico", "Giraldi", 44, false, true, 1, 9008000, 3, 283);
+            Citizen citizen6 = new Citizen("Franco", "Lechner", 41, false, true, 3, 1800300);
             List<Citizen> list = new List<Citizen>();
             list.Add(citizen1);
             list.Add(citizen2);
@@ -21,77 +22,18 @@ namespace Classes
             list.Add(citizen5);
             list.Add(citizen6);
 
+            Comune comune = new Comune("inps","Roma",19043512);
+
             foreach (Citizen citizen in list)
             {
-                Console.WriteLine($"is citizen elegible: {IsCitizenElegible(citizen)}");
+                bool elegible = comune.IsCitizenElegible(citizen);
+                string applicante = $"il Citadino {citizen.Name} {citizen.LastName}";
+
+                if (elegible)
+                    Console.WriteLine(applicante +" è idoneo".PadLeft(50 - applicante.Length));
+                else Console.WriteLine(applicante + " non è idoneo".PadLeft(50 - applicante.Length));            
             }
             Console.Read();
-        }
-
-        public static bool IsCitizenElegible(Citizen citizen)
-        {
-            int score = 0;
-            int parametri = 9;
-
-            if (citizen == null) 
-                throw new ArgumentNullException();
-                
-            if(citizen.HasDebt)
-                return false;
-            
-            if(!citizen.HasDebt)
-            {
-                score += 30;
-            }
-
-            if (citizen.IsStudent)
-                score += 30;
-
-            if(citizen.HasServiced)
-                score += 30;
-
-            if (citizen.Age >= 18 && citizen.Age <= 25 && citizen.IsStudent || citizen.Age > 60 && !citizen.HasIncome)
-                score += 30;
-            else score += 15;
-
-            switch (citizen.ChildCount)
-            {
-                case 0:
-                    score += 0;
-                    break;
-                case 1:
-                    score += 20;
-                    break;
-                case 2:
-                    score += 25;
-                    break;
-                case >= 3:
-                    score += 30;
-                    break;
-            }
-
-            if(citizen.GradeMaturita >= 90)
-                score += 30;
-            else if(citizen.GradeMaturita <= 89 && citizen.GradeMaturita>= 60)
-                score += 20;
-
-            if (citizen.AverageUniversityGrade >= 28)
-                score += 30;
-            else if (citizen.AverageUniversityGrade >= 18)
-                score += 15;
-
-            if (!citizen.HasIncome) 
-                score += 30;
-
-            if (citizen.ResidencePIL < 100000000) 
-                score += 30;
-
-            score /= parametri;
-
-            if (score >= 25)
-                return true;
-            else return false;
-            
         }
     }
 }
