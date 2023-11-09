@@ -22,9 +22,9 @@ namespace Classes
 
         public bool IsCitizenElegible(Citizen citizen)
         {
-            citizen.GetInfo();
+            //citizen.GetInfo();
             int score = 0;
-            int parametri = 9;
+            int parametri = 7;
 
             if (citizen == null)
                 throw new ArgumentNullException();
@@ -42,8 +42,6 @@ namespace Classes
                 score += 30;
             else score += 15;
 
-            if (!citizen.HasIncome && !citizen.IsSenior)
-                score += 20;
 
             switch (citizen.ChildCount)
             {
@@ -78,7 +76,7 @@ namespace Classes
                 score += 30;
 
             score /= parametri;
-
+             
             if (score >= 25)
                 return true;
             else return false;

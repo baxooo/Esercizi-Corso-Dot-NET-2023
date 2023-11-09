@@ -9,11 +9,11 @@ namespace Classes
         static void Main(string[] args)
         {
             Citizen citizen1 = new Student("Aronne", "Piperno", 21, false, false, 95, 29, 0, 737084);
-            Citizen citizen2 = new Citizen("Marco", "Rossi", 24, false, false, 2, 6001000);
-            Citizen citizen3 = new UniversityStudent("Giulia", "Trentini", 35, false, true, 91, 2, 7004800, 30);
-            Citizen citizen4 = new Citizen("Marcello", "Martana", 71, false, false, 0, 100000001);
+            Citizen citizen2 = new Citizen("Marco", "Rossi", 34, false, false, 2, 6001000);
+            Citizen citizen3 = new UniversityStudent("Giulia", "Trentini", 25, false, false, 91, 2, 7004800, 30);
+            Citizen citizen4 = new Citizen("Marcello", "Martana", 71, false, true, 0, 100000001);
             Citizen citizen5 = new Military("Nico", "Giraldi", 44, false, true, 1, 9008000, 3, 283);
-            Citizen citizen6 = new Citizen("Franco", "Lechner", 41, false, true, 3, 1800300);
+            Citizen citizen6 = new Citizen("Franco", "Lechner", 41, true, false, 3, 1800300);
             List<Citizen> list = new List<Citizen>();
             list.Add(citizen1);
             list.Add(citizen2);
