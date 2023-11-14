@@ -12,7 +12,7 @@ namespace Interface.StateModels
     /// </summary>
     internal class EurozoneState : State, IBCE
     {
-        public EurozoneState(string name, int pil, string currency, bool usesDeathPunishment) : base(name, pil, currency,usesDeathPunishment)
+        public EurozoneState(string name, int pil, string currency, bool usesDeathPunishment,GovernmentType governmentType) : base(name, pil, currency,usesDeathPunishment,governmentType)
         {
             ((IBCE)this).UseEuro();
         }

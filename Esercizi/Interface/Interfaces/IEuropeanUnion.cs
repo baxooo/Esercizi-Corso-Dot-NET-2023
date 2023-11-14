@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    public interface IEuropeanUnion: IBCE
+    public interface IEuropeanUnion: IBCE, IPoliticalOrganization
     {
         public void ConstitutionIntegration();
         public void HumanRightsTribunal();

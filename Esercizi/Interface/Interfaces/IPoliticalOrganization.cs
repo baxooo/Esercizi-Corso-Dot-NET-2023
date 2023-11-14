@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    internal interface IPoliticalOrganization : IEuropeanUnion
+    public interface IPoliticalOrganization
     {
         public List<string> PartiesNames { get; set; }
 

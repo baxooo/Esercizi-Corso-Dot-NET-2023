@@ -9,8 +9,8 @@ namespace Interface.StateModels
 {
     internal class ONUState : State, IONU
     {
-        public ONUState(string name, int pil, string currency,bool usesDeathPunishment) 
-            : base(name, pil, currency,usesDeathPunishment)
+        public ONUState(string name, int pil, string currency,bool usesDeathPunishment,GovernmentType governType) 
+            : base(name, pil, currency,usesDeathPunishment,governType)
         {
         }
 
