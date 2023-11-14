@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Interface.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Interface.NewFolder
 {
-    public class Comune
+    public class Comune : IEntitaAmministrativa
     {
         List<Citizen> _citizens = new List<Citizen>();
         City _city;
@@ -30,6 +31,11 @@ namespace Interface.NewFolder
         {
             _citizens.Remove(citizen);
             newComune.AddCitizen(citizen);
+        }
+
+        void IEntitaAmministrativa.EseguiServizio()
+        {
+            Console.WriteLine("il comune sta pulendo le strade");
         }
     }
 }

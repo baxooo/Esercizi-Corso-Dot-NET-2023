@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Interface.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Interface.NewFolder
 {
-    
-    public class Region
+
+    public class Region : IEntitaAmministrativa
     {
         private string _name;
         List<Provincia> _province = new List<Provincia>();
@@ -31,6 +32,11 @@ namespace Interface.NewFolder
         { 
             _province.Remove(provincia);
             newRegion.AddProvincia(provincia);
+        }
+
+        void IEntitaAmministrativa.EseguiServizio()
+        {
+            Console.WriteLine("organizza la sanità");
         }
     }
 }
