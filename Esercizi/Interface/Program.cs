@@ -8,7 +8,7 @@ namespace Interface
     {
         static void Main(string[] args)
         {
-            State stato1 = new EuroONUState("Italia", 1440,"Euro");
+            State stato1 = new EuroONUState("Italia", 1440,"Euro",GovernmentType.Republica);
             State stato2 = new EurozoneState("San Marino", 1, "Euro", false,GovernmentType.Republica);
             State stato3 = new ONUState("Marocco", 142, "Dirham", true, GovernmentType.MonarchiaCostituzionale);
             State stato4 = new State("Città del Vaticano", 0, "Euro", false,GovernmentType.MonarchiaAssoluta);
@@ -60,7 +60,7 @@ namespace Interface
             Provincia provinciaDiMilano = new Provincia(milano.Name, Lombardia);
             Provincia provinciaDiVerona = new Provincia(verona.Name, Veneto);
 
-            State italia = new EuroONUState("Italia", 1400, "Euro");
+            State italia = new EuroONUState("Italia", 1400, "Euro", GovernmentType.Republica);
 
             italia.AddRegion(Lazio);
             italia.AddRegion(Veneto);

@@ -12,10 +12,15 @@ namespace Interface.StateModels
     /// </summary>
     internal class EuropeanUnionState : State, IEuropeanUnion
     {
-        public EuropeanUnionState(string name,int pil, string currency, bool usesDeathPunishment = false) 
-            : base(name,pil,currency, usesDeathPunishment)
+        public EuropeanUnionState(string name, int pil, string currency, GovernmentType governmentType, bool usesDeathPunishment = false )
+            : base(name,pil,currency, usesDeathPunishment,governmentType)
         {
             ((IEuropeanUnion)this).NoDeathPunishment();
+        }
+
+        public void InternationalRelations()
+        {
+            Console.WriteLine($"{_name} has good international relationships");
         }
 
         void IEuropeanUnion.ConstitutionIntegration()

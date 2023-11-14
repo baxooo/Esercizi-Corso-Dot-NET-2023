@@ -9,9 +9,6 @@ namespace Interface.Interfaces
 {
     public interface IPoliticalOrganization
     {
-        public List<string> PartiesNames { get; set; }
-
-        public void InternationlRelations(State state);
-
+        public void InternationalRelations();
     }
 }

@@ -9,7 +9,8 @@ namespace Interface.StateModels
 {
     internal class EuroONUState : EuropeanUnionState, IONU
     {
-        public EuroONUState(string name, int pil, string currency) : base(name, pil, currency)
+        public EuroONUState(string name, int pil, string currency, GovernmentType government, bool usesDeathPunishment = false) 
+            : base(name, pil, currency,government,usesDeathPunishment)
         {
         }
 
