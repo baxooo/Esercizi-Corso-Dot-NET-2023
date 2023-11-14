@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace Interface.NewFolder
 {
 
-    public class Region : IEntitaAmministrativa
+    public class Region : AreaGeografica,IEntitaAmministrativa
     {
         private string _name;
         List<Provincia> _province = new List<Provincia>();
 
-        public Region(string name)
+        public Region(string name,int positionX, int positionY) : base(positionX, positionY)
         {
-            _name = name;
+
         }
 
         public void AddProvincia(Provincia provincia)

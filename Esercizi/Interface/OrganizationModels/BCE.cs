@@ -14,7 +14,7 @@ namespace Interface.OrganizationModels
             
         }
 
-        public State EnterEuroZone(State state)
+        public EurozoneState EnterEuroZone(State state)
         {
             if (state.PIL <= 300)
                 return null;

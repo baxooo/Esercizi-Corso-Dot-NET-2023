@@ -14,7 +14,7 @@ namespace Interface.OrganizationModels
         {
         }
 
-        public State EnterNATO(State state)
+        public NATOState EnterNATO(State state)
         {
             try
             {

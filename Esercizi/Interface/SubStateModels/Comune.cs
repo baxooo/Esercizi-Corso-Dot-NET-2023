@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Interface.NewFolder
 {
-    public class Comune : IEntitaAmministrativa
+    public class Comune : AreaGeografica, IEntitaAmministrativa
     {
         List<Citizen> _citizens = new List<Citizen>();
         City _city;
 
-        public Comune(City city)
+        public Comune(City city, int positionX, int positionY) :base(positionX,positionY)
         {
             _city = city;
         }

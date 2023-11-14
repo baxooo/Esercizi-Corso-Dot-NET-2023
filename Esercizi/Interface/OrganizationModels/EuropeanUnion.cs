@@ -17,7 +17,7 @@ namespace Interface.OrganizationModels
 
         }
 
-        public State EnterEuropeanUnion(State state)
+        public EuropeanUnionState EnterEuropeanUnion(State state)
         {
             if (!IsStateElegible(state)) 
                 return state;

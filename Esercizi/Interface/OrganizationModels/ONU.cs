@@ -15,7 +15,7 @@ namespace Interface.OrganizationModels
                 
         }
 
-        public State EnterONU(State state)
+        public ONUState EnterONU(State state)
         {
             try
             {

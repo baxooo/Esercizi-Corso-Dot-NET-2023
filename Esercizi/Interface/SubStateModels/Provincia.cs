@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Interface.NewFolder
 {
-    public class Provincia : IEntitaAmministrativa
+    public class Provincia : AreaGeografica, IEntitaAmministrativa
     {
         string _name;
         List<Comune> _comuni = new List<Comune>();
@@ -16,12 +16,14 @@ namespace Interface.NewFolder
         public Region RegioneDiAppartenenza { get { return _regioneDiAppartenenza; } set { _regioneDiAppartenenza = value; } }
 
         
-        public Provincia(string name)
+        public Provincia(string name, int positionX,int positionY)
+            :base(positionX, positionY)
         {
             _name = name;
         }
 
-        public Provincia(string name, Region regioneDiAppartenenza)
+        public Provincia(string name, Region regioneDiAppartenenza, int positionX, int positionY)
+            :base(positionX, positionY)
         {
             _regioneDiAppartenenza = regioneDiAppartenenza;
             _name = name;

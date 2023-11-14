@@ -18,7 +18,7 @@ namespace Interface.StateModels
         Oligarchia = 5,
         Teocrazia = 6,
     }
-    public class State : IEntitaAmministrativa, IDeathPunishmentState
+    public class State : AreaGeografica,IEntitaAmministrativa, IDeathPunishmentState
     {
         protected int _PIL;
         protected string _name;
@@ -29,7 +29,8 @@ namespace Interface.StateModels
         protected float _militaryBudgetPercentage;
             
 
-        public State(string name, int pil, string currency, bool usesDeathPunishment, GovernmentType governType)
+        public State(string name, int pil, string currency, bool usesDeathPunishment, GovernmentType governType, int positionX,int positionY)
+            : base(positionX,positionY)
         {
             _name = name;
             _currency = currency;
