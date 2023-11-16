@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    public interface IEuropeanUnion: IBCE, IPoliticalOrganization
+    public interface IEuropeanUnion: IEuroZone, IPoliticalOrganization
     {
         public void ConstitutionIntegration();
         public void HumanRightsTribunal();
-        void NoDeathPunishment();
+        public void EMA();
     }
 }

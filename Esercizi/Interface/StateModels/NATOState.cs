@@ -9,8 +9,10 @@ namespace Interface.StateModels
 {
     internal class NATOState : State, INATO
     {
-        public NATOState(string name, int pil,string currency,bool usesDeathPunishment,GovernmentType governmentType)
-            :base(name,pil,currency,usesDeathPunishment,governmentType)
+        
+        public NATOState(string name, int pil,string currency, GovernmentType governmentType,
+            int posX, int posY,string army,string border)
+            :base(name, pil, currency, governmentType, posX, posY,army,border)
         {
             MilitaryBudgetAt2Percent();
         }

@@ -9,9 +9,14 @@ namespace Interface.StateModels
 {
     internal class ONUState : State, IONU
     {
-        public ONUState(string name, int pil, string currency,bool usesDeathPunishment,GovernmentType governType) 
-            : base(name, pil, currency,usesDeathPunishment,governType)
+        public ONUState(string name, int pil, string currency,GovernmentType governType,int posX,int posY,string army, string border) 
+            : base(name, pil, currency,  governType, posX, posY,army,border)
         {
+        }
+
+        public void InternationalRelations()
+        {
+            throw new NotImplementedException();
         }
 
         public void PopulationControl()

@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interface.NewFolder
+namespace Interface.SubStateModels
 {
     public class City :AreaGeografica
     {
-        private string _name;
-        private string _annoDiFondazione;
+        protected string _name;
         public string Name { get { return _name; } }
-        public string AnnoDiFondazione { get { return _annoDiFondazione; } }
 
-        public City(string name, string annoDiIstituzione, int positionX, int positionY) 
+        public Country Country { get; set; }
+
+        public City(string name,  int positionX, int positionY) 
             : base(positionX,positionY)
         {
             _name = name;
-            _annoDiFondazione = annoDiIstituzione;
+            Country = new Country(name);
         }
     }
 }

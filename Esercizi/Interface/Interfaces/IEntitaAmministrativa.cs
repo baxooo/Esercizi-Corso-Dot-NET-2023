@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    internal interface IEntitaAmministrativa
+    public interface IEntitaAmministrativa
     {
-        protected void EseguiServizio();
+        public void HNS();
+        public void LawSystem();
+        public void EducationalSystem();
+
     }
 }

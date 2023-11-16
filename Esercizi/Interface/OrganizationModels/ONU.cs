@@ -17,6 +17,12 @@ namespace Interface.OrganizationModels
 
         public ONUState EnterONU(State state)
         {
+            if (state.GovernType == GovernmentType.MonarchiaAssoluta)
+            {
+                Console.WriteLine("questo stato non può far parte del ONU");
+                return null;
+            }
+
             try
             {
                 ONUState onuState = (ONUState)state;
@@ -29,5 +35,22 @@ namespace Interface.OrganizationModels
                 return null;
             }
         }
+
+
+        public void Unicef()
+        {
+
+        }
+        public void OmsOffice()
+        {
+
+        }
+
+        public void FifaOffice()
+        {
+
+        }
+
+
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    public interface IBCE
+    public interface IEuroZone
     {
-        public  void UseEuro();
+        public void MonetaUnica();
     }
 }

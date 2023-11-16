@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Interface.StateModels;
 
-namespace Interface
+namespace Interface.EU
 {
     internal class EuroCentralBank
     {

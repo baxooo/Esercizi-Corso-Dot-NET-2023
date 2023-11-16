@@ -10,12 +10,13 @@ namespace Interface.StateModels
     /// <summary>
     /// A State that is  part of the European Union but does not necessarily uses the Euro as currency
     /// </summary>
-    internal class EuropeanUnionState : State, IEuropeanUnion
+    public class EuropeanUnionState : State, IEuropeanUnion
     {
-        public EuropeanUnionState(string name, int pil, string currency, GovernmentType governmentType, bool usesDeathPunishment = false )
-            : base(name,pil,currency, usesDeathPunishment,governmentType)
+        public EuropeanUnionState(string name, int pil, string currency, GovernmentType governmentType, 
+             int posX,int posY,string army,string border)
+            : base(name,pil,currency, governmentType,posX,posY,army,border)
         {
-            ((IEuropeanUnion)this).NoDeathPunishment();
+            MonetaUnica();
         }
 
         public void InternationalRelations()
@@ -23,24 +24,25 @@ namespace Interface.StateModels
             Console.WriteLine($"{_name} has good international relationships");
         }
 
-        void IEuropeanUnion.ConstitutionIntegration()
+        public void ConstitutionIntegration()
         {
             Console.WriteLine($"Lo stato {_name} ha integrato le leggi europee costituzionali");
         }
 
-        void IEuropeanUnion.HumanRightsTribunal()
+        public void HumanRightsTribunal()
         {
             Console.WriteLine($"Lo stato {_name} ha istituito un tribunale per i diritti dell'uomo");
         }
 
-        void IEuropeanUnion.NoDeathPunishment()
-        {
-            _usesDeathPunishment = false;
-        }
 
-        void IBCE.UseEuro()
+        public void MonetaUnica()
         {
             _currency = "Euro";
+        }
+
+        public void EMA()
+        {
+            Console.WriteLine($"lo stato {_name} aderisce all'Agenzia Europea per i Medicinali");
         }
     }
 }

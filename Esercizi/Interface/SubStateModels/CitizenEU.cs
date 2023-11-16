@@ -4,34 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interface.NewFolder
+namespace Interface.SubStateModels
 {
-    public class Citizen
+    public class CitizenEU
     {
         private string _name;
         private string _lastName;
         private string _birthDay;
-        private Comune _comuneDiResidenza;
+        private ComuneEU _comuneDiResidenza;
+
+        public EuID ID { get; private set; }
 
         public string Name { get { return _name; } }
         public string LastName { get { return _lastName; } }
         public string BirthDay { get { return _birthDay; } }  
-        public Comune ComuneDiResidenza { get { return _comuneDiResidenza; } }
+        public ComuneEU ComuneDiResidenza { get { return _comuneDiResidenza; } }
 
 
-        public Citizen(string name, string lastName, string birthDay)
+        public CitizenEU(string name, string lastName, string birthDay, ComuneEU comuneDiResidenza)
         {
             _name = name;
             _lastName = lastName;
             _birthDay = birthDay;
+            _comuneDiResidenza = comuneDiResidenza;
+            ID = _comuneDiResidenza.GetIdCard(this);
         }
 
-        public void SetComuneDiResidenza(Comune comune)
-        {
-            _comuneDiResidenza = comune;
-        }
-
-        public void ChangeComuneDiResidenza(Comune newComune)
+        public void ChangeComuneDiResidenza(ComuneEU newComune)
         {
             _comuneDiResidenza.RemoveCitizen(this, newComune);
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    internal interface IONU
+    internal interface IONU : IPoliticalOrganization
     {
         public void TerritoryDefence();
         public void PopulationControl();
