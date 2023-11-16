@@ -2,6 +2,7 @@
 using Interface.SubStateModels;
 using Interface.StateModels;
 using Interface.EU;
+using Interface.OrganizationModels;
 
 namespace Interface
 {
@@ -33,10 +34,12 @@ namespace Interface
             bank.CalcSpread(stato4);
             corte.RispettaIDirittiUmani(stato4);
 
+            CambiaRegione();
+
             Console.Read();
         }
 
-        private void Association()
+        private static void Association()
         {
             ComuneEU comuneDiRoma = new ComuneEU("Roma", 9,9);
 
@@ -46,9 +49,21 @@ namespace Interface
 
             ProvinciaEU provinciaDiRoma = new(comuneDiRoma.Name, Lazio,9,9);
 
-            State italia = new EuroONUState("Italia", 1400, "Euro", GovernmentType.Republica, 33, 57,"Esercito Della Republica Italiana", "Svizzera");
+            State italia = new EuroONUState("Italia", 1400, "Euro", GovernmentType.Republica, 33, 57, "Esercito Della Republica Italiana", "Svizzera");
 
             italia.AddRegion(Lazio);
         }
+
+        private static void CambiaRegione()
+        {
+            EuropeanUnionState italia = new ("Italia", 1400, "Euro", GovernmentType.Republica, 33, 57, "Esercito Della Republica Italiana", "Austria");
+            EuropeanUnionState austria = new ("Austria", 480, "Euro", GovernmentType.Republica, 33, 57, "Austrian Armed Forces", "Italia");
+            EuParliament par = new EuParliament();
+
+            italia.CreateRegion("Trentino Alto Adige", 3, 4);
+
+            EuParliament.MoveRegionToOtherCountryRequest(italia, austria, italia.Region);
+        }
+
     }
 }

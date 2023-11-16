@@ -11,11 +11,7 @@ namespace Interface.OrganizationModels
 {
     public class EuParliament 
     {
-        Random _rnd;
-        public EuParliament()
-        {
-            _rnd = new Random();
-        }
+        static Random _rnd = new Random();
 
         /// <summary>
         /// 
@@ -23,7 +19,7 @@ namespace Interface.OrganizationModels
         /// <param name="state1"></param>
         /// <param name="state2"></param>
         /// <param name="region"></param>
-        public void MoveRegionToOtherCountryRequest(EuropeanUnionState state1,EuropeanUnionState state2,RegionEU region)
+        public static void MoveRegionToOtherCountryRequest(EuropeanUnionState state1,EuropeanUnionState state2,RegionEU region)
         {
             string request = $"request to move {region.Name} from {state1.Name} to {state2.Name} has been ";
             string accepted = "accepted";
@@ -34,19 +30,19 @@ namespace Interface.OrganizationModels
                 Console.WriteLine(request + accepted);
                 MoveRegionToOtherCountry(state1 ,state2,region);
             }
-
-            Console.WriteLine(request + denied);
+            else
+                Console.WriteLine(request + denied);
         }
 
-        private void MoveRegionToOtherCountry(EuropeanUnionState state1, EuropeanUnionState state2, RegionEU region)
+        private static void MoveRegionToOtherCountry(EuropeanUnionState state1, EuropeanUnionState state2, RegionEU region)
         {
-            Console.WriteLine($"State {state1.Name} with: {state1.Region.Name}, moves {region.Name} to state {state2.Name} with: {state2.Region.Name}");
+            Console.WriteLine($"State {state1.Name} with: {state1.Region.Name}, moves {region.Name} to state {state2.Name}");
             state1.RemoveRegion(region);
             state2.AddRegion(region);
-            Console.WriteLine($"State {state1.Name} now has: {state1.Region.Name}, state {state2.Name} now has: {state2.Region.Name}");
+            Console.WriteLine($"State {state1.Name} now has: no region, state {state2.Name} now has: {state2.Region.Name}");
         }
 
-        public EuropeanUnionState EnterEuropeanUnion(State state)
+        public static EuropeanUnionState EnterEuropeanUnion(State state)
         {
             if (!IsStateElegible(state))
             {
@@ -66,7 +62,7 @@ namespace Interface.OrganizationModels
             }
         }
 
-        private bool IsStateElegible(State state)
+        private static bool IsStateElegible(State state)
         {
             if (state is EuropeanUnionState)
             {

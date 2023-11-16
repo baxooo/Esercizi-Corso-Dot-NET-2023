@@ -1,9 +1,11 @@
 ﻿using Interface.Interfaces;
+using Interface.SubStateModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Interface.StateModels
 {
@@ -43,6 +45,11 @@ namespace Interface.StateModels
         public void EMA()
         {
             Console.WriteLine($"lo stato {_name} aderisce all'Agenzia Europea per i Medicinali");
+        }
+        public void CreateRegion(string name,int positionX,int positionY)
+        {
+            RegionEU region = new(name, positionX, positionY);
+            _region = region;
         }
     }
 }

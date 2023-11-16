@@ -16,6 +16,7 @@ namespace Interface.SubStateModels
 
         public RegionEU(string name,int positionX, int positionY) : base(positionX, positionY)
         {
+            _name = name;
 
         }
 
