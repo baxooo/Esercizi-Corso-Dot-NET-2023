@@ -1,5 +1,4 @@
 ﻿using Interface.Interfaces;
-using Interface.SubStateModels.RegionEU;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,12 @@ namespace Interface.SubStateModels
     public class RegionEU : AreaGeografica, IEuPublicAdministration
     {
         private string _name;
-        private static int _numeroDiProvince;
-        ProvinciaEU[] _province = new ProvinciaEU[_numeroDiProvince];
+        List<ProvinciaEU> _province = new List<ProvinciaEU>();
 
         public string Name { get { return _name; } }
-        public ProvinciaEU[] Province { get { return _province; } }
+        public List<ProvinciaEU> Province { get { return _province; } }
 
-        public RegionEU(string name, int positionX, int positionY, int numeroDiProvince) : base(positionX, positionY)
+        public RegionEU(string name, int positionX, int positionY) : base(positionX, positionY)
         {
             _name = name;
         }
@@ -27,16 +25,11 @@ namespace Interface.SubStateModels
 
         public void AddProvincia(ProvinciaEU provincia)
         {
-            if(_numeroDiProvince == _province.Length)
-            {
-                Array.Resize(ref _province, _numeroDiProvince++);
-            }
-
-            _province.Append(provincia);
+            _province.Add(provincia);
         }
         public void RemoveProvincia(ProvinciaEU provincia, RegionEU newRegion)
         {
-            _province = _province.Where(p => p != provincia).ToArray();
+            _province.Remove(provincia);
             newRegion.AddProvincia(provincia);
         }
 

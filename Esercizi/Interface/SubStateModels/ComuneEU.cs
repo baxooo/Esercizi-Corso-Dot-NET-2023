@@ -23,13 +23,24 @@ namespace Interface.SubStateModels
 
         public void AddCitizen(CitizenEU citizen)
         {
-            if(_citizens.Length == _maxCitizen)
+            if(_citizens[_maxCitizen - 1] != null)
             {
                 Console.WriteLine("non è possibile aggiungere un nuovo cittadino");
                 return;
             }
+            int index;
+            var last = _citizens.LastOrDefault(c => c != null);
+            
+            if (last == null)
+                index = 0;
+            else
+            {
+                index = Array.IndexOf(_citizens, last);
+                _citizens[index + 1] = citizen;
+                return;
+            }
 
-           _citizens.Append(citizen);
+            _citizens[index] = citizen;
         }
 
         public void RemoveCitizen(CitizenEU citizen, ComuneEU newComune)

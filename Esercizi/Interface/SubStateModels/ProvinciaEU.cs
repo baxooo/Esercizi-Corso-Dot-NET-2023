@@ -12,19 +12,17 @@ namespace Interface.SubStateModels
     public class ProvinciaEU : AreaGeografica, IEuPublicAdministration
     {
         string _name;
-        static int _numeroDiComuni;
-        ComuneEU[] _comuni = new ComuneEU[_numeroDiComuni];
+        List<ComuneEU> _comuni = new List<ComuneEU>();
         RegionEU _regioneDiAppartenenza;
 
         public RegionEU RegioneDiAppartenenza { get { return _regioneDiAppartenenza; } set { _regioneDiAppartenenza = value; } }
         public string Name { get { return _name; } }
-        public ComuneEU[] Comuni {  get { return _comuni; } } 
+        public List<ComuneEU> Comuni {  get { return _comuni; } } 
 
-        public ProvinciaEU(string name, int positionX, int positionY, int numeroDiComuni)
+        public ProvinciaEU(string name, int positionX, int positionY)
             : base(positionX, positionY)
         {
             _name = name;
-            _numeroDiComuni = numeroDiComuni;
         }
 
         public ProvinciaEU(string name, RegionEU regioneDiAppartenenza, int positionX, int positionY)
@@ -47,11 +45,7 @@ namespace Interface.SubStateModels
 
         public void AddComune(ComuneEU comune)
         {
-            if (_comuni.Length == _numeroDiComuni)
-            {
-                Array.Resize(ref _comuni, _numeroDiComuni++);
-            }
-            _comuni.Append(comune);
+            _comuni.Add(comune);
         }
 
         /// <summary>
@@ -61,7 +55,7 @@ namespace Interface.SubStateModels
         /// <param name="newProvincia"></param>
         public void RemoveComune(ComuneEU comune, ProvinciaEU newProvincia)
         {
-            _comuni = _comuni.Where(c => c != comune).ToArray();
+            _comuni.Remove(comune);
             newProvincia.AddComune(comune);
         }
 

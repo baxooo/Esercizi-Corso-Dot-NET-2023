@@ -24,18 +24,17 @@ namespace Interface.StateModels
         protected int _PIL;
         protected string _name;
         protected string _currency;
-        protected RegionEU[] _region;
+        protected List<RegionEU> _regions = new List<RegionEU>();
         protected GovernmentType _governType;
         protected float _militaryBudgetPercentage;
         protected string _flag;
         protected Random _rnd;
         protected string _army;
         protected string _border;
-        protected int _numberOfRegions;
 
 
         public State(string name, int pil, string currency, GovernmentType governType, 
-            int positionX, int positionY, string army, string border,int numberOfRegions)
+            int positionX, int positionY, string army, string border)
             : base(positionX, positionY)
         {
             _name = name;
@@ -43,7 +42,6 @@ namespace Interface.StateModels
             _PIL = pil;
             _army = army;
             _border = border;
-            _numberOfRegions = numberOfRegions;
 
             Random rnd = new Random();
             _rnd = rnd;
@@ -54,17 +52,13 @@ namespace Interface.StateModels
         public int PIL { get { return _PIL; } }
         public string Flag { get { return _flag; } }
         public string Currency { get { return _currency; } }
-        public RegionEU[] Region { get { return _region; } }
+        public List<RegionEU> Region { get { return _regions; } }
 
         public GovernmentType GovernType { get => _governType; }
 
         public void AddRegion(RegionEU region)
         {
-            if(_numberOfRegions == _region.Length)
-            {
-                Array.Resize(ref _region, _numberOfRegions++);
-            }
-            _region.Append(region);
+            _regions.Add(region);
         }
 
         public void BorderRedefinition(EuParliament parliament)
@@ -91,7 +85,7 @@ namespace Interface.StateModels
 
         public void RemoveRegion(RegionEU region)
         {
-            _region = null;
+            _regions.Remove(region);
         }
 
 

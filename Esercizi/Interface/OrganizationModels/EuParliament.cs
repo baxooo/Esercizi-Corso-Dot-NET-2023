@@ -36,10 +36,10 @@ namespace Interface.OrganizationModels
 
         private static void MoveRegionToOtherCountry(EuropeanUnionState state1, EuropeanUnionState state2, RegionEU region)
         {
-            Console.WriteLine($"State {state1.Name} with: {state1.Region.Name}, moves {region.Name} to state {state2.Name}");
+            Console.WriteLine($"State {state1.Name} with: {state1.Region.ToString()}, moves {region.Name} to state {state2.Name}");
             state1.RemoveRegion(region);
             state2.AddRegion(region);
-            Console.WriteLine($"State {state1.Name} now has: no region, state {state2.Name} now has: {state2.Region.Name}");
+            Console.WriteLine($"State {state1.Name} now has: no region, state {state2.Name} now has: {state2.Region.ToString()}");
         }
 
         public static EuropeanUnionState EnterEuropeanUnion(State state)

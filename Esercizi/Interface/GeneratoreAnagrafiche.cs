@@ -20,7 +20,7 @@ namespace Interface
         private static DateTime _start = new DateTime(1930,1,1);
         private int range = (DateTime.Today - _start).Days;
 
-        public CitizenEU GeneraPersona(ComuneEU comune)
+        private CitizenEU GeneraPersona(ComuneEU comune)
         {
             string name = _nomi[_rnd.Next(_nomi.Length)];
             string lastName = _cognomi[_rnd.Next(_cognomi.Length)];
@@ -31,22 +31,25 @@ namespace Interface
 
         public void SmistaPopolazione(State state, int citizens)
         {
-            int regions = state.Region.Length;
+            int regions = state.Region.Count;
             int splitByRegion = citizens / regions;
             
             foreach(RegionEU region in state.Region)
             {
                 foreach(ProvinciaEU prov in region.Province)
                 {
-                    int splitByProvince = splitByRegion / region.Province.Length;
+                    int splitByProvince = splitByRegion / region.Province.Count;
                     foreach(ComuneEU com in prov.Comuni)
                     {
-                        int splitByComune = splitByProvince / prov.Comuni.Length;
+                        int splitByComune = splitByProvince / prov.Comuni.Count;
                         com.SetMaxCitizen(splitByComune);
-                        for(int i = 0; i < splitByComune; i++)
+                        Console.WriteLine(com.Name +" " +splitByComune);
+                        for (int i = 0; i < splitByComune; i++)
                         {
                             com.AddCitizen(GeneraPersona(com));
                         }
+
+                        Console.WriteLine(com.Name + com.Citizen.Length);
                     }
                 }
             }

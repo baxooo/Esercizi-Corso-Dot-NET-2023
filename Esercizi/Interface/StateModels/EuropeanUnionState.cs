@@ -49,7 +49,7 @@ namespace Interface.StateModels
         public void CreateRegion(string name,int positionX,int positionY)
         {
             RegionEU region = new(name, positionX, positionY);
-            _region = region;
+            _regions.Add(region);
         }
     }
 }
