@@ -12,16 +12,35 @@ namespace Interface.SubStateModels
     {
 
         CitizenEU sindaco;
-        List<CitizenEU> _citizens = new List<CitizenEU>();
+        static int _maxCitizen;
+        CitizenEU[] _citizens = new CitizenEU[_maxCitizen];
+        public CitizenEU[] Citizen { get { return _citizens; } }
 
-        public ComuneEU(string name, int positionX, int positionY) :base(name,positionX,positionY)
+        public ComuneEU(string name, int positionX, int positionY) : base(name, positionX, positionY)
         {
             
         }
 
         public void AddCitizen(CitizenEU citizen)
         {
-            _citizens.Add(citizen);
+            if(_citizens.Length == _maxCitizen)
+            {
+                Console.WriteLine("non è possibile aggiungere un nuovo cittadino");
+                return;
+            }
+
+           _citizens.Append(citizen);
+        }
+
+        public void RemoveCitizen(CitizenEU citizen, ComuneEU newComune)
+        {
+            _citizens = _citizens.Where(c => c != citizen).ToArray();
+            newComune.AddCitizen(citizen);
+        }
+        public void SetMaxCitizen(int size)
+        {
+            _maxCitizen = size;
+            Array.Resize(ref _citizens, size);
         }
 
         public void BorderRedefinition(EuParliament parliament)
@@ -41,11 +60,7 @@ namespace Interface.SubStateModels
         /// </summary>
         /// <param name="citizen"></param>
         /// <param name="newComune"></param>
-        public void RemoveCitizen(CitizenEU citizen, ComuneEU newComune)
-        {
-            _citizens.Remove(citizen);
-            newComune.AddCitizen(citizen);
-        }
+        
 
         public void WelfareServices()
         {

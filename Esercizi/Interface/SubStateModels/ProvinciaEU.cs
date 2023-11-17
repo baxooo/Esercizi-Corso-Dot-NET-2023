@@ -8,23 +8,27 @@ using System.Threading.Tasks;
 
 namespace Interface.SubStateModels
 {
+
     public class ProvinciaEU : AreaGeografica, IEuPublicAdministration
     {
         string _name;
-        List<ComuneEU> _comuni = new List<ComuneEU>();
+        static int _numeroDiComuni;
+        ComuneEU[] _comuni = new ComuneEU[_numeroDiComuni];
         RegionEU _regioneDiAppartenenza;
 
         public RegionEU RegioneDiAppartenenza { get { return _regioneDiAppartenenza; } set { _regioneDiAppartenenza = value; } }
+        public string Name { get { return _name; } }
+        public ComuneEU[] Comuni {  get { return _comuni; } } 
 
-        
-        public ProvinciaEU(string name, int positionX,int positionY)
-            :base(positionX, positionY)
+        public ProvinciaEU(string name, int positionX, int positionY, int numeroDiComuni)
+            : base(positionX, positionY)
         {
             _name = name;
+            _numeroDiComuni = numeroDiComuni;
         }
 
         public ProvinciaEU(string name, RegionEU regioneDiAppartenenza, int positionX, int positionY)
-            :base(positionX, positionY)
+            : base(positionX, positionY)
         {
             _regioneDiAppartenenza = regioneDiAppartenenza;
             _name = name;
@@ -43,7 +47,11 @@ namespace Interface.SubStateModels
 
         public void AddComune(ComuneEU comune)
         {
-            _comuni.Add(comune);
+            if (_comuni.Length == _numeroDiComuni)
+            {
+                Array.Resize(ref _comuni, _numeroDiComuni++);
+            }
+            _comuni.Append(comune);
         }
 
         /// <summary>
@@ -51,9 +59,9 @@ namespace Interface.SubStateModels
         /// </summary>
         /// <param name="comune"></param>
         /// <param name="newProvincia"></param>
-        public void RemoveComune(ComuneEU comune,ProvinciaEU newProvincia)
+        public void RemoveComune(ComuneEU comune, ProvinciaEU newProvincia)
         {
-            _comuni.Remove(comune);
+            _comuni = _comuni.Where(c => c != comune).ToArray();
             newProvincia.AddComune(comune);
         }
 
@@ -71,7 +79,7 @@ namespace Interface.SubStateModels
         public void HNS(EuID id) =>
             Console.WriteLine($"il servizio sanitario della provincia {_name} ha preso in carico il cittadino {id}");
 
-        public void EducationalSystem(EuID id) => 
+        public void EducationalSystem(EuID id) =>
             Console.WriteLine($"la provincia {_name} ha dato una borsa di studio al cittadino {id}");
     }
 }
