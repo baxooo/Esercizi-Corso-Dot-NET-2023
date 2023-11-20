@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Interface.SubStateModels
 {
-    public class RegionEU : AreaGeografica, IEuPublicAdministration
+    internal class RegionEU : AreaGeografica, IEuPublicAdministration
     {
         private string _name;
         List<ProvinciaEU> _province = new List<ProvinciaEU>();
@@ -21,7 +21,7 @@ namespace Interface.SubStateModels
             _name = name;
         }
 
-        
+
 
         public void AddProvincia(ProvinciaEU provincia)
         {
@@ -56,3 +56,4 @@ namespace Interface.SubStateModels
 
     }
 }
+

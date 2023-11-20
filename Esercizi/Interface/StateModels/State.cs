@@ -9,17 +9,7 @@ using System.Threading.Tasks;
 
 namespace Interface.StateModels
 {
-    public enum GovernmentType
-    {
-        Democrazia = 0,
-        Monarchia = 1,
-        MonarchiaCostituzionale = 2,
-        MonarchiaAssoluta= 3,
-        Republica = 4,
-        Oligarchia = 5,
-        Teocrazia = 6,
-    }
-    public class State : AreaGeografica, IEuCitizenPublicService
+    internal class State : AreaGeografica, IEuCitizenPublicService
     {
         protected int _PIL;
         protected string _name;

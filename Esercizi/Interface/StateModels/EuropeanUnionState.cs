@@ -12,7 +12,7 @@ namespace Interface.StateModels
     /// <summary>
     /// A State that is  part of the European Union but does not necessarily uses the Euro as currency
     /// </summary>
-    public class EuropeanUnionState : State, IEuropeanUnion
+    internal class EuropeanUnionState : State, IEuropeanUnion
     {
         public EuropeanUnionState(string name, int pil, string currency, GovernmentType governmentType, 
              int posX,int posY,string army,string border)

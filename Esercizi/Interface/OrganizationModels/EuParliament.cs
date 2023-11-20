@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Interface.OrganizationModels
 {
-    public class EuParliament 
+    internal class EuParliament 
     {
         static Random _rnd = new Random();
 
@@ -42,7 +42,7 @@ namespace Interface.OrganizationModels
             Console.WriteLine($"State {state1.Name} now has: no region, state {state2.Name} now has: {state2.Region.ToString()}");
         }
 
-        public static EuropeanUnionState EnterEuropeanUnion(State state)
+        public static EuropeanUnionState EnterEuropeanUnion(StateModels.State state)
         {
             if (!IsStateElegible(state))
             {

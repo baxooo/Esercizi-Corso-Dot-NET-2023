@@ -11,7 +11,11 @@ namespace Interface
     {
         static void Main(string[] args)
         {
-            Anagrafiche();
+            var Italia = new EuropeanUnionState("Italia", 1400, "Euro", GovernmentType.Republica, 10, 10,
+                "Esercito Della Repubblica Italiana", "Austria");
+            Anagrafiche(Italia);
+
+            InterrogateLINQ(Italia);
             Console.Read();
         }
 
@@ -68,7 +72,7 @@ namespace Interface
             //EuParliament.MoveRegionToOtherCountryRequest(italia, austria, italia.Region);
         }
 
-        private static void Anagrafiche()
+        private static void Anagrafiche(EuropeanUnionState state)
         {
             RegionEU Lazio = new RegionEU("Lazio", 10, 10);
             RegionEU Umbria = new RegionEU("Umbria", 8, 10);
@@ -143,14 +147,30 @@ namespace Interface
             Umbria.AddProvincia(provinciaDiTerni);
             Umbria.AddProvincia(provinciaDiPerugia);
 
-            var Italia = new EuropeanUnionState("Italia", 1400, "Euro", GovernmentType.Republica, 10, 10,
-                "Esercito Della Repubblica Italiana", "Austria");
-            Italia.AddRegion(Lazio);
-            Italia.AddRegion(Umbria);
+            
+            state.AddRegion(Lazio);
+            state.AddRegion(Umbria);
 
-            var gen = new GeneratoreAnagrafiche();
+            GeneratoreAnagrafiche.SmistaPopolazione(state, 1000);
 
-            gen.SmistaPopolazione(Italia, 1000);
+
+        }
+
+        private static void InterrogateLINQ(State state)
+        {
+            var selectAllNamedFlavio = state.Region.SelectMany(p => p.Province)
+                .SelectMany(c => c.Comuni)
+                .SelectMany(c => c.Citizen.Where(n => n.Name == "Flavio"))
+                .ToArray();
+
+            Console.WriteLine($"there are {selectAllNamedFlavio.Length} named Flavio");
+
+            var biggestComune = state.Region.SelectMany(p => p.Province)
+                .SelectMany(c => c.Comuni)
+                .OrderBy(n => n.Citizen.Length)
+                .First();
+
+            Console.WriteLine($"the biggest comune is {biggestComune.Name}");
         }
     }
 }

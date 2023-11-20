@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    public interface IEuCitizenPublicService : IEntitaAmministrativaEU
+    internal interface IEuCitizenPublicService : IEntitaAmministrativaEU
     {
         public abstract void WelfareServices();
         public void HNS(EuID id);

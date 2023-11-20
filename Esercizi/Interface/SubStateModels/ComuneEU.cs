@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Interface.SubStateModels
 {
-    public class ComuneEU : City, IEuCitizenPublicService
+    internal class ComuneEU : City, IEuCitizenPublicService
     {
 
         CitizenEU sindaco;
@@ -42,13 +42,17 @@ namespace Interface.SubStateModels
 
             _citizens[index] = citizen;
         }
-
+        /// <summary>
+        /// a Citizen can be removed from a Comune, but it must be moved to a new one.
+        /// </summary>
+        /// <param name="citizen"></param>
+        /// <param name="newComune"></param>
         public void RemoveCitizen(CitizenEU citizen, ComuneEU newComune)
         {
             _citizens = _citizens.Where(c => c != citizen).ToArray();
             newComune.AddCitizen(citizen);
         }
-        public void SetMaxCitizen(int size)
+        public void SetMaxCitizens(int size)
         {
             _maxCitizen = size;
             Array.Resize(ref _citizens, size);
@@ -66,13 +70,8 @@ namespace Interface.SubStateModels
             Console.WriteLine($"la richiesta del cittadino {id} per la visita medica è stata accettata");
         public void HNS() => Console.WriteLine($"il comune di {_name} amministra le su strutture sanitarie");
         public void LawSystem() => Console.WriteLine($"il comune di {_name} amministra le sue strutture burocratiche");
-        /// <summary>
-        /// a Citizen can be removed from a Comune, but it must be moved to a new one.
-        /// </summary>
-        /// <param name="citizen"></param>
-        /// <param name="newComune"></param>
+       
         
-
         public void WelfareServices()
         {
             throw new NotImplementedException();

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Interface.SubStateModels
 {
 
-    public class ProvinciaEU : AreaGeografica, IEuPublicAdministration
+    internal class ProvinciaEU : AreaGeografica, IEuPublicAdministration
     {
         string _name;
         List<ComuneEU> _comuni = new List<ComuneEU>();

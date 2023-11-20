@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Interface.Interfaces
 {
-    public interface IEntitaAmministrativaEU : IEntitaAmministrativa
+    internal interface IEntitaAmministrativaEU : IEntitaAmministrativa
     {
         public void BorderRedefinition(EuParliament parliament);
     }

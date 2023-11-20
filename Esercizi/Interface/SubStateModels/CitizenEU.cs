@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interface.SubStateModels
 {
-    public class CitizenEU
+    internal class CitizenEU
     {
         private string _name;
         private string _lastName;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interface
 {
-    public class AreaGeografica
+    internal class AreaGeografica
     {
         protected int _positionX;
         protected int _positionY;

@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Interface
 {
-    public  class GeneratoreAnagrafiche
+    internal static class GeneratoreAnagrafiche
     {
-        private string[] _nomi = new string[] { "Marco","Claudio","Giuseppe","Antonio","Alessandro","Andrea","Alberto",
+        private static readonly string[] _nomi = new string[] { "Marco","Claudio","Giuseppe","Antonio","Alessandro","Andrea","Alberto",
             "Alberto","Giulio","Franco","Francesco","Francesca","Giulia","Flavio","Laurena","Sara","Alessia","Barbara"
         };
-        private string[] _cognomi = new string[] { "Pepe","Roberti","Stanislao","Di Pea","Proietti","Ferrante","Rossi",
+        private static readonly string[] _cognomi = new string[] { "Pepe","Roberti","Stanislao","Di Pea","Proietti","Ferrante","Rossi",
             "Grassi","Ferri"
         };
-        private Random _rnd = new Random();
+        private static Random _rnd = new Random();
         private static DateTime _start = new DateTime(1930,1,1);
-        private int range = (DateTime.Today - _start).Days;
+        private static int range = (DateTime.Today - _start).Days;
 
-        private CitizenEU GeneraPersona(ComuneEU comune)
+        private static CitizenEU GeneraPersona(ComuneEU comune)
         {
             string name = _nomi[_rnd.Next(_nomi.Length)];
             string lastName = _cognomi[_rnd.Next(_cognomi.Length)];
@@ -29,7 +29,7 @@ namespace Interface
             return citizen;
         }
 
-        public void SmistaPopolazione(State state, int citizens)
+        public static void SmistaPopolazione(State state, int citizens)
         {
             int regions = state.Region.Count;
             int splitByRegion = citizens / regions;
@@ -42,7 +42,7 @@ namespace Interface
                     foreach(ComuneEU com in prov.Comuni)
                     {
                         int splitByComune = splitByProvince / prov.Comuni.Count;
-                        com.SetMaxCitizen(splitByComune);
+                        com.SetMaxCitizens(splitByComune);
                         Console.WriteLine(com.Name +" " +splitByComune);
                         for (int i = 0; i < splitByComune; i++)
                         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interface.SubStateModels
 {
-    public class City :AreaGeografica
+    internal class City :AreaGeografica
     {
         protected string _name;
         public string Name { get { return _name; } }
