@@ -152,21 +152,20 @@ namespace Interface
             state.AddRegion(Umbria);
 
             GeneratoreAnagrafiche.SmistaPopolazione(state, 1000);
-
-
         }
 
         private static void InterrogateLINQ(State state)
         {
-            var selectAllNamedFlavio = state.Region.SelectMany(p => p.Province)
-                .SelectMany(c => c.Comuni)
+            var comuni = state.Region.SelectMany(p => p.Province)
+                .SelectMany(c => c.Comuni);
+
+            var selectAllNamedFlavio = comuni
                 .SelectMany(c => c.Citizen.Where(n => n.Name == "Flavio"))
                 .ToArray();
 
             Console.WriteLine($"there are {selectAllNamedFlavio.Length} named Flavio");
 
-            var biggestComune = state.Region.SelectMany(p => p.Province)
-                .SelectMany(c => c.Comuni)
+            var biggestComune = comuni
                 .OrderBy(n => n.Citizen.Length)
                 .First();
 
