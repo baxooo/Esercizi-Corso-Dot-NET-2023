@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classes", "Classes\Classes.csproj", "{7DE97511-23B5-46D1-9BA0-C889A55D87CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Interface.csproj", "{B6E2F7A9-B9EC-42AB-B3CD-254D8E692462}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interface", "Interface\Interface.csproj", "{B6E2F7A9-B9EC-42AB-B3CD-254D8E692462}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyClone", "SpotifyClone\SpotifyClone.csproj", "{78AE6493-6933-429B-BCCE-D045443C7644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B6E2F7A9-B9EC-42AB-B3CD-254D8E692462}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6E2F7A9-B9EC-42AB-B3CD-254D8E692462}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6E2F7A9-B9EC-42AB-B3CD-254D8E692462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78AE6493-6933-429B-BCCE-D045443C7644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78AE6493-6933-429B-BCCE-D045443C7644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78AE6493-6933-429B-BCCE-D045443C7644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78AE6493-6933-429B-BCCE-D045443C7644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
