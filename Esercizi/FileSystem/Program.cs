@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace FileSystem
@@ -20,7 +22,6 @@ namespace FileSystem
             customers.Add(new Customer(38, "Barbara"));
             customers.Add(new Customer(61, "Sara"));
             customers.Add(new Customer(29, "Luca"));
-
 
             List<Account> accounts = new List<Account>();
             accounts.Add(new Account(1, 654.30m));
@@ -41,7 +42,7 @@ namespace FileSystem
             CreateGenericCsv(path, "file.csv", accounts);
         }
 
-        static void CreateCsv(string path, string fileName,List<Customer> customers)
+        static void CreateCsv(string path, string fileName, List<Customer> customers)
         {
             StringBuilder sb = new StringBuilder();
             
@@ -76,24 +77,66 @@ namespace FileSystem
 
             File.AppendAllText(completePath, sb.ToString());
         }
-        static void CreateGenericCsv<T>(string path,string fileName, List<T> dati)
+        //static void CreateGenericCsv<T>(string path,string fileName, List<T> dati)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+
+        //    string completePath = Path.Combine(path, fileName);
+
+        //    if (!File.Exists(completePath))
+        //    {
+        //        string header = string.Format("Name,Age");
+        //        sb.AppendLine(header);
+        //    }
+            
+        //    foreach (var dato in dati)
+        //    {
+        //        if(dato is Account account)
+        //            sb.AppendLine($"{account.AccountId},{account.Saldo}");
+        //        if (dato is Customer customer)
+        //            sb.AppendLine($"{customer.Name},{customer.Age}");
+        //    }
+
+        //    File.AppendAllText(completePath, sb.ToString());
+        //}
+        static void CreateGenericCsv<T>(string path, string fileName, List<T> dati)
         {
             StringBuilder sb = new StringBuilder();
-
             string completePath = Path.Combine(path, fileName);
+
+            Type type = typeof(T);
+            var properties = type.GetProperties();
 
             if (!File.Exists(completePath))
             {
-                string header = string.Format("Name,Age");
+                string header;
+                string format = string.Empty;
+
+                var dato = dati[0];
+                foreach (var property in properties)
+                {
+                    var value = property.GetValue(dato);
+                    //Console.WriteLine($"{property.Name}, {value}");
+                    format += $"{property.Name},";
+                }
+                
+                header = string.Format(format.Trim(','));
+                //Console.WriteLine(header);
                 sb.AppendLine(header);
             }
-            
+
             foreach (var dato in dati)
             {
-                if(dato is Account account)
-                    sb.AppendLine($"{account.AccountId},{account.Saldo}");
-                if (dato is Customer customer)
-                    sb.AppendLine($"{customer.Name},{customer.Age}");
+                string[] valuesToAppend = new string[2];
+                for (int i = 0; i <= properties.Length - 1; i++)
+                {
+                    var property = properties[i];
+                    var value = property.GetValue(dato);
+                    valuesToAppend[i] = value.ToString();
+                    //Console.WriteLine($"{property.Name}, {value}");
+                }
+                sb.AppendLine(string.Join(',',valuesToAppend));
+                //Console.WriteLine(string.Join(',', valuesToAppend));
             }
 
             File.AppendAllText(completePath, sb.ToString());

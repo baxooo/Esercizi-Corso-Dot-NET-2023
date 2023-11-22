@@ -12,8 +12,8 @@ namespace FileSystem.Models
         public decimal Saldo { get; set; }
         public Account(int accountId,decimal saldo)
         {
-            accountId = AccountId;
-            saldo = Saldo;
+            AccountId = accountId ;
+            Saldo = saldo;
         }
     }
 }
