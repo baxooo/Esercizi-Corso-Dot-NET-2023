@@ -35,7 +35,10 @@ namespace FileSystem
 
             string path = Directory.GetCurrentDirectory();
 
-            CreateCsv(path, "file.csv", customers);
+            CreateCsv(path, "customerFile.csv", customers);
+            CreateCsv(path, "AccountFile.csv", accounts);
+
+            CreateGenericCsv(path, "file.csv", accounts);
         }
 
         static void CreateCsv(string path, string fileName,List<Customer> customers)
@@ -69,6 +72,28 @@ namespace FileSystem
             foreach (var account in accounts)
             {
                 sb.AppendLine(account.AccountId + "," + account.Saldo);
+            }
+
+            File.AppendAllText(completePath, sb.ToString());
+        }
+        static void CreateGenericCsv<T>(string path,string fileName, List<T> dati)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string completePath = Path.Combine(path, fileName);
+
+            if (!File.Exists(completePath))
+            {
+                string header = string.Format("Name,Age");
+                sb.AppendLine(header);
+            }
+            
+            foreach (var dato in dati)
+            {
+                if(dato is Account account)
+                    sb.AppendLine($"{account.AccountId},{account.Saldo}");
+                if (dato is Customer customer)
+                    sb.AppendLine($"{customer.Name},{customer.Age}");
             }
 
             File.AppendAllText(completePath, sb.ToString());
