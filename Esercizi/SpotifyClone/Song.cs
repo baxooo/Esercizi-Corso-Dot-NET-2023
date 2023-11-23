@@ -16,13 +16,12 @@ namespace SpotifyClone
         public string ReleaseDate {  get { return _releaseDate; } }
         public int Duration { get {  return _duration; } }
 
-        public Song(string title,Artist artist,Album album, string releaseDate,int duration)
+        public Song(string title,Artist artist,Album album, int duration)
         {
              _album = album;
-            _releaseDate = releaseDate;
             _title = title;
             _artist = artist;
-            _releaseDate = releaseDate;
+            _releaseDate = album.ReleaseDate;
             _duration = duration;
         }
     }

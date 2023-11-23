@@ -1,4 +1,7 @@
-﻿namespace SpotifyClone.UserModels
+﻿using System.ComponentModel;
+using System.Linq;
+
+namespace SpotifyClone.UserModels
 {
     internal class Artist : User
     {
@@ -11,7 +14,12 @@
         public Artist(int id, string name, string alias) : base(id, name)
         {
             _alias = alias;
+            _albums = new Album[0];
         }
 
+        public void AddAlbum(Album album)
+        {
+            _albums = _albums.Append(album).ToArray();
+        }
     }
 }
