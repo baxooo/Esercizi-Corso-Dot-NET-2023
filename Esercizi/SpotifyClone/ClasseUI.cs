@@ -56,24 +56,8 @@ namespace SpotifyClone
 
         private bool GetInputFromUser()
         {
-            string  inputString = Console.ReadLine();
-            inputString = inputString.ToLower();
-            char input = char.MinValue;
-            try
-            {
-                input = inputString[0];
-            }
-            catch (IndexOutOfRangeException ex)
-            {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(ex.Message);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(ex.StackTrace);
-                Console.ResetColor();
-            }
-
-            
+            char input = Console.ReadKey().KeyChar;
+            input = Char.ToLower(input);
             switch (input)
             {
                 case 'm'://menu musica already default con default Artists
@@ -250,10 +234,6 @@ namespace SpotifyClone
             Console.WriteLine("╚═════════════════════════════════════════════╝");
         }
 
-        private void UpdateMenu()
-        {
-
-        }
         private void SelectMediaSourceMenu()
         {
             string top =    "╔═════════════════════════════════════════════╗";
@@ -264,24 +244,29 @@ namespace SpotifyClone
             Console.WriteLine(top);
             Console.WriteLine(center);
             Console.WriteLine(bottom);
-            string input;
+           
 
             do
             {
-                input = Console.ReadLine();
-                if (String.Equals(input, "M", StringComparison.OrdinalIgnoreCase))
+                char input = Console.ReadKey().KeyChar;
+                input = Char.ToLower(input);
+                switch (input)
                 {
-                    Console.Clear();
-                    CreateDefaultMenu();
-                    while (GetInputFromUser());//non mi aggrada questo while nel while
-                    validInput = true;
+                    case 'm':
+                        Console.Clear();
+                        CreateDefaultMenu();
+                        while (GetInputFromUser()) ;//non mi aggrada questo while nel while
+                        validInput = true;
+                        break;
+
+                    case 'v':
+
+                        Console.WriteLine("Movies are not available yet!");
+                        break;
+                    default:
+                        Console.WriteLine("Input is not valid, please try again!");
+                        break;
                 }
-                else if (String.Equals(input, "v", StringComparison.OrdinalIgnoreCase))
-                {
-                    Console.WriteLine("Movies are not available yet!");
-                }
-                else
-                    Console.WriteLine("Input is not valid, please try again!");
 
             } while (!validInput);
         }
