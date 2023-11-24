@@ -10,7 +10,7 @@ namespace SpotifyClone
     internal class Playlist : IPlaylist
     {
         protected string _name;
-        protected Song[] _songs;
+        protected Song[] _songs = new Song[0];
         protected int _id;
 
         public string Name { get { return _name; } }

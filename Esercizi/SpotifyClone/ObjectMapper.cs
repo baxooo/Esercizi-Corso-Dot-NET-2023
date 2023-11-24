@@ -30,7 +30,7 @@ namespace SpotifyClone
                 .Select(d => new Song(d.Id, d.Title, 
                                        GetArtist(artists, d.Artist), 
                                        GetAlbum(albums, d.Album), 
-                                       0,d.Rating, Int32.Parse(d.PlaylistId)
+                                       0,d.Rating, d.PlaylistId
                 )).ToList();
 
             foreach(var album in albums)
@@ -51,7 +51,7 @@ namespace SpotifyClone
             List<Playlist> playlists = data
                 .Where(d => !string.IsNullOrEmpty(d.Playlist))
                 .GroupBy(d => d.PlaylistId)
-                .Select(d => new Playlist(Int32.Parse(d.First().PlaylistId),d.First().Playlist))
+                .Select(d => new Playlist(d.First().PlaylistId,d.First().Playlist))
                 .ToList();
 
             foreach(var playlist in playlists)

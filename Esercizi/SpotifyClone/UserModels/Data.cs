@@ -15,6 +15,6 @@ namespace SpotifyClone.UserModels
         public string Artist { get; set; }
         public string Genre { get; set; }
         public string Playlist { get; set; }
-        public string PlaylistId { get; set; }
+        public int PlaylistId { get; set; }
     }
 }
