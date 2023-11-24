@@ -8,10 +8,12 @@ namespace SpotifyClone.UserModels
         protected string _alias;
         protected Album[] _albums;
         protected string _genere;
+        private int _score;
 
         public string Alias { get { return _alias; } }
         public Album[] Albums { get { return _albums; } }
         public string Genere {  get { return _genere; } }
+        public int Score { get { return _score; } } 
 
         public Artist(string name, string alias, string genere, int id = 0) : base(id, name)
         {
@@ -23,6 +25,7 @@ namespace SpotifyClone.UserModels
         public void AddAlbum(Album album)
         {
             _albums = _albums.Append(album).ToArray();
+            _score += album.Score;
         }
     }
 }

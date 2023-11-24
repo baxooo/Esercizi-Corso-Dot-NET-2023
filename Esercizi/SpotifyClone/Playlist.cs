@@ -12,10 +12,12 @@ namespace SpotifyClone
         protected string _name;
         protected Song[] _songs = new Song[0];
         protected int _id;
+        private int _score;
 
         public string Name { get { return _name; } }
         public Song[] Songs { get { return _songs; } }
         public int PlaylistId { get { return _id; } }
+        public int Score { get { return _score; } } 
 
         public Playlist(int id,string name)
         {
@@ -30,6 +32,8 @@ namespace SpotifyClone
         public void AddSong(Song song)
         {
             _songs = _songs.Append(song).ToArray();
+            _score += song.Rating;
+            _songs = _songs.OrderByDescending(x => x.Rating).ToArray();
         }
 
         public void RemoveSong(Song song)

@@ -32,10 +32,10 @@ namespace SpotifyClone
 
             try
             {
-                _albums = _user.Albums;
-                _artists = _user.Artists;
-                _playlists = _user.Playlists;
-                _radio = _user.RadioFavorites;
+                _albums = _user.Albums.OrderByDescending(p=> p.Score).ToArray();
+                _artists = _user.Artists.OrderByDescending(p => p.Score).ToArray();
+                _playlists = _user.Playlists.OrderByDescending(p => p.Score).ToArray();
+                _radio = _user.RadioFavorites.OrderByDescending(p => p.Score).ToArray();
             }
             catch (NullReferenceException ex)
             {
@@ -46,6 +46,7 @@ namespace SpotifyClone
                 Console.ResetColor();
                 Console.Read();
             }
+            
             
             SelectMediaSourceMenu();
         }
@@ -233,15 +234,15 @@ namespace SpotifyClone
                 Console.ForegroundColor = ConsoleColor.Black;
 
                 if (oggetto is Album album)
-                    Console.Write($" {i}. {album.AlbumName}".PadRight(45));
+                    Console.Write($" {i}. {album.AlbumName}".PadRight(45 - album.Score.ToString().Length) + album.Score);
                 else if (oggetto is Artist artist)
-                    Console.Write($" {i}. {artist.Alias}".PadRight(45));
+                    Console.Write($" {i}. {artist.Alias}".PadRight(45 - artist.Score.ToString().Length) + artist.Score);
                 else if(oggetto is Radio radio)
-                    Console.Write($" {i}. {radio.Name}".PadRight(45));
+                    Console.Write($" {i}. {radio.Name}".PadRight(45- radio.Score.ToString().Length) + radio.Score);
                 else if(oggetto is Playlist playlist)
-                    Console.Write($" {i}. {playlist.Name}".PadRight(45));
+                    Console.Write($" {i}. {playlist.Name}".PadRight(45- playlist.Score.ToString().Length) + playlist.Score);
                 else if(oggetto is Song song)
-                    Console.Write($" {i}. {song.Title}".PadRight(45));
+                    Console.Write($" {i}. {song.Title}".PadRight(45- song.Rating.ToString().Length) + song.Rating);
                 else if(oggetto is string st)
                     Console.Write($" {i}. {st}".PadRight(45));
 

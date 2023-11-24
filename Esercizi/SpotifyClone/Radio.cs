@@ -7,6 +7,7 @@
 
         public string Name { get { return _name; } }
         public Playlist OnAirPlaylist {  get { return _onAirPlaylist; } }
+        public int Score { get { return _onAirPlaylist.Score; } }
 
         public Radio(string name)
         {

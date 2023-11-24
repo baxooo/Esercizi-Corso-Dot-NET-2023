@@ -21,6 +21,7 @@ namespace SpotifyClone
             _currentSong = song;
             _isPlaying = true;
             _isPLaylist = false;
+            song.Rating += 1;
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
         }
         public void Start(IPlaylist playlist) 
@@ -29,6 +30,7 @@ namespace SpotifyClone
             _currentIndex = 0;
             _currentPlaylist = playlist;
             _currentSong = _currentPlaylist.Songs[_currentIndex];
+            _currentSong.Rating += 1;
             _isPlaying = true;
             _isPLaylist = true;
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
@@ -74,6 +76,7 @@ namespace SpotifyClone
                 _currentIndex = -1;// restarts playlist
             
             _currentSong = _currentPlaylist.Songs[_currentIndex + 1];
+            _currentSong.Rating += 1;
             _currentIndex++;
 
             Console.WriteLine($"Now Playing {_currentSong.Title}");
@@ -88,6 +91,7 @@ namespace SpotifyClone
                 _currentIndex = _currentPlaylist.Songs.Length;// goes to the end of playlist
             
             _currentSong = _currentPlaylist.Songs[_currentIndex - 1];
+            _currentSong.Rating += 1;
             _currentIndex--;
 
             Console.WriteLine($"Now Playing {_currentSong.Title}");
