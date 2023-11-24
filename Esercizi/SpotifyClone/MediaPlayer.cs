@@ -25,11 +25,10 @@ namespace SpotifyClone
         }
         public void Start(IPlaylist playlist) 
         {
-            if (_isPlaying)
-                return;
+            
             _currentIndex = 0;
             _currentPlaylist = playlist;
-            //_currentSong = (Song)_currentPlaylist[_currentIndex];
+            _currentSong = _currentPlaylist.Songs[_currentIndex];
             _isPlaying = true;
             _isPLaylist = true;
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
@@ -39,7 +38,7 @@ namespace SpotifyClone
         {
             if(!IsSongSelected())
             {
-                Console.WriteLine("no song to play or pause, to choose a song please write \"p\" followed by the index of the song you want to play");
+                Console.WriteLine("no song to play or pause, to choose a song please write the index of the song you want to play");
                 return;
             }
 
@@ -71,8 +70,12 @@ namespace SpotifyClone
                 Console.WriteLine("Please select a playlist with \"g\"");
                 return;
             }
+            if (_currentIndex >= _currentPlaylist.Songs.Length - 1)
+                _currentIndex = -1;// restarts playlist
+            
             _currentSong = _currentPlaylist.Songs[_currentIndex + 1];
             _currentIndex++;
+
             Console.WriteLine($"Now Playing {_currentSong.Title}");
         }
 
@@ -80,8 +83,13 @@ namespace SpotifyClone
         {
             if (!_isPlaying && !_isPLaylist) 
                 return;
-            _currentSong = _currentPlaylist.Songs[_currentIndex + 1];
-            _currentIndex++;
+
+            if (_currentIndex <= 0)
+                _currentIndex = _currentPlaylist.Songs.Length;// goes to the end of playlist
+            
+            _currentSong = _currentPlaylist.Songs[_currentIndex - 1];
+            _currentIndex--;
+
             Console.WriteLine($"Now Playing {_currentSong.Title}");
         }
 
