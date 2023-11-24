@@ -8,7 +8,7 @@ namespace SpotifyClone.UserModels
 {
     internal sealed class UserListener : User
     {
-        private Playlist _favorites = new Playlist("favorites");
+        private Playlist _favorites = new Playlist(0, "favorites");
         private bool _isPremium;
         private Radio[] _radioFavorites;
         private Artist[] _artists = new Artist[0];
@@ -26,7 +26,8 @@ namespace SpotifyClone.UserModels
             _radioFavorites = new Radio[0];
         }
 
-        public void CreateNewEmptyPlaylist(string playlistName) => _playlists = _playlists.Append(new Playlist(playlistName)).ToArray();
+        public void CreateNewEmptyPlaylist(string playlistName) => 
+            _playlists = _playlists.Append(new Playlist(_playlists.Length + 1, playlistName)).ToArray();
 
         public void CreateNewPlaylist(Playlist playlist)
         {

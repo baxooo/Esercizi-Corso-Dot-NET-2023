@@ -37,7 +37,7 @@ namespace SpotifyClone
                 _playlists = _user.Playlists;
                 _radio = _user.RadioFavorites;
             }
-            catch (ArgumentNullException ex)
+            catch (NullReferenceException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(ex.Message);

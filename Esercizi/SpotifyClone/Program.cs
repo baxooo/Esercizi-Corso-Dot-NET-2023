@@ -1,5 +1,8 @@
 ﻿using SpotifyClone.UserModels;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace SpotifyClone
 {
@@ -7,50 +10,73 @@ namespace SpotifyClone
     {
         static void Main(string[] args)
         {
-            UserListener user = new UserListener(1,"Carlo");
 
-            Artist greenDay = new Artist(1, "Geen Day", "Green Day");
+            UserListener user = null; 
+            string path = @"D:/songs.csv";
+            List<string> list = ReadDataFromCsv(path);
+            if (list == null || list.Count == 0)
+            {
+                // TODO - log
+                user = GenerateData();
+            }
+            else
+            {
+                List<Data> csv = CsvReader<Data>.CreateObject(list);
+                user = ObjectMapper.MapSongsData(csv);
+            }
+
+            ClasseUI classe = new ClasseUI(user);
+
+
+            Console.Read();
+        }
+
+        static UserListener GenerateData()
+        {
+            UserListener user = new UserListener(1, "Carlo");
+            Artist greenDay = new Artist("Geen Day", "Green Day", "Rock");
             Song[] greenSongs = new Song[3];
-            Album AmericanIdiot = new Album("American Idiot", greenDay,greenSongs, "2004");
+            Album AmericanIdiot = new Album("American Idiot", greenDay, greenSongs, "2004");
             greenDay.AddAlbum(AmericanIdiot);
 
-            var AmIdiot = new Song("American Idiot", greenDay, AmericanIdiot,  174);
-            var WakeSeptember = new Song("Wake Me up When September Ends", greenDay, AmericanIdiot, 285);
-            var holyday = new Song("Holyday", greenDay, AmericanIdiot, 232);
+            var AmIdiot = new Song(43, "American Idiot", greenDay, AmericanIdiot, 174, 0,1);
+            var WakeSeptember = new Song(44, "Wake Me up When September Ends", greenDay, AmericanIdiot, 285,0, 1);
+            var holyday = new Song(45, "Holyday", greenDay, AmericanIdiot, 232, 0, 1);
 
-            greenSongs[0] = AmIdiot; 
-            greenSongs[1] = WakeSeptember; 
+            greenSongs[0] = AmIdiot;
+            greenSongs[1] = WakeSeptember;
             greenSongs[2] = holyday;
 
-            Artist Salmo = new Artist(2, "Maurizio", "Salmo");
-            Song[] salmoSongs= new Song[2];
-            Album playlistSalmo = new Album("Playlist", Salmo,salmoSongs, "2018");
+            Artist Salmo = new Artist("Maurizio", "Salmo", "Rap");
+            Song[] salmoSongs = new Song[2];
+            Album playlistSalmo = new Album("Playlist", Salmo, salmoSongs, "2018");
             Salmo.AddAlbum(playlistSalmo);
-            
 
-            var novantaMin = new Song("90MIN", Salmo, playlistSalmo, 231);
-            var pxm = new Song("PMX",Salmo,playlistSalmo, 184);
+
+            var novantaMin = new Song(46, "90MIN", Salmo, playlistSalmo, 231, 0 , 1);
+            var pxm = new Song(47, "PMX", Salmo, playlistSalmo, 184, 0, 1);
 
             salmoSongs[0] = novantaMin;
             salmoSongs[1] = pxm;
 
-            Playlist playlist = new Playlist("misto");
+            Playlist playlist = new Playlist(1,"misto");
             playlist.AddSong(AmIdiot);
             playlist.AddSong(WakeSeptember);
             playlist.AddSong(holyday);
             playlist.AddSong(pxm);
             playlist.AddSong(novantaMin);
             user.CreateNewPlaylist(playlist);
+            return user;
+        }
 
+        public static List<string> ReadDataFromCsv(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return null; // TODO - log
+            }
 
-            ClasseUI classe = new ClasseUI(user);
-
-            
-
-
-
-
-            Console.Read();
+            return File.ReadAllLines(path).ToList();
         }
     }
 }

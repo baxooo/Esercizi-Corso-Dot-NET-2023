@@ -7,14 +7,17 @@ namespace SpotifyClone.UserModels
     {
         protected string _alias;
         protected Album[] _albums;
+        protected string _genere;
 
         public string Alias { get { return _alias; } }
         public Album[] Albums { get { return _albums; } }
+        public string Genere {  get { return _genere; } }
 
-        public Artist(int id, string name, string alias) : base(id, name)
+        public Artist(string name, string alias, string genere, int id = 0) : base(id, name)
         {
             _alias = alias;
             _albums = new Album[0];
+            _genere = genere;
         }
 
         public void AddAlbum(Album album)

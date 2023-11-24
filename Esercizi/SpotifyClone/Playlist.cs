@@ -11,14 +11,20 @@ namespace SpotifyClone
     {
         protected string _name;
         protected Song[] _songs;
+        protected int _id;
 
         public string Name { get { return _name; } }
         public Song[] Songs { get { return _songs; } }
+        public int PlaylistId { get { return _id; } }
 
-        public Playlist(string name)
+        public Playlist(int id,string name)
         {
+            _id = id;
             _name = name;   
-            _songs = new Song[0];
+        }
+        public Playlist()
+        {
+            
         }
 
         public void AddSong(Song song)
