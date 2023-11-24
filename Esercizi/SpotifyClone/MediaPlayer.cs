@@ -14,20 +14,25 @@ namespace SpotifyClone
         private bool _isPlaying;
         private bool _isPLaylist;
 
-
         public void Start(Song song)
         {
+            if(_isPlaying) 
+                return; 
             _currentSong = song;
             _isPlaying = true;
             _isPLaylist = false;
-            Console.WriteLine($"Now Playing {_currentSong.Title}");
+            Console.WriteLine($"\rNow Playing {_currentSong.Title}");
         }
         public void Start(IPlaylist playlist) 
         {
+            if (_isPlaying)
+                return;
             _currentIndex = 0;
             _currentPlaylist = playlist;
+            //_currentSong = (Song)_currentPlaylist[_currentIndex];
             _isPlaying = true;
             _isPLaylist = true;
+            Console.WriteLine($"\rNow Playing {_currentSong.Title}");
         }
 
         public void PlayPause()
@@ -42,25 +47,30 @@ namespace SpotifyClone
             {
                 case true:
                     Console.WriteLine($"Paused {_currentSong.Title}");
+                    _isPlaying = false;
                     break;
                 case false:
-                    Console.WriteLine($"Resumed {_currentSong.Title}");
+                    Console.WriteLine($"Playing {_currentSong.Title}");
+                    _isPlaying = true;
                     break;
             }
-
         }
 
         public void Stop()
         {
             if (!IsSongSelected())
                 return;
+            _isPlaying = false;
             Console.WriteLine($"Stopped {_currentSong.Title}, to restart press \"p\"");
         }
 
         public void Next()
         {
-            if (!_isPlaying && !_isPLaylist)
+            if (!_isPLaylist)
+            {
+                Console.WriteLine("Please select a playlist with \"g\"");
                 return;
+            }
             _currentSong = _currentPlaylist.Songs[_currentIndex + 1];
             _currentIndex++;
             Console.WriteLine($"Now Playing {_currentSong.Title}");

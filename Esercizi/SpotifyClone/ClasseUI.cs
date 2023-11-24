@@ -23,6 +23,7 @@ namespace SpotifyClone
         private Radio[] _radio;
         private Playlist _currentSelectedPlaylist;
         private Album _currentSelectedAlbum;
+        private bool _isSong = false;
 
         public ClasseUI(UserListener user)
         {
@@ -105,10 +106,19 @@ namespace SpotifyClone
                     _player.PlayPause();
                     return true;
                 case 's'://stop
+                    Console.Clear();
+                    CreateMenu(_currentColor, _currentSelectionArray);
+                    _player.Stop();
                     return true;
                 case 'n'://next
+                    Console.Clear();
+                    CreateMenu(_currentColor, _currentSelectionArray);
+                    _player.Next();
                     return true;
                 case 'b'://previous
+                    Console.Clear();
+                    CreateMenu(_currentColor, _currentSelectionArray);
+                    _player.Previous();
                     return true;
                 case 'g'://select whole playlist
                     Console.Clear();
@@ -133,17 +143,24 @@ namespace SpotifyClone
                             var array = GetNestedArray(_currentSelectionArray[i - 1]);
                             Console.Clear();
                             CreateMenu(_currentColor, array);
+                            if (_isSong) // ho aggiunto questa soluzione poco elegante al problema dello
+                                         // stampare "is now playing X", in quanto antecedentemente nello
+                                         // switch case in GetNestedArray(x) andavo a stampare su console
+                                         // ma subito dopo c'è un clear e poi ristampa la console e non
+                                         // si vedeva.
+                            {
+                                _player.Start((Song)_currentSelectionArray[i - 1]);
+                                _isSong = false;
+                            }
                             break;
                         }
                     }
                     return true;
-
                 default:
                     Console.Clear();
                     CreateDefaultMenu();
                     Console.WriteLine("Input is not valid, please try again!");
                     return true;
-
             }
         }
 
@@ -162,7 +179,7 @@ namespace SpotifyClone
                 case Radio radio:
                     return radio.OnAirPlaylist.Songs;
                 case Song song:
-                    _player.Start(song);
+                    _isSong = true;
                     return _currentSelectionArray;
             }
             return null;
@@ -244,8 +261,7 @@ namespace SpotifyClone
             Console.WriteLine(top);
             Console.WriteLine(center);
             Console.WriteLine(bottom);
-           
-
+            
             do
             {
                 char input = Console.ReadKey().KeyChar;
@@ -267,7 +283,6 @@ namespace SpotifyClone
                         Console.WriteLine("Input is not valid, please try again!");
                         break;
                 }
-
             } while (!validInput);
         }
 
