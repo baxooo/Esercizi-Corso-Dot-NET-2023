@@ -12,7 +12,7 @@ namespace SpotifyClone
     {
         public static UserListener MapSongsData(List<Data> data)
         {
-            UserListener user = new UserListener(1,"Carlo");
+            UserListener user = new UserListener(1,"Carlo",MembershipTypeEnum.FREE);
 
             List<Artist> artists = data
                 .Where(d => !string.IsNullOrEmpty(d.Artist))
@@ -65,7 +65,7 @@ namespace SpotifyClone
                 user.CreateNewPlaylist(playlist);
             }
 
-                
+            user.AllSongs = songs.ToArray();
 
             return user;
         }

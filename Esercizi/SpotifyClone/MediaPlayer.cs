@@ -16,6 +16,8 @@ namespace SpotifyClone
         private bool _isPlaying;
         private bool _isPLaylist;
         private ClasseUI _classeUI;
+        private Random _random = new Random();
+        private Song[] _allSongs = new Song[0];
 
         public MediaPlayer(ClasseUI classe)
         {
@@ -24,17 +26,40 @@ namespace SpotifyClone
 
         public void Start(Song song)
         {
-            if(_isPlaying) 
-                return; 
+            if(_classeUI.User.RemainingTime == 0)
+            {
+                StartRandom();
+                return;
+            }
+
             _currentSong = song;
             _isPlaying = true;
             _isPLaylist = false;
             song.Rating += 1;
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
+            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
+            {
+                _classeUI.User.RemainingTime = 0;
+            }
         }
+
+        private void StartRandom()
+        {
+            Song song = _classeUI.User.AllSongs[_random.Next(0, _classeUI.User.AllSongs.Length - 1)];
+            _currentSong = song;
+            _isPlaying = true;
+            _isPLaylist = false;
+        }
+
         public void Start(IPlaylist playlist) 
         {
-            
+            if (_classeUI.User.RemainingTime == 0)
+            {
+                StartRandom();
+                return;
+            }
+
             _currentIndex = 0;
             _currentPlaylist = playlist;
             _currentSong = _currentPlaylist.Songs[_currentIndex];
@@ -43,6 +68,11 @@ namespace SpotifyClone
             _isPLaylist = true;
             playlist.UpdateScore();
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
+            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
+            {
+                _classeUI.User.RemainingTime = 0;
+            }
         }
 
         public void PlayPause()
@@ -81,6 +111,13 @@ namespace SpotifyClone
                 Console.WriteLine("Please select a playlist with \"g\"");
                 return;
             }
+
+            if (_classeUI.User.RemainingTime == 0)
+            {
+                StartRandom();
+                return;
+            }
+
             if (_currentIndex >= _currentPlaylist.Songs.Length - 1)
                 _currentIndex = -1;// restarts playlist
             
@@ -89,12 +126,26 @@ namespace SpotifyClone
             _currentIndex++;
 
             Console.WriteLine($"Now Playing {_currentSong.Title}");
+            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
+            {
+                _classeUI.User.RemainingTime = 0;
+            } 
         }
 
         public void Previous() 
         {
-            if (!_isPlaying && !_isPLaylist) 
+            if (!_isPLaylist)
+            {
+                Console.WriteLine("Please select a playlist with \"g\"");
                 return;
+            }
+
+            if (_classeUI.User.RemainingTime == 0)
+            {
+                StartRandom();
+                return;
+            }
 
             if (_currentIndex <= 0)
                 _currentIndex = _currentPlaylist.Songs.Length;// goes to the end of playlist
@@ -104,6 +155,11 @@ namespace SpotifyClone
             _currentIndex--;
 
             Console.WriteLine($"Now Playing {_currentSong.Title}");
+            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
+            {
+                _classeUI.User.RemainingTime = 0;
+            }
         }
 
         private bool IsSongSelected()

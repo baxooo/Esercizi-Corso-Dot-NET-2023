@@ -10,22 +10,45 @@ namespace SpotifyClone.UserModels
     internal sealed class UserListener : User
     {
         private Playlist _favorites;
-        private bool _isPremium;
         private Radio[] _radioFavorites;
         private Artist[] _artists = new Artist[0];
         private Album[] _albums = new Album[0];
+        private Song[] _songs = new Song[0];
+        private int _remainingTime = 360000;//100 ore in secondi
 
         public Playlist Favorites { get; private set; }
-        public bool IsPremium { get { return _isPremium; } }
         public Radio[] RadioFavorites { get { return _radioFavorites; } }
         public Artist[] Artists { get { return _artists; } }
         public Album[] Albums { get { return _albums; } }
 
-        public UserListener(int id, string name) : base(id, name)
+        public Song[] AllSongs { get => _songs; set => _songs  = value; }
+
+        public int RemainingTime {  get { return _remainingTime; } set { _remainingTime = value; } }
+        public MembershipTypeEnum MembershipType { get; private set; } 
+
+        public UserListener(int id, string name,MembershipTypeEnum type) : base(id, name)
         {
             _playlists = new Playlist[0];
             _radioFavorites = new Radio[0];
             _favorites = new Playlist(0, "favorites");
+            MembershipType = type;
+
+            switch (type)
+            {
+                case MembershipTypeEnum.FREE:
+                    _remainingTime = 360000;//100 ore
+                    break;
+                case MembershipTypeEnum.PREMIUM:
+                    _remainingTime = (int)3.6e+6;//1000 ore
+                    break;
+                case MembershipTypeEnum.GOLD:
+                    _remainingTime = -1;//unlimited
+                    break;
+                default:
+                    _remainingTime = 360000;
+                    break;
+            }
+
         }
 
         public void CreateNewEmptyPlaylist(string playlistName) => 

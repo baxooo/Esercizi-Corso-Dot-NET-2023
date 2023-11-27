@@ -27,6 +27,8 @@ namespace SpotifyClone
         private Logger _logger;
         private CultureInfo _culture;
 
+        public UserListener User {  get { return _user; } } 
+
         public ClasseUI(UserListener user)
         {
             _player = new MediaPlayer(this);

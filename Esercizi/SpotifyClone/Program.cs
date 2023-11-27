@@ -22,7 +22,7 @@ namespace SpotifyClone
             List<string> list = ReadDataFromCsv(songsFilePath);
             if (list == null || list.Count == 0)
             {
-                logger.Log(loggerFilePath, LogTypeEnum.WARNING, "Unable to read dataset, using default songs");
+                logger.Log(LogTypeEnum.WARNING, "Unable to read dataset, using default songs");
                 user = GenerateData();
             }
             else
@@ -40,7 +40,7 @@ namespace SpotifyClone
 
         static UserListener GenerateData()
         {
-            UserListener user = new UserListener(1, "Carlo");
+            UserListener user = new UserListener(1, "Carlo", MembershipTypeEnum.FREE);
             Artist greenDay = new Artist("Geen Day", "Green Day", "Rock");
             Song[] greenSongs = new Song[3];
             Album AmericanIdiot = new Album("American Idiot", greenDay, greenSongs, "2004");
