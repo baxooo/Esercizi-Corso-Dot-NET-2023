@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotifyClone
+namespace SpotifyClone.Interfaces
 {
     internal interface IPlaylist
     {
         Song[] Songs { get; }
+        public void UpdateScore();
     }
 }

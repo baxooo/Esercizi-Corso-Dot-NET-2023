@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SpotifyClone.Interfaces;
+using SpotifyClone.UserModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -7,38 +9,40 @@ using System.Threading.Tasks;
 
 namespace SpotifyClone
 {
-    internal class Playlist : IPlaylist
+    internal class Playlist : IPlaylist, IRating
     {
         protected string _name;
         protected Song[] _songs = new Song[0];
         protected int _id;
-        private int _score;
-
+        private int _rating;
         public string Name { get { return _name; } }
         public Song[] Songs { get { return _songs; } }
+
+
         public int PlaylistId { get { return _id; } }
-        public int Score { get { return _score; } } 
+        public int Rating { get { return _rating; } } 
 
         public Playlist(int id,string name)
         {
             _id = id;
             _name = name;   
         }
-        public Playlist()
-        {
-            
-        }
 
         public void AddSong(Song song)
         {
             _songs = _songs.Append(song).ToArray();
-            _score += song.Rating;
-            _songs = _songs.OrderByDescending(x => x.Rating).ToArray();
+            _rating += song.Rating;
         }
 
         public void RemoveSong(Song song)
         {
-            _songs.Where(s => s != song).ToArray();
+            _songs = _songs.Where(s => s != song).ToArray();
+            _rating -= song.Rating;
+        }
+
+        public void UpdateScore()
+        {
+            _songs = _songs.OrderByDescending(p => p.Rating).ToArray();
         }
     }
 }

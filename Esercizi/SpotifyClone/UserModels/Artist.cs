@@ -1,9 +1,11 @@
-﻿using System.ComponentModel;
+﻿using SpotifyClone.Interfaces;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SpotifyClone.UserModels
 {
-    internal class Artist : User
+    
+    internal class Artist : User,IRating
     {
         protected string _alias;
         protected Album[] _albums;
@@ -13,7 +15,7 @@ namespace SpotifyClone.UserModels
         public string Alias { get { return _alias; } }
         public Album[] Albums { get { return _albums; } }
         public string Genere {  get { return _genere; } }
-        public int Score { get { return _score; } } 
+        public int Rating { get { return _score; } } 
 
         public Artist(string name, string alias, string genere, int id = 0) : base(id, name)
         {
@@ -25,7 +27,12 @@ namespace SpotifyClone.UserModels
         public void AddAlbum(Album album)
         {
             _albums = _albums.Append(album).ToArray();
-            _score += album.Score;
+            _score += album.Rating;
+        }
+
+        public void UpdateAlbumScore()
+        {
+            _score = _albums.Sum(album => album.Rating);
         }
     }
 }

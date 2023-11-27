@@ -8,7 +8,7 @@ namespace SpotifyClone.UserModels
 {
     internal sealed class UserListener : User
     {
-        private Playlist _favorites = new Playlist(0, "favorites");
+        private Playlist _favorites;
         private bool _isPremium;
         private Radio[] _radioFavorites;
         private Artist[] _artists = new Artist[0];
@@ -24,6 +24,7 @@ namespace SpotifyClone.UserModels
         {
             _playlists = new Playlist[0];
             _radioFavorites = new Radio[0];
+            _favorites = new Playlist(0, "favorites");
         }
 
         public void CreateNewEmptyPlaylist(string playlistName) => 
@@ -43,22 +44,43 @@ namespace SpotifyClone.UserModels
             GetAllAlbums();
         }
 
-        public void AddNewFavorite(Song song) => _favorites.AddSong(song);
-        public void RemoveFavorite(Song song) => _favorites.RemoveSong(song);
+        public void AddNewFavorite(Song song)
+        {
+            _favorites.AddSong(song);
+            GetAllArtists();
+            GetAllAlbums();
+        
+        }
+        public void RemoveFavorite(Song song)
+        {
+            _favorites.RemoveSong(song);
+            GetAllArtists();
+            GetAllAlbums();
+        }
 
         private void GetAllArtists()
         {
-            if (Playlists.Length > 0)
+            if (_playlists.Length > 0)
             {
-                _artists = _playlists.SelectMany(s => s.Songs).Select(p => p.Artist).Distinct().ToArray();
+                _artists = _playlists.SelectMany(a => a.Songs).Select(p => p.Artist).Distinct().ToArray();
             }
         }
         private void GetAllAlbums()
         {
-            if (Playlists.Length > 0)
+            if (_playlists.Length > 0)
             {
-                _albums = _playlists.SelectMany(s => s.Songs).Select(a => a.Album).Distinct().ToArray();
+                _albums = _playlists.SelectMany(a => a.Songs).Select(a => a.Album).Distinct().ToArray();
             }
+        }
+
+        public void UpdateArraySort()
+        {
+            _albums.ToList().ForEach(a => a.UpdateScore());
+            _artists.ToList().ForEach(a => a.UpdateAlbumScore());
+            _playlists.ToList().ForEach(a => a.UpdateScore());
+            _albums = _albums.OrderByDescending(a => a.Rating).ToArray();
+            _artists = _artists.OrderByDescending(a => a.Rating).ToArray();
+            _playlists = Playlists.OrderByDescending(a => a.Rating).ToArray();
         }
     }
 }

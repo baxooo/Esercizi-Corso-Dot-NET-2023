@@ -1,8 +1,9 @@
-﻿using SpotifyClone.UserModels;
+﻿using SpotifyClone.Interfaces;
+using SpotifyClone.UserModels;
 
 namespace SpotifyClone
 {
-    internal class Song
+    internal class Song : IRating
     {
         protected int _id;
         protected string _title;

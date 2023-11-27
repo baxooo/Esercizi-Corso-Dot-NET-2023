@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpotifyClone.Interfaces;
 
 namespace SpotifyClone
 {
@@ -13,6 +14,12 @@ namespace SpotifyClone
         private Song _currentSong;
         private bool _isPlaying;
         private bool _isPLaylist;
+        private ClasseUI _classeUI;
+
+        public MediaPlayer(ClasseUI classe)
+        {
+            _classeUI = classe;
+        }
 
         public void Start(Song song)
         {
@@ -33,6 +40,7 @@ namespace SpotifyClone
             _currentSong.Rating += 1;
             _isPlaying = true;
             _isPLaylist = true;
+            playlist.UpdateScore();
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
         }
 
@@ -101,7 +109,7 @@ namespace SpotifyClone
         {
             if (_currentSong == null)
             {
-                Console.WriteLine("no song to play, pause or stop, to choose a song please write \"p\" followed by the index of the song you want to play ex.\"p1\"");
+                Console.WriteLine("no song to play, pause or stop, to choose a song please write the index of the song you want to play");
                 return false;
             }
             else return true;

@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.Timers;
 using System.Runtime.InteropServices;
 using System.Transactions;
+using SpotifyClone.Interfaces;
 
 namespace SpotifyClone
 {
@@ -15,51 +16,30 @@ namespace SpotifyClone
     {
         MediaPlayer _player;
         UserListener _user;
-        private object[] _currentSelectionArray;
+        private IRating[] _currentSelectionArray;
         private ConsoleColor _currentColor;
-        private Album[] _albums;
-        private Artist[] _artists;
-        private Playlist[] _playlists;
-        private Radio[] _radio;
         private Playlist _currentSelectedPlaylist;
         private Album _currentSelectedAlbum;
         private bool _isSong = false;
 
         public ClasseUI(UserListener user)
         {
-            _player = new MediaPlayer();
+            _player = new MediaPlayer(this);
             _user = user;
-
-            try
-            {
-                _albums = _user.Albums.OrderByDescending(p=> p.Score).ToArray();
-                _artists = _user.Artists.OrderByDescending(p => p.Score).ToArray();
-                _playlists = _user.Playlists.OrderByDescending(p => p.Score).ToArray();
-                _radio = _user.RadioFavorites.OrderByDescending(p => p.Score).ToArray();
-            }
-            catch (NullReferenceException ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(ex.Message);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(ex.StackTrace);
-                Console.ResetColor();
-                Console.Read();
-            }
-            
             
             SelectMediaSourceMenu();
         }
 
         private void CreateDefaultMenu()
         {
-            CreateMenu(ConsoleColor.Magenta, _artists);
+            CreateMenu(ConsoleColor.Magenta, _user.Artists.OrderByDescending(a=> a.Rating).ToArray());
         }
 
         private bool GetInputFromUser()
         {
             char input = Console.ReadKey().KeyChar;
             input = Char.ToLower(input);
+            _user.UpdateArraySort();
             switch (input)
             {
                 case 'm'://menu musica already default con default Artists
@@ -72,21 +52,21 @@ namespace SpotifyClone
                     return true;
                 case 'a'://artists
                     Console.Clear();
-                    CreateMenu(ConsoleColor.Magenta, _artists);
+                    CreateMenu(ConsoleColor.Magenta, _user.Artists);
                     return true;
                 case 'd'://albums
                     Console.Clear();
-                    CreateMenu(ConsoleColor.Red, _albums);
+                    CreateMenu(ConsoleColor.Red, _user.Albums);
                     return true;
                 case 'l'://playlist
                     Console.Clear();
-                    CreateMenu(ConsoleColor.Green, _playlists);
+                    CreateMenu(ConsoleColor.Green, _user.Playlists);
                     return true;
                 case 'r'://radio
                     Console.Clear();
                     try
                     {
-                        CreateMenu(ConsoleColor.Yellow, _radio);
+                        CreateMenu(ConsoleColor.Yellow, _user.RadioFavorites);
                     }
                     catch (ArgumentNullException ex)
                     {
@@ -165,7 +145,7 @@ namespace SpotifyClone
             }
         }
 
-        private object[] GetNestedArray(object o)
+        private IRating[] GetNestedArray(object o)
         {
             switch (o)
             {
@@ -186,7 +166,7 @@ namespace SpotifyClone
             return null;
         }
 
-        private void CreateMenu(ConsoleColor consoleColor, object[] array)
+        private void CreateMenu(ConsoleColor consoleColor, IRating[] array)
         {
             _currentColor = consoleColor;
             _currentSelectionArray = array;
@@ -225,6 +205,8 @@ namespace SpotifyClone
 
             Console.WriteLine("╔═════════════════════════════════════════════╗");
             int i = 0;
+
+            array = array.OrderByDescending(a => a.Rating).ToArray();
             foreach (var oggetto in array)
             {
                 if (i == 10) break;
@@ -234,17 +216,15 @@ namespace SpotifyClone
                 Console.ForegroundColor = ConsoleColor.Black;
 
                 if (oggetto is Album album)
-                    Console.Write($" {i}. {album.AlbumName}".PadRight(45 - album.Score.ToString().Length) + album.Score);
+                    Console.Write($" {i}. {album.AlbumName}".PadRight(45 - album.Rating.ToString().Length) + album.Rating);
                 else if (oggetto is Artist artist)
-                    Console.Write($" {i}. {artist.Alias}".PadRight(45 - artist.Score.ToString().Length) + artist.Score);
+                    Console.Write($" {i}. {artist.Alias}".PadRight(45 - artist.Rating.ToString().Length) + artist.Rating);
                 else if(oggetto is Radio radio)
-                    Console.Write($" {i}. {radio.Name}".PadRight(45- radio.Score.ToString().Length) + radio.Score);
+                    Console.Write($" {i}. {radio.Name}".PadRight(45- radio.Rating.ToString().Length) + radio.Rating);
                 else if(oggetto is Playlist playlist)
-                    Console.Write($" {i}. {playlist.Name}".PadRight(45- playlist.Score.ToString().Length) + playlist.Score);
+                    Console.Write($" {i}. {playlist.Name}".PadRight(45- playlist.Rating.ToString().Length) + playlist.Rating);
                 else if(oggetto is Song song)
                     Console.Write($" {i}. {song.Title}".PadRight(45- song.Rating.ToString().Length) + song.Rating);
-                else if(oggetto is string st)
-                    Console.Write($" {i}. {st}".PadRight(45));
 
                 Console.ResetColor();
                 Console.Write("║\n");
@@ -254,14 +234,12 @@ namespace SpotifyClone
 
         private void SelectMediaSourceMenu()
         {
-            string top =    "╔═════════════════════════════════════════════╗";
-            string center = "║              Select Media Source            ║" +
-                          "\n║         'M' for Music, 'V' for Movies       ║";
-            string bottom = "╚═════════════════════════════════════════════╝";
+            string menu = "╔═════════════════════════════════════════════╗" +
+                        "\n║              Select Media Source            ║" +
+                        "\n║         'M' for Music, 'V' for Movies       ║" +
+                        "\n╚═════════════════════════════════════════════╝";
             bool validInput = false;
-            Console.WriteLine(top);
-            Console.WriteLine(center);
-            Console.WriteLine(bottom);
+            Console.WriteLine(menu);
             
             do
             {
@@ -285,11 +263,6 @@ namespace SpotifyClone
                         break;
                 }
             } while (!validInput);
-        }
-
-        private void Choose()
-        {
-            
         }
     }
 }
