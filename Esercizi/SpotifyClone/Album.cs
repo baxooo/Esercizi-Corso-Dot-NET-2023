@@ -36,6 +36,7 @@ namespace SpotifyClone
 
         public void UpdateScore()
         {
+            _rating = _songs.Sum(s => s.Rating);
             _songs = _songs.OrderByDescending(p => p.Rating).ToArray();
         }
     }
