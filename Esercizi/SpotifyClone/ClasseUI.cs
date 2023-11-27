@@ -11,6 +11,7 @@ using System.Transactions;
 using SpotifyClone.Interfaces;
 using SpotifyClone.Models;
 using SpotifyClone.Authentication;
+using System.Globalization;
 
 namespace SpotifyClone
 {
@@ -24,6 +25,7 @@ namespace SpotifyClone
         private Album _currentSelectedAlbum;
         private bool _isSong = false;
         private Logger _logger;
+        private CultureInfo _culture;
 
         public ClasseUI(UserListener user)
         {
@@ -318,7 +320,53 @@ namespace SpotifyClone
             }
             while (!loggedIn);
 
+            SelectCultureInfo();
             SelectMediaSourceMenu();
+        }
+
+        private void SelectCultureInfo()
+        {
+            Console.Clear();
+            string menu = "╔═════════════════════════════════════════════╗" +
+                        "\n║          Please select a language           ║" +
+                        "\n║                  1.English                  ║" +
+                        "\n║                  2.Italian                  ║" +
+                        "\n║                  3.French                   ║" +
+                        "\n║                  4.German                   ║" +
+                        "\n║                  5.Spanish                  ║" +
+                        "\n╚═════════════════════════════════════════════╝";
+            Console.WriteLine(menu);
+            bool validInput = true;
+            do
+            {
+                char input = Console.ReadKey().KeyChar;
+
+                switch (input)
+                {
+                    case '1':
+                        _culture = CultureInfo.CreateSpecificCulture("en-US");
+                        validInput = false;
+                        break;
+                    case '2':
+                        _culture = CultureInfo.CreateSpecificCulture("it-IT");
+                        validInput = false;
+                        break;
+                    case '3':
+                        _culture = CultureInfo.CreateSpecificCulture("fr-FR");
+                        validInput = false;
+                        break;
+                    case '4':
+                        _culture = CultureInfo.CreateSpecificCulture("de-DE");
+                        validInput = false;
+                        break;
+                    case '5':
+                        _culture = CultureInfo.CreateSpecificCulture("es-ES");
+                        validInput = false;
+                        break;
+                }
+            }
+            while (validInput);
+            
         }
     }
 }
