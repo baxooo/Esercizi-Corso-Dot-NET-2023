@@ -48,7 +48,7 @@ namespace SpotifyClone
 
             using (StreamWriter writer = File.AppendText(filePath))
             {
-                writer.WriteLine($"[{DateTime.Now}] [{type}]: {message}");
+                writer.WriteLine($"[{DateTime.UtcNow.ToString("O")}] [{type}]: {message}");
             }
         }
 

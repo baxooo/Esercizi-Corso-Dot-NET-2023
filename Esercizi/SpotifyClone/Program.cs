@@ -27,7 +27,7 @@ namespace SpotifyClone
             }
             else
             {
-                logger.Log(loggerFilePath, LogTypeEnum.INFO, "creating data for user");
+                logger.Log( LogTypeEnum.INFO, "creating dataset for user");
                 List<Data> csv = CsvReader<Data>.CreateObject(list, logger);
                 user = ObjectMapper.MapSongsData(csv);
             }
