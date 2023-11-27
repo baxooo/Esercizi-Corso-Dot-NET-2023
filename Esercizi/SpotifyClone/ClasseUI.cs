@@ -12,6 +12,7 @@ using SpotifyClone.Interfaces;
 using SpotifyClone.Models;
 using SpotifyClone.Authentication;
 using System.Globalization;
+using System.Xml;
 
 namespace SpotifyClone
 {
@@ -91,6 +92,9 @@ namespace SpotifyClone
                     }
                     return true;
                 case 'e'://exit
+                    TimeSpan timeSpan  = TimeSpan.FromSeconds(User.ListenTime);
+                    _logger.Log(LogTypeEnum.INFO, 
+                         $"user closed the app, listening music for a total of {XmlConvert.ToString(timeSpan)}");
                     return false;
                 case 'p':// play/pause
                     Console.Clear();

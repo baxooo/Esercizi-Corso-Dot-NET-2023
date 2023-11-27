@@ -33,9 +33,6 @@ namespace SpotifyClone
             }
 
             ClasseUI classe = new ClasseUI(user);
-
-
-            Console.Read();
         }
 
         static UserListener GenerateData()
@@ -58,7 +55,6 @@ namespace SpotifyClone
             Song[] salmoSongs = new Song[2];
             Album playlistSalmo = new Album("Playlist", Salmo, salmoSongs, "2018");
             Salmo.AddAlbum(playlistSalmo);
-
 
             var novantaMin = new Song(46, "90MIN", Salmo, playlistSalmo, 231, 0 , 1);
             var pxm = new Song(47, "PMX", Salmo, playlistSalmo, 184, 0, 1);

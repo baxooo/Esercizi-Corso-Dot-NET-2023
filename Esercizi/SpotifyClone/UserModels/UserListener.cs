@@ -25,6 +25,7 @@ namespace SpotifyClone.UserModels
 
         public int RemainingTime {  get { return _remainingTime; } set { _remainingTime = value; } }
         public MembershipTypeEnum MembershipType { get; private set; } 
+        public int ListenTime { get; set; }
 
         public UserListener(int id, string name,MembershipTypeEnum type) : base(id, name)
         {
@@ -48,7 +49,6 @@ namespace SpotifyClone.UserModels
                     _remainingTime = 360000;
                     break;
             }
-
         }
 
         public void CreateNewEmptyPlaylist(string playlistName) => 

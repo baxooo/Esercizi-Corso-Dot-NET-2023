@@ -37,7 +37,9 @@ namespace SpotifyClone
             _isPLaylist = false;
             song.Rating += 1;
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
-            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            int songDuration = _random.Next(90, 360);
+            _classeUI.User.RemainingTime -= songDuration;
+            _classeUI.User.ListenTime += songDuration;
             if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
             {
                 _classeUI.User.RemainingTime = 0;
@@ -50,6 +52,7 @@ namespace SpotifyClone
             _currentSong = song;
             _isPlaying = true;
             _isPLaylist = false;
+            _classeUI.User.ListenTime += _random.Next(90, 360);
         }
 
         public void Start(IPlaylist playlist) 
@@ -68,7 +71,9 @@ namespace SpotifyClone
             _isPLaylist = true;
             playlist.UpdateScore();
             Console.WriteLine($"\rNow Playing {_currentSong.Title}");
-            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            int songDuration = _random.Next(90, 360);
+            _classeUI.User.RemainingTime -= songDuration;
+            _classeUI.User.ListenTime += songDuration;
             if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
             {
                 _classeUI.User.RemainingTime = 0;
@@ -126,7 +131,9 @@ namespace SpotifyClone
             _currentIndex++;
 
             Console.WriteLine($"Now Playing {_currentSong.Title}");
-            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            int songDuration = _random.Next(90, 360);
+            _classeUI.User.RemainingTime -= songDuration;
+            _classeUI.User.ListenTime += songDuration;
             if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
             {
                 _classeUI.User.RemainingTime = 0;
@@ -155,7 +162,9 @@ namespace SpotifyClone
             _currentIndex--;
 
             Console.WriteLine($"Now Playing {_currentSong.Title}");
-            _classeUI.User.RemainingTime -= _random.Next(90, 360);
+            int songDuration = _random.Next(90, 360);
+            _classeUI.User.RemainingTime -= songDuration;
+            _classeUI.User.ListenTime += songDuration;
             if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
             {
                 _classeUI.User.RemainingTime = 0;
