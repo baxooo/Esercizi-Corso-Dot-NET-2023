@@ -46,7 +46,6 @@ namespace SpotifyClone
                 File.Create(filePath);
             }
 
-
             using (StreamWriter writer = File.AppendText(filePath))
             {
                 writer.WriteLine($"[{DateTime.Now}] [{type}]: {message}");
@@ -66,6 +65,5 @@ namespace SpotifyClone
                 writer.WriteLine($"[{DateTime.Now}] [{type}]: {message}");
             }
         }
-
     }
 }

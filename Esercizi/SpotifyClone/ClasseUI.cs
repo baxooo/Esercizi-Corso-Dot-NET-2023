@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Transactions;
 using SpotifyClone.Interfaces;
 using SpotifyClone.Models;
+using SpotifyClone.Authentication;
 
 namespace SpotifyClone
 {
@@ -22,13 +23,18 @@ namespace SpotifyClone
         private Playlist _currentSelectedPlaylist;
         private Album _currentSelectedAlbum;
         private bool _isSong = false;
+        private Logger _logger;
 
         public ClasseUI(UserListener user)
         {
             _player = new MediaPlayer(this);
             _user = user;
             
-            SelectMediaSourceMenu();
+            _logger = Logger.Instance;
+            if (_logger.FilePath == null)
+                _logger.FilePath = @"D:/Log.txt";
+
+            LogMenu();
         }
 
         private void CreateDefaultMenu()
@@ -235,6 +241,7 @@ namespace SpotifyClone
 
         private void SelectMediaSourceMenu()
         {
+            Console.Clear();
             string menu = "╔═════════════════════════════════════════════╗" +
                         "\n║              Select Media Source            ║" +
                         "\n║         'M' for Music, 'V' for Movies       ║" +
@@ -264,6 +271,54 @@ namespace SpotifyClone
                         break;
                 }
             } while (!validInput);
+        }
+
+        private void LogMenu()
+        {
+
+            string[] credentials = new string[2];
+            bool loggedIn = false;
+            do
+            {
+                Console.Clear();
+
+                string menu = "╔═════════════════════════════════════════════╗" +
+                            "\n║        Please Insert User Credentials       ║" +
+                            "\n║             Separated by a comma            ║" +
+                            "\n╚═════════════════════════════════════════════╝";
+                Console.WriteLine(menu);
+
+
+                string userInput = Console.ReadLine();
+                
+                credentials = userInput.Split(',');
+
+                if(credentials.Length != 2)
+                {
+                    Console.WriteLine("Insert User credentials separated by a comma es. \"user,user\"");
+                    _logger.Log(LogTypeEnum.INFO, "Failed attempt to log in");
+
+                    Console.WriteLine("press any key to restart");
+                    Console.ReadKey();
+                    continue;
+                }
+                if(Login.ValidateLogin(credentials[0], credentials[1]))
+                {
+                    loggedIn= true;
+                    _logger.Log(LogTypeEnum.INFO, "successfull log in attempt from user");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid credentials, please try again");
+                    _logger.Log(LogTypeEnum.INFO, "Failed attempt to log in");
+
+                    Console.WriteLine("press any key to restart");
+                    Console.ReadKey();
+                }
+            }
+            while (!loggedIn);
+
+            SelectMediaSourceMenu();
         }
     }
 }
