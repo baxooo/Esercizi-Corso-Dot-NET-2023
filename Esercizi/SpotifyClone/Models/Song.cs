@@ -1,5 +1,6 @@
 ﻿using SpotifyClone.Interfaces;
 using SpotifyClone.UserModels;
+using SpotifyClone.Models;
 
 namespace SpotifyClone
 {

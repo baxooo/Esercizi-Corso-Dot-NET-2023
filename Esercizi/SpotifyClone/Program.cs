@@ -1,4 +1,5 @@
-﻿using SpotifyClone.UserModels;
+﻿using SpotifyClone.Models;
+using SpotifyClone.UserModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,17 +12,23 @@ namespace SpotifyClone
         static void Main(string[] args)
         {
 
+            Logger logger = Logger.Instance;
+            string loggerFilePath = @"D:/Log.txt";
+            logger.FilePath = loggerFilePath;
+
             UserListener user = null; 
-            string path = @"D:/songs.csv";
-            List<string> list = ReadDataFromCsv(path);
+            string songsFilePath = @"D:/songs.csv";
+
+            List<string> list = ReadDataFromCsv(songsFilePath);
             if (list == null || list.Count == 0)
             {
-                // TODO - log
+                logger.Log(loggerFilePath, LogTypeEnum.WARNING, "Unable to read dataset, using default songs");
                 user = GenerateData();
             }
             else
             {
-                List<Data> csv = CsvReader<Data>.CreateObject(list);
+                logger.Log(loggerFilePath, LogTypeEnum.INFO, "creating data for user");
+                List<Data> csv = CsvReader<Data>.CreateObject(list, logger);
                 user = ObjectMapper.MapSongsData(csv);
             }
 

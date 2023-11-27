@@ -10,7 +10,7 @@ namespace SpotifyClone
 {
     public class CsvReader<T> where T : class, new()
     {
-        public static List<T> CreateObject(List<string> csv)
+        public static List<T> CreateObject(List<string> csv, Logger log)
         {
             List<T> list = new List<T>();
             string[] headers = csv.ElementAt(0).Split(',');
@@ -60,7 +60,7 @@ namespace SpotifyClone
                     list.Add(entry);
                 }
             }
-            else Console.WriteLine("Errore: Oggetto e File Csv hanno Dataset diversi!");
+            else log.Log(LogTypeEnum.ERROR, "Oggetto e File Csv hanno Dataset diversi!");
 
             return list;
         }

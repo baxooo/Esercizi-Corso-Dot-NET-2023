@@ -1,10 +1,11 @@
 ﻿using SpotifyClone.Interfaces;
+using SpotifyClone.Models;
 using System.ComponentModel;
 using System.Linq;
 
 namespace SpotifyClone.UserModels
 {
-    
+
     internal class Artist : User,IRating
     {
         protected string _alias;

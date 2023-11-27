@@ -7,7 +7,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotifyClone
+namespace SpotifyClone.Models
 {
     internal class Playlist : IPlaylist, IRating
     {
@@ -20,12 +20,12 @@ namespace SpotifyClone
 
 
         public int PlaylistId { get { return _id; } }
-        public int Rating { get { return _rating; } } 
+        public int Rating { get { return _rating; } }
 
-        public Playlist(int id,string name)
+        public Playlist(int id, string name)
         {
             _id = id;
-            _name = name;   
+            _name = name;
         }
 
         public void AddSong(Song song)

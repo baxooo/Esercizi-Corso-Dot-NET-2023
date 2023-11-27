@@ -2,9 +2,9 @@
 using SpotifyClone.UserModels;
 using System.Linq;
 
-namespace SpotifyClone
+namespace SpotifyClone.Models
 {
-    internal class Album : IPlaylist,IRating
+    internal class Album : IPlaylist, IRating
     {
         private string _albumName;
         private Artist _artist;
@@ -15,7 +15,7 @@ namespace SpotifyClone
 
         public string AlbumName { get { return _albumName; } }
         public Artist Artist { get { return _artist; } }
-        public Song[] Songs {  get { return _songs; } }
+        public Song[] Songs { get { return _songs; } }
         public string ReleaseDate { get { return _releaseDate; } }
         public string Genere { get { return _genere; } }
         public int Rating { get { return _rating; } }

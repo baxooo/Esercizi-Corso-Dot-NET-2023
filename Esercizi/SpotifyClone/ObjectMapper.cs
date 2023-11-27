@@ -1,4 +1,5 @@
-﻿using SpotifyClone.UserModels;
+﻿using SpotifyClone.Models;
+using SpotifyClone.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace SpotifyClone
             List<Song> songs = data
                 .Where(d => !string.IsNullOrEmpty(d.Title))
                 .Select(d => new Song(d.Id, d.Title, 
-                                       GetArtist(artists, d.Artist), 
-                                       GetAlbum(albums, d.Album), 
+                                       GetArtist(artists, d.Artist),
+                                       GetAlbum(albums, d.Album),
                                        0,d.Rating, d.PlaylistId
                 )).ToList();
 
