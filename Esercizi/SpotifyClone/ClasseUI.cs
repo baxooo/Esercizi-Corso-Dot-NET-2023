@@ -17,7 +17,7 @@ namespace SpotifyClone
         private ConsoleColor _currentColor;
         private Playlist _currentSelectedPlaylist;
         private Album _currentSelectedAlbum;
-        private bool _isMedia = false;
+        private bool _isSong = false;
         private Logger _logger;
         private CultureInfo _culture;
         private bool _isMusic;
@@ -129,15 +129,18 @@ namespace SpotifyClone
                             var array = GetNestedArray(_currentSelectionArray[i - 1]);
                             Console.Clear();
                             CreateMenu(_currentColor, array);
-                            if (_isMedia) // ho aggiunto questa soluzione poco elegante al problema dello
+                            if (_isSong) // ho aggiunto questa soluzione poco elegante al problema dello
                                           // stampare "is now playing X", in quanto antecedentemente nello
                                           // switch case in GetNestedArray(x) andavo a stampare su console
                                           // ma subito dopo c'è un clear che ristampa l'interfaccia e non
                                           // si vedeva.
                             {
-                                _player.Start((IRating)_currentSelectionArray[i - 1]);
-                                _isMedia = false;
+                                 _player.Start((Song)_currentSelectionArray[i - 1]);
+                                _isSong = false;
                             }
+                            else if(!_isSong && !_isMusic) 
+                                _player.Start((Movie)_currentSelectionArray[i - 1]);
+
                             break;
                         }
                     }
@@ -165,12 +168,12 @@ namespace SpotifyClone
                 case Radio radio:
                     return radio.OnAirPlaylist.Songs;
                 case Song song:
-                    _isMedia = true;
+                    _isSong = true;
                     return _currentSelectionArray;
                 case MoviePlaylist mp:
                     return mp.Movies;
                 case Movie movie:
-                    _isMedia = true;
+                    _isMusic = false;
                     return _currentSelectionArray;
             }
             return null;
