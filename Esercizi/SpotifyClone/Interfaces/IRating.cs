@@ -8,6 +8,6 @@ namespace SpotifyClone.Interfaces
 {
     internal interface IRating
     {
-        int Rating {  get; }
+        int Rating { get; set; }
     }
 }

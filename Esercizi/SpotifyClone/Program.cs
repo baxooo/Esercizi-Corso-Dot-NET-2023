@@ -31,8 +31,50 @@ namespace SpotifyClone
                 List<Data> csv = CsvReader<Data>.CreateObject(list, logger);
                 user = ObjectMapper.MapSongsData(csv);
             }
-
+            user = GenerateMoviesData(user);
             ClasseUI classe = new ClasseUI(user);
+            classe.LogMenu();
+        }
+
+        private static UserListener GenerateMoviesData(UserListener user)
+        {
+            Movie[] allMovies = new Movie[10]
+            {
+                new Movie(2, new int[] { 1920, 1080 }, "Harry Potter e Il Prigioniero di Azkaban"),
+                new Movie(5, new int[] { 1280, 720 }, "BeetleJuice"),
+                new Movie(8, new int[] { 3840, 2160 }, "John Wick"),
+                new Movie(1, new int[] { 1920, 928 }, "Zombie Land"),
+                new Movie(4, new int[] { 1920, 1080 }, "Back to the Future"),
+                new Movie(3, new int[] { 1920, 1080 }, "Il Grande Lebowski"),
+                new Movie(3, new int[] { 1920, 1080 }, "The Wolf of Wall Street"),
+                new Movie(2, new int[] { 1280, 720 }, "Le Iene"),
+                new Movie(11, new int[] { 3840, 2160 }, "DJANGO"),
+                new Movie(5, new int[] { 1280, 720 }, "Vacanze di Natale 2000")
+            };
+             
+
+            MoviePlaylist p1 = new MoviePlaylist("Azione");
+            p1.AddMovie(allMovies[2]);
+            p1.AddMovie(allMovies[3]);
+            p1.AddMovie(allMovies[8]);
+            p1.UpdateScore();
+            MoviePlaylist p2 = new MoviePlaylist("Fantasia");
+            p2.AddMovie(allMovies[0]);
+            p2.AddMovie(allMovies[1]);
+            p2.AddMovie(allMovies[4]);
+            p2.UpdateScore();
+            MoviePlaylist p3 = new MoviePlaylist("Mix");
+            p3.AddMovie(allMovies[5]);
+            p3.AddMovie(allMovies[6]);
+            p3.AddMovie(allMovies[9]);
+            p3.UpdateScore();
+
+            allMovies.ToList().ForEach(movie => user.AddMovie(movie));
+            user.AddMoviePlaylist(p1);
+            user.AddMoviePlaylist(p2);
+            user.AddMoviePlaylist(p3);
+
+            return user;
         }
 
         static UserListener GenerateData()

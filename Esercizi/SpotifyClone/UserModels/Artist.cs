@@ -6,7 +6,7 @@ using System.Linq;
 namespace SpotifyClone.UserModels
 {
 
-    internal class Artist : User,IRating
+    internal class Artist : User, IRating
     {
         protected string _alias;
         protected Album[] _albums;
@@ -16,7 +16,7 @@ namespace SpotifyClone.UserModels
         public string Alias { get { return _alias; } }
         public Album[] Albums { get { return _albums; } }
         public string Genere {  get { return _genere; } }
-        public int Rating { get { return _score; } } 
+        public int Rating { get { return _score; } set { _score = value; } } 
 
         public Artist(string name, string alias, string genere, int id = 0) : base(id, name)
         {
@@ -31,7 +31,7 @@ namespace SpotifyClone.UserModels
             _score += album.Rating;
         }
 
-        public void UpdateAlbumScore()
+        public void UpdateScore()
         {
             _score = _albums.Sum(album => album.Rating);
         }

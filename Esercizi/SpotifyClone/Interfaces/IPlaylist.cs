@@ -7,7 +7,7 @@ using SpotifyClone.Models;
 
 namespace SpotifyClone.Interfaces
 {
-    internal interface IPlaylist
+    internal interface IPlaylist: IRating
     {
         Song[] Songs { get; }
         public void UpdateScore();

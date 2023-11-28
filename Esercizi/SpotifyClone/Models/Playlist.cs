@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpotifyClone.Models
 {
-    internal class Playlist : IPlaylist, IRating
+    internal class Playlist : IPlaylist
     {
         protected string _name;
         protected Song[] _songs = new Song[0];
@@ -18,9 +18,8 @@ namespace SpotifyClone.Models
         public string Name { get { return _name; } }
         public Song[] Songs { get { return _songs; } }
 
-
         public int PlaylistId { get { return _id; } }
-        public int Rating { get { return _rating; } }
+        public int Rating { get { return _rating; } set { _rating = value; } }
 
         public Playlist(int id, string name)
         {

@@ -24,19 +24,22 @@ namespace SpotifyClone
             _classeUI = classe;
         }
 
-        public void Start(Song song)
+        public void Start(IRating media)
         {
             if(_classeUI.User.RemainingTime == 0)
             {
                 StartRandom();
                 return;
             }
+            if (media is Song song)
+            {
+                _currentSong = song;
+            }
 
-            _currentSong = song;
+            media.Rating += 1;
             _isPlaying = true;
             _isPLaylist = false;
-            song.Rating += 1;
-            Console.WriteLine($"\rNow Playing {_currentSong.Title}");
+            Console.WriteLine($"\rNow Playing {media.Title}");
             int songDuration = _random.Next(90, 360);
             _classeUI.User.RemainingTime -= songDuration;
             _classeUI.User.ListenTime += songDuration;
@@ -44,6 +47,11 @@ namespace SpotifyClone
             {
                 _classeUI.User.RemainingTime = 0;
             }
+        }
+
+        public void Start(Movie movie)
+        {
+            Console.WriteLine($"\rNow Playing {movie.Title}");
         }
 
         private void StartRandom()

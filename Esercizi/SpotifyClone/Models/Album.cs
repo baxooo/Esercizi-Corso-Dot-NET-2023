@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SpotifyClone.Models
 {
-    internal class Album : IPlaylist, IRating
+    internal class Album : IPlaylist
     {
         private string _albumName;
         private Artist _artist;
@@ -18,7 +18,7 @@ namespace SpotifyClone.Models
         public Song[] Songs { get { return _songs; } }
         public string ReleaseDate { get { return _releaseDate; } }
         public string Genere { get { return _genere; } }
-        public int Rating { get { return _rating; } }
+        public int Rating { get { return _rating; } set { _rating = value; } }
         public Album(string albumName, Artist artist, Song[] songs, string releaseDate)
         {
             _albumName = albumName;

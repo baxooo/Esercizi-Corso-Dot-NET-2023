@@ -16,7 +16,7 @@ namespace SpotifyClone
                 return _onAirPlaylist; 
             }
         }
-        public int Rating { get { return _onAirPlaylist.Rating; } }
+        public int Rating { get { return _onAirPlaylist.Rating; } set { _onAirPlaylist.Rating = value; } }
 
         public Radio(string name)
         {
