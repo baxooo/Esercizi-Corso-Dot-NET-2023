@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpotifyClone.Models
 {
-    internal class Playlist : IPlaylist
+    internal class Playlist : ISongPlaylist
     {
         protected string _name;
         protected Song[] _songs = new Song[0];

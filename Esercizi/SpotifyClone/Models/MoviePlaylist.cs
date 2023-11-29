@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SpotifyClone.Models
 {
-    internal class MoviePlaylist : IRating
+    internal class MoviePlaylist : IMoviePlaylist
     {
         private int _rating = 0;
         private Movie[] _movies = new Movie[0];
         
         public int Rating { get { return _rating; } set { _rating = value; } }
-        public Movie[] Movies { get { return _movies; } private set { _movies = value; } }
+        public Movie[] Movies { get { return _movies; } set { _movies = value; } }
         public string PlaylistName { get; private set; }
 
         public MoviePlaylist()

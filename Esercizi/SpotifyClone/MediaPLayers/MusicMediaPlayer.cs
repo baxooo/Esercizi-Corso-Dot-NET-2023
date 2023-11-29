@@ -9,7 +9,7 @@ namespace SpotifyClone.MediaPLayers
 {
     internal class MusicMediaPlayer : IMediaPlayer
     {
-        protected IPlaylist _currentPlaylist;
+        protected ISongPlaylist _currentPlaylist;
         protected Song _currentSong;
 
         protected int _currentIndex;
@@ -61,7 +61,7 @@ namespace SpotifyClone.MediaPLayers
             }
             
             _currentIndex = 0;
-            _currentPlaylist = playlist;
+            _currentPlaylist = (ISongPlaylist)playlist;
             _currentSong = _currentPlaylist.Songs[_currentIndex];
             _currentSong.Rating += 1;
             _isPlaying = true;
