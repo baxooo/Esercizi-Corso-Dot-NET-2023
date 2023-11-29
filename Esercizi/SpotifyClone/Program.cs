@@ -19,7 +19,7 @@ namespace SpotifyClone
             UserListener user = null; 
             string songsFilePath = @"D:/songs.csv";
 
-            List<string> list = ReadDataFromCsv(songsFilePath);
+            List<string> list = ReadDataFromCsv(songsFilePath,logger);
             if (list == null || list.Count == 0)
             {
                 logger.Log(LogTypeEnum.WARNING, "Unable to read dataset, using default songs");
@@ -114,10 +114,11 @@ namespace SpotifyClone
             return user;
         }
 
-        public static List<string> ReadDataFromCsv(string path)
+        public static List<string> ReadDataFromCsv(string path,Logger logger)
         {
             if (!File.Exists(path))
             {
+                logger.Log(LogTypeEnum.WARNING, "csv file does not exist");
                 return null; // TODO - log
             }
 

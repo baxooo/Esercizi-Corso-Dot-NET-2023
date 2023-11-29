@@ -6,27 +6,28 @@ using SpotifyClone.Models;
 using SpotifyClone.Authentication;
 using System.Globalization;
 using System.Xml;
+using SpotifyClone.MediaPLayers;
+using System.Numerics;
 
 namespace SpotifyClone
 {
     internal sealed class ClasseUI
     {
-        MediaPlayer _player;
+        IMediaPlayer _player;
         UserListener _user;
         private IRating[] _currentSelectionArray;
         private ConsoleColor _currentColor;
         private Playlist _currentSelectedPlaylist;
         private Album _currentSelectedAlbum;
-        private bool _isSong = false;
         private Logger _logger;
         private CultureInfo _culture;
         private bool _isMusic;
+        private bool _isMedia;
 
         public UserListener User {  get { return _user; } } 
 
         public ClasseUI(UserListener user)
         {
-            _player = new MediaPlayer(this);
             _user = user;
             _logger = Logger.Instance;
 
@@ -67,7 +68,7 @@ namespace SpotifyClone
                 case 'd' ://albums or all movies
                     Console.Clear();
                     if (_isMusic)
-                        CreateMenu(ConsoleColor.Magenta, _user.Artists);
+                        CreateMenu(ConsoleColor.Red, _user.Albums);
                     else
                         CreateMenu(ConsoleColor.Magenta, _user.AllMovies);
                     return true;
@@ -129,17 +130,11 @@ namespace SpotifyClone
                             var array = GetNestedArray(_currentSelectionArray[i - 1]);
                             Console.Clear();
                             CreateMenu(_currentColor, array);
-                            if (_isSong) // ho aggiunto questa soluzione poco elegante al problema dello
-                                          // stampare "is now playing X", in quanto antecedentemente nello
-                                          // switch case in GetNestedArray(x) andavo a stampare su console
-                                          // ma subito dopo c'è un clear che ristampa l'interfaccia e non
-                                          // si vedeva.
+                            if (_isMedia)
                             {
-                                 _player.Start((Song)_currentSelectionArray[i - 1]);
-                                _isSong = false;
+                                _player.Start(array[i - 1]);
+                                _isMedia = false;
                             }
-                            else if(!_isSong && !_isMusic) 
-                                _player.Start((Movie)_currentSelectionArray[i - 1]);
 
                             break;
                         }
@@ -168,12 +163,13 @@ namespace SpotifyClone
                 case Radio radio:
                     return radio.OnAirPlaylist.Songs;
                 case Song song:
-                    _isSong = true;
+                    _isMedia = true;
+                    _isMusic = true;
                     return _currentSelectionArray;
                 case MoviePlaylist mp:
                     return mp.Movies;
                 case Movie movie:
-                    _isMusic = false;
+                    _isMedia = true;
                     return _currentSelectionArray;
             }
             return null;
@@ -292,6 +288,8 @@ namespace SpotifyClone
                 {
                     case 'm':
                         _isMusic = true;
+                        _player = new MusicMediaPlayer();
+                        _player.SetClasseUI(this);
                         Console.Clear();
                         CreateDefaultMenu();
                         while (GetInputFromUser()); // non mi aggrada questo while nel while
@@ -301,6 +299,8 @@ namespace SpotifyClone
                     case 'v':
                         _isMusic = false;
                         Console.Clear();
+                        _player = new MovieMediaPlayer();
+                        _player.SetClasseUI(this);
                         CreateDefaultMenu();
                         while (GetInputFromUser());
                         validInput = true;

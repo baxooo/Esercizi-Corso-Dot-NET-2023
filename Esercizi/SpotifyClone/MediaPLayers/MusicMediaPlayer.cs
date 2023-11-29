@@ -1,37 +1,34 @@
-﻿using System;
+﻿using SpotifyClone.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SpotifyClone.Interfaces;
-using SpotifyClone.Models;
 
-namespace SpotifyClone
+namespace SpotifyClone.MediaPLayers
 {
-    internal class MediaPlayer
+    internal class MusicMediaPlayer : IMediaPlayer
     {
-        private int _currentIndex;
-        private IPlaylist _currentPlaylist;
-        private Song _currentSong;
-        private bool _isPlaying;
-        private bool _isPLaylist;
-        private ClasseUI _classeUI;
-        private Random _random = new Random();
-        private Song[] _allSongs = new Song[0];
+        protected IPlaylist _currentPlaylist;
+        protected Song _currentSong;
 
-        public MediaPlayer(ClasseUI classe)
-        {
-            _classeUI = classe;
-        }
+        protected int _currentIndex;
+        protected bool _isPlaying;
+        protected bool _isPLaylist;
+        protected static ClasseUI _classeUI;
+        protected Random _random = new Random();
+        //protected static IMediaPlayer _instance;
+        private static readonly object _lockObject = new object();
 
-        public void Start(Song song)
+        public void Start(IRating media)
         {
-            if(_classeUI.User.RemainingTime == 0)
+            Song song = media as Song;
+            if (_classeUI.User.RemainingTime == 0)
             {
                 StartRandom();
                 return;
             }
-            
+
             _currentSong = song;
             song.Rating += 1;
             _isPlaying = true;
@@ -46,12 +43,6 @@ namespace SpotifyClone
             }
         }
 
-        public void Start(Movie movie)
-        {
-            movie.Rating += 1;
-            Console.WriteLine($"\rNow Playing {movie.Title}");
-        }
-
         private void StartRandom()
         {
             Song song = _classeUI.User.AllSongs[_random.Next(0, _classeUI.User.AllSongs.Length - 1)];
@@ -61,14 +52,14 @@ namespace SpotifyClone
             _classeUI.User.ListenTime += _random.Next(90, 360);
         }
 
-        public void Start(IPlaylist playlist) 
+        public void Start(IPlaylist playlist)
         {
             if (_classeUI.User.RemainingTime == 0)
             {
                 StartRandom();
                 return;
             }
-
+            
             _currentIndex = 0;
             _currentPlaylist = playlist;
             _currentSong = _currentPlaylist.Songs[_currentIndex];
@@ -88,7 +79,7 @@ namespace SpotifyClone
 
         public void PlayPause()
         {
-            if(!IsSongSelected())
+            if (!IsSongSelected())
             {
                 Console.WriteLine("no song to play or pause, to choose a song please write the index of the song you want to play");
                 return;
@@ -131,7 +122,7 @@ namespace SpotifyClone
 
             if (_currentIndex >= _currentPlaylist.Songs.Length - 1)
                 _currentIndex = -1;// restarts playlist
-            
+
             _currentSong = _currentPlaylist.Songs[_currentIndex + 1];
             _currentSong.Rating += 1;
             _currentIndex++;
@@ -143,10 +134,10 @@ namespace SpotifyClone
             if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
             {
                 _classeUI.User.RemainingTime = 0;
-            } 
+            }
         }
 
-        public void Previous() 
+        public void Previous()
         {
             if (!_isPLaylist)
             {
@@ -162,7 +153,7 @@ namespace SpotifyClone
 
             if (_currentIndex <= 0)
                 _currentIndex = _currentPlaylist.Songs.Length;// goes to the end of playlist
-            
+
             _currentSong = _currentPlaylist.Songs[_currentIndex - 1];
             _currentSong.Rating += 1;
             _currentIndex--;
@@ -185,6 +176,11 @@ namespace SpotifyClone
                 return false;
             }
             else return true;
+        }
+
+        public void SetClasseUI(ClasseUI classe)
+        {
+            _classeUI = classe;
         }
     }
 }
