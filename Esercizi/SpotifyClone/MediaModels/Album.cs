@@ -2,7 +2,7 @@
 using SpotifyClone.UserModels;
 using System.Linq;
 
-namespace SpotifyClone.Models
+namespace SpotifyClone.MediaModels
 {
     internal class Album : ISongPlaylist
     {

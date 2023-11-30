@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotifyClone.Models
+namespace SpotifyClone.MediaModels
 {
     internal class MoviePlaylist : IMoviePlaylist
     {

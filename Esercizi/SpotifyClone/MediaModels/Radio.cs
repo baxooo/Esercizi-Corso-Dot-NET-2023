@@ -1,7 +1,6 @@
 ﻿using SpotifyClone.Interfaces;
-using SpotifyClone.Models;
 
-namespace SpotifyClone
+namespace SpotifyClone.MediaModels
 {
     internal class Radio : IRating
     {
@@ -9,13 +8,7 @@ namespace SpotifyClone
         private Playlist _onAirPlaylist;
 
         public string Name { get { return _name; } }
-        public Playlist OnAirPlaylist 
-        {  
-            get 
-            { 
-                return _onAirPlaylist; 
-            }
-        }
+        public Playlist OnAirPlaylist { get { return _onAirPlaylist; } }
         public int Rating { get { return _onAirPlaylist.Rating; } set { _onAirPlaylist.Rating = value; } }
 
         public Radio(string name)

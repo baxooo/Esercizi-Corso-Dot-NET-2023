@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SpotifyClone
+namespace SpotiLogLibrary
 {
     public class Logger
     {
@@ -17,7 +13,7 @@ namespace SpotifyClone
         public string FilePath { get; set; }
         private Logger()
         {
-            
+
         }
 
         public static Logger Instance
@@ -39,9 +35,9 @@ namespace SpotifyClone
             }
         }
 
-        public void Log(string filePath,LogTypeEnum type, string message)
+        public void Log(string filePath, LogTypeEnum type, string message)
         {
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
             {
                 File.Create(filePath);
             }

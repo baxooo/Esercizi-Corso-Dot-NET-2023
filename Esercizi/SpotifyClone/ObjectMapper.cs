@@ -1,4 +1,4 @@
-﻿using SpotifyClone.Models;
+﻿using SpotifyClone.MediaModels;
 using SpotifyClone.UserModels;
 using System;
 using System.Collections.Generic;

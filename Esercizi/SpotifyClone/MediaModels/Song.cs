@@ -1,8 +1,8 @@
 ﻿using SpotifyClone.Interfaces;
 using SpotifyClone.UserModels;
-using SpotifyClone.Models;
 
-namespace SpotifyClone
+
+namespace SpotifyClone.MediaModels
 {
     internal class Song : IRating
     {
@@ -41,6 +41,14 @@ namespace SpotifyClone
         public Song()
         {
             
+        }
+
+        public dynamic GetSongInfo()
+        {
+            return new
+            {
+                _title, _artist, _album, _duration, _rating
+            };
         }
     }
 }

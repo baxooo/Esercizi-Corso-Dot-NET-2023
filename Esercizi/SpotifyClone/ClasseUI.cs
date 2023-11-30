@@ -2,12 +2,12 @@
 using System;
 using System.Linq;
 using SpotifyClone.Interfaces;
-using SpotifyClone.Models;
+using SpotifyClone.MediaModels;
 using SpotifyClone.Authentication;
 using System.Globalization;
 using System.Xml;
 using SpotifyClone.MediaPLayers;
-using System.Numerics;
+using SpotiLogLibrary;
 
 namespace SpotifyClone
 {
@@ -47,7 +47,6 @@ namespace SpotifyClone
         {
             char input = Console.ReadKey().KeyChar;
             input = Char.ToLower(input);
-            _user.UpdateArraySort();
             switch (input)
             {
                 case 'm'://menu default 
@@ -164,7 +163,6 @@ namespace SpotifyClone
                     return radio.OnAirPlaylist.Songs;
                 case Song song:
                     _isMedia = true;
-                    _isMusic = true;
                     return _currentSelectionArray;
                 case MoviePlaylist mp:
                     return mp.Movies;

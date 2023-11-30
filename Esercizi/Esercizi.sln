@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyClone", "SpotifyClon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystem", "FileSystem\FileSystem.csproj", "{210786A8-FFE7-418D-889E-87F00CFC9DCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingletonProxy", "SingletonProxy\SingletonProxy.csproj", "{8A4CDD55-99D4-4763-9C03-D52691F62646}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingletonProxy", "SingletonProxy\SingletonProxy.csproj", "{8A4CDD55-99D4-4763-9C03-D52691F62646}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotiLogLibrary", "SpotiLogLibrary\SpotiLogLibrary.csproj", "{64419DF3-6B1C-469D-B222-43EAA435A4F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8A4CDD55-99D4-4763-9C03-D52691F62646}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A4CDD55-99D4-4763-9C03-D52691F62646}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A4CDD55-99D4-4763-9C03-D52691F62646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64419DF3-6B1C-469D-B222-43EAA435A4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64419DF3-6B1C-469D-B222-43EAA435A4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64419DF3-6B1C-469D-B222-43EAA435A4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64419DF3-6B1C-469D-B222-43EAA435A4F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

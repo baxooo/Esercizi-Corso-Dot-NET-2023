@@ -82,12 +82,6 @@ namespace SpotifyClone.MediaPLayers
             }
         }
 
-        public void Start(Movie movie)
-        {
-            movie.Rating += 1;
-            Console.WriteLine($"\rNow Playing {movie.Title}");
-        }
-
         public void Start(IRating media)//single movie
         {
             Movie movie = media as Movie;

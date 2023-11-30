@@ -1,4 +1,5 @@
 ﻿using SpotifyClone.Interfaces;
+using SpotifyClone.MediaModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyClone.Interfaces;
-using SpotifyClone.Models;
+using SpotifyClone.MediaModels;
 
 namespace SpotifyClone.MediaPLayers
 {

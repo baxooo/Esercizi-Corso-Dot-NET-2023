@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SpotifyClone.Models;
+using SpotifyClone.MediaModels;
 
 namespace SpotifyClone.UserModels
 {
@@ -75,7 +75,6 @@ namespace SpotifyClone.UserModels
             _favorites.AddSong(song);
             GetAllArtists();
             GetAllAlbums();
-        
         }
         public void RemoveFavorite(Song song)
         {
