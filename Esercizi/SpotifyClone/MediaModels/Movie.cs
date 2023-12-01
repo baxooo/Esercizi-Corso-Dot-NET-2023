@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotifyClone
+namespace SpotifyClone.MediaModels
 {
-    internal class Movie : IRating
+    public class Movie : IRating
     {
         private int _rating;
         private int[] _resolution = new int[2];
@@ -16,9 +16,9 @@ namespace SpotifyClone
 
         public string Title { get { return _title; } }
         public int Rating { get { return _rating; } set { _rating = value; } }
-        public int[] Resolution {  get { return _resolution; } }
+        public int[] Resolution { get { return _resolution; } }
 
-        public Movie(int rating, int[] resolution,string title)
+        public Movie(int rating, int[] resolution, string title)
         {
             if (resolution.Length != 2)
             {

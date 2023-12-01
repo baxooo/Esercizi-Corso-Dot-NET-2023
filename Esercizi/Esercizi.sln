@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystem", "FileSystem\Fi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingletonProxy", "SingletonProxy\SingletonProxy.csproj", "{8A4CDD55-99D4-4763-9C03-D52691F62646}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotiLogLibrary", "SpotiLogLibrary\SpotiLogLibrary.csproj", "{64419DF3-6B1C-469D-B222-43EAA435A4F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotiLogLibrary", "SpotiLogLibrary\SpotiLogLibrary.csproj", "{64419DF3-6B1C-469D-B222-43EAA435A4F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotiBackEnd", "SpotiBackEnd\SpotiBackEnd.csproj", "{9C835B90-F352-46B6-A7A3-17DDBEEEF624}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotiServicesLibrary", "SpotiServicesLibrary\SpotiServicesLibrary.csproj", "{9A412EC3-F159-4F1B-8972-8CDB1E010298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{64419DF3-6B1C-469D-B222-43EAA435A4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64419DF3-6B1C-469D-B222-43EAA435A4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64419DF3-6B1C-469D-B222-43EAA435A4F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C835B90-F352-46B6-A7A3-17DDBEEEF624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C835B90-F352-46B6-A7A3-17DDBEEEF624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C835B90-F352-46B6-A7A3-17DDBEEEF624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C835B90-F352-46B6-A7A3-17DDBEEEF624}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A412EC3-F159-4F1B-8972-8CDB1E010298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A412EC3-F159-4F1B-8972-8CDB1E010298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A412EC3-F159-4F1B-8972-8CDB1E010298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A412EC3-F159-4F1B-8972-8CDB1E010298}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

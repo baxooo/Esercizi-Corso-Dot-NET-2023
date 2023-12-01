@@ -8,29 +8,31 @@ using System.Globalization;
 using System.Xml;
 using SpotifyClone.MediaPLayers;
 using SpotiLogLibrary;
+using SpotifyClone.ModelsDTO;
+using SpotiServicesLibrary;
 
 namespace SpotifyClone
 {
     internal sealed class ClasseUI
     {
         IMediaPlayer _player;
-        UserListener _user;
+        UserDTO _user;
         private IRating[] _currentSelectionArray;
         private ConsoleColor _currentColor;
-        private Playlist _currentSelectedPlaylist;
-        private Album _currentSelectedAlbum;
+        private PlaylistDTO _currentSelectedPlaylist;
+        private AlbumDTO _currentSelectedAlbum;
         private Logger _logger;
         private CultureInfo _culture;
+        UserServices _userServices;
         private bool _isMusic;
         private bool _isMedia;
 
-        public UserListener User {  get { return _user; } } 
 
-        public ClasseUI(UserListener user)
+        public ClasseUI()
         {
-            _user = user;
             _logger = Logger.Instance;
 
+            _userServices = UserServices.Instance;
             if (_logger.FilePath == null)
                 _logger.FilePath = @"D:/Log.txt";
         }
@@ -60,7 +62,7 @@ namespace SpotifyClone
                 case 'a'://artists or movie playlists
                     Console.Clear();
                     if (_isMusic)
-                        CreateMenu(ConsoleColor.Magenta, _user.Artists);
+                        CreateMenu(ConsoleColor.Magenta, _context);
                     else
                         CreateMenu(ConsoleColor.Magenta, _user.PlaylistMovie);
                     return true;
@@ -82,7 +84,7 @@ namespace SpotifyClone
                     CreateMenu(ConsoleColor.Yellow, _user.RadioFavorites);
                     return true;
                 case 'e'://exit
-                    TimeSpan timeSpan  = TimeSpan.FromSeconds(User.ListenTime);
+                    TimeSpan timeSpan  = _userServices.GetUserListenTime(_user.Id);
                     _logger.Log(LogTypeEnum.INFO, 
                          $"user closed the app, listening music for a total of {XmlConvert.ToString(timeSpan)}");
                     return false;
@@ -151,22 +153,22 @@ namespace SpotifyClone
         {
             switch (o)
             {
-                case Album album:
+                case AlbumDTO album:
                     _currentSelectedAlbum = album;
                     return album.Songs;
-                case Playlist playlist:
+                case PlaylistDTO playlist:
                     _currentSelectedPlaylist = playlist;
                     return playlist.Songs;
-                case Artist artist:
+                case ArtistDTO artist:
                     return artist.Albums;
-                case Radio radio:
+                case RadioDTO radio:
                     return radio.OnAirPlaylist.Songs;
-                case Song song:
+                case SongDTO:
                     _isMedia = true;
                     return _currentSelectionArray;
-                case MoviePlaylist mp:
+                case MoviePlaylistDTO mp:
                     return mp.Movies;
-                case Movie movie:
+                case MovieDTO:
                     _isMedia = true;
                     return _currentSelectionArray;
             }
@@ -312,7 +314,7 @@ namespace SpotifyClone
 
         public void LogMenu()
         {
-
+            AuthenticationServices au = AuthenticationServices.Instance;
             string[] credentials = new string[2];
             bool loggedIn = false;
             do
@@ -339,7 +341,9 @@ namespace SpotifyClone
                     Console.ReadKey();
                     continue;
                 }
-                if(Login.ValidateLogin(credentials[0], credentials[1]))
+
+                UserDTO user = au.Login(credentials[0], credentials[1]);//TODO - aggiungere corretto tipo di ritorno al metodo Login
+                if (user != null)
                 {
                     loggedIn= true;
                     _logger.Log(LogTypeEnum.INFO, "successfull log in attempt from user");

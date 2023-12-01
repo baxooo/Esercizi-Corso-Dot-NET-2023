@@ -1,4 +1,6 @@
 ﻿using SpotifyClone.Interfaces;
+using SpotifyClone.MediaModels;
+using SpotifyClone.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,7 @@ namespace SpotifyClone.MediaPLayers
         protected bool _isPLaylist;
         protected static ClasseUI _classeUI;
 
+        
         public void Next()
         {
             if (!_isPLaylist)
@@ -33,10 +36,6 @@ namespace SpotifyClone.MediaPLayers
             _currentIndex++;
 
             Console.WriteLine($"Now Playing {_currentMovie.Title}");
-            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
-            {
-                _classeUI.User.RemainingTime = 0;
-            }
         }
 
         public void Previous()
@@ -55,10 +54,6 @@ namespace SpotifyClone.MediaPLayers
             _currentIndex--;
 
             Console.WriteLine($"Now Playing {_currentMovie.Title}");
-            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
-            {
-                _classeUI.User.RemainingTime = 0;
-            }
         }
 
         public void PlayPause()
@@ -103,10 +98,6 @@ namespace SpotifyClone.MediaPLayers
             _isPLaylist = true;
             playlist.UpdateScore();
             Console.WriteLine($"\rNow Playing {_currentMovie.Title}");
-            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
-            {
-                _classeUI.User.RemainingTime = 0;
-            }
         }
 
         public void Stop()
