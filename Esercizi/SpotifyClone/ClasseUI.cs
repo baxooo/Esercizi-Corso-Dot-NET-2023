@@ -1,15 +1,13 @@
-﻿using SpotifyClone.UserModels;
-using System;
+﻿using System;
 using System.Linq;
 using SpotifyClone.Interfaces;
 using SpotifyClone.MediaModels;
-using SpotifyClone.Authentication;
 using System.Globalization;
 using System.Xml;
 using SpotifyClone.MediaPLayers;
 using SpotiLogLibrary;
-using SpotifyClone.ModelsDTO;
 using SpotiServicesLibrary;
+using SpotiServicesLibrary.ModelsDTO;
 
 namespace SpotifyClone
 {
@@ -40,7 +38,7 @@ namespace SpotifyClone
         private void CreateDefaultMenu()
         {
             if(_isMusic)
-                CreateMenu(ConsoleColor.Magenta, _user.Artists.OrderByDescending(a => a.Rating).ToArray());
+                CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
             else
                 CreateMenu(ConsoleColor.Magenta, _user.PlaylistMovie.OrderByDescending(m => m.Rating).ToArray());
         }
@@ -62,7 +60,7 @@ namespace SpotifyClone
                 case 'a'://artists or movie playlists
                     Console.Clear();
                     if (_isMusic)
-                        CreateMenu(ConsoleColor.Magenta, _context);
+                        CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
                     else
                         CreateMenu(ConsoleColor.Magenta, _user.PlaylistMovie);
                     return true;
