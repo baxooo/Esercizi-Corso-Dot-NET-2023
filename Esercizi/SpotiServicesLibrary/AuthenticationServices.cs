@@ -1,5 +1,6 @@
 ﻿using SpotiBackEnd.DbContext;
 using SpotiBackEnd.Models.UserModels;
+using SpotiServicesLibrary.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,11 +34,11 @@ namespace SpotiServicesLibrary
             _context = new SpotifyDbContext(_path);
         }
 
-        public UserListener Login(string UserName,string Password)// TODO - cambiare l'UserListener in un DTO più appropriato
+        public UserDTO Login(string UserName,string Password)
         {
             //faccio finta di fare un log in al momento 
             if (UserName == "user"|| Password == "user")
-                return _context.UserListeners.Where(u => u.Id == 1).FirstOrDefault();
+                return _context.UserListeners.Cast<UserDTO>().Where(u => u.Id == 1).FirstOrDefault();
             return null;
         }
     }

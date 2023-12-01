@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SpotifyClone.MediaModels;
 
-namespace SpotifyClone.Interfaces
+namespace SpotiServicesLibrary.Interfaces
 {
-    internal interface IPlaylist: IRating
+    public interface IPlaylist : IRating
     {
         public void UpdateScore();
     }

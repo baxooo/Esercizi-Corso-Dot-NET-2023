@@ -51,22 +51,22 @@ namespace SpotiServicesLibrary
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
 
-            return user.Playlists.Cast<PlaylistDTO>().ToArray();
+            return user.Playlists.Cast<PlaylistDTO>().OrderByDescending(r => r.Rating).ToArray();
         }
         public AlbumDTO[] GetUserAlbumsArray(int userId)
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.Albums.Cast<AlbumDTO>().ToArray();
+            return user.Albums.Cast<AlbumDTO>().OrderByDescending(r => r.Rating).ToArray();
         }
         public ArtistDTO[] GetUserArtistArray(int userId) 
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.Artists.Cast<ArtistDTO>().ToArray();
+            return user.Artists.Cast<ArtistDTO>().OrderByDescending(r=> r.Rating).ToArray();
         }
         public RadioDTO[] GetUserRadioArray(int userId) 
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.RadioFavorites.Cast<RadioDTO>().ToArray();
+            return user.RadioFavorites.Cast<RadioDTO>().OrderByDescending(r => r.Rating).ToArray();
         }
 
         public PlaylistDTO GetUserFavoritesPlaylist(int userId) 
@@ -77,7 +77,7 @@ namespace SpotiServicesLibrary
         public SongDTO[] GetUserAllSongsArray(int userId) 
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.AllSongs.Cast<SongDTO>().ToArray();
+            return user.AllSongs.Cast<SongDTO>().OrderByDescending(r => r.Rating).ToArray();
         }
 
     }

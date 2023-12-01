@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SpotifyClone.Interfaces;
 using SpotifyClone.MediaModels;
+using SpotiServicesLibrary.Interfaces;
 
 namespace SpotifyClone.MediaPLayers
 {

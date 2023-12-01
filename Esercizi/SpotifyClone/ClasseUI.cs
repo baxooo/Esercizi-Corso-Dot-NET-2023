@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-using SpotifyClone.Interfaces;
-using SpotifyClone.MediaModels;
 using System.Globalization;
 using System.Xml;
 using SpotifyClone.MediaPLayers;
 using SpotiLogLibrary;
 using SpotiServicesLibrary;
 using SpotiServicesLibrary.ModelsDTO;
+using SpotiServicesLibrary.Interfaces;
 
 namespace SpotifyClone
 {
@@ -40,7 +39,7 @@ namespace SpotifyClone
             if(_isMusic)
                 CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
             else
-                CreateMenu(ConsoleColor.Magenta, _user.PlaylistMovie.OrderByDescending(m => m.Rating).ToArray());
+                CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
         }
 
         private bool GetInputFromUser()
@@ -61,25 +60,25 @@ namespace SpotifyClone
                     Console.Clear();
                     if (_isMusic)
                         CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
-                    else
-                        CreateMenu(ConsoleColor.Magenta, _user.PlaylistMovie);
+                    //else
+                        //CreateMenu(ConsoleColor.Magenta, _user.PlaylistMovie); // TODO 
                     return true;
                 case 'd' ://albums or all movies
                     Console.Clear();
                     if (_isMusic)
-                        CreateMenu(ConsoleColor.Red, _user.Albums);
-                    else
-                        CreateMenu(ConsoleColor.Magenta, _user.AllMovies);
+                        CreateMenu(ConsoleColor.Red, _userServices.GetUserAlbumsArray(_user.Id));
+                  //  else
+                       // CreateMenu(ConsoleColor.Magenta, _user.AllMovies); // TODO
                     return true;
                 case 'l'://playlist
                     if (!_isMusic)  return true;
                     Console.Clear();
-                    CreateMenu(ConsoleColor.Green, _user.Playlists);
+                    CreateMenu(ConsoleColor.Green, _userServices.GetUserPlaylistsArray(_user.Id));
                     return true;
                 case 'r'://radio
                     if (!_isMusic) return true;
                     Console.Clear();
-                    CreateMenu(ConsoleColor.Yellow, _user.RadioFavorites);
+                    CreateMenu(ConsoleColor.Yellow, _userServices.GetUserRadioArray(_user.Id));
                     return true;
                 case 'e'://exit
                     TimeSpan timeSpan  = _userServices.GetUserListenTime(_user.Id);
@@ -239,25 +238,25 @@ namespace SpotifyClone
 
                 switch (oggetto)
                 {
-                    case Album album:
-                        Console.Write($" {i}. {album.AlbumName}".PadRight(45 - album.Rating.ToString().Length) + album.Rating);
+                    case AlbumDTO album:
+                        Console.Write($" {i}. {album.AlbumTitle}".PadRight(45 - album.Rating.ToString().Length) + album.Rating);
                         break;
-                    case Artist artist:
+                    case ArtistDTO artist:
                         Console.Write($" {i}. {artist.Alias}".PadRight(45 - artist.Rating.ToString().Length) + artist.Rating);
                         break;
-                    case Radio radio:
+                    case RadioDTO radio:
                         Console.Write($" {i}. {radio.Name}".PadRight(45 - radio.Rating.ToString().Length) + radio.Rating);
                         break;
-                    case Playlist playlist:
+                    case PlaylistDTO playlist:
                         Console.Write($" {i}. {playlist.Name}".PadRight(45 - playlist.Rating.ToString().Length) + playlist.Rating);
                         break;
-                    case Song song:
+                    case SongDTO song:
                         Console.Write($" {i}. {song.Title}".PadRight(45 - song.Rating.ToString().Length) + song.Rating);
                         break;
-                    case Movie movie:
+                    case MovieDTO movie:
                         Console.Write($" {i}. {movie.Title}".PadRight(45 - movie.Rating.ToString().Length) + movie.Rating);
                         break;
-                    case MoviePlaylist pl:
+                    case MoviePlaylistDTO pl:
                         Console.Write($" {i}. {pl.PlaylistName}".PadRight(45 - pl.Rating.ToString().Length) + pl.Rating);
                         break;
                 };
