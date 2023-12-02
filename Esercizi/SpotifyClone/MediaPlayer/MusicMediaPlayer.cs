@@ -1,44 +1,50 @@
-﻿using SpotifyClone.Interfaces;
-using SpotifyClone.MediaModels;
+﻿using SpotiServicesLibrary;
+using SpotiServicesLibrary.Interfaces;
+using SpotiServicesLibrary.ModelsDTO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpotifyClone.MediaPLayers
 {
     internal class MusicMediaPlayer : IMediaPlayer
     {
         protected ISongPlaylist _currentPlaylist;
-        protected Song _currentSong;
+        protected SongDTO _currentSong;
+        private static MusicMediaPlayer _instance;
+        private static UserServices _userServices;
 
         protected int _currentIndex;
         protected bool _isPlaying;
         protected bool _isPLaylist;
-        protected static ClasseUI _classeUI;
         protected Random _random = new Random();
         private static readonly object _lockObject = new object();
 
-        public void Start(IRating media)
+        private int _allUserSongsCount;
+
+        public static MusicMediaPlayer Instance
         {
-            Song song = media as Song;
-            // TODO
-            // fare request a backend per rimuovere tempo di ascolto all'utente e sapere se ha finito il tempo
-            if (_classeUI.User.RemainingTime == 0)
+            get
             {
-                StartRandom();
+                if (_instance == null)
+                    lock (_lockObject)
+                        if (_instance == null)
+                            _instance = new MusicMediaPlayer();
+                return _instance;
+            }
+        }
+
+        private MusicMediaPlayer()
+        {
+            _userServices = UserServices.Instance;
+        }
+
+        public void Start(IRating media,int userId)
+        {
+            SongDTO song = media as SongDTO;
+            if (!_userServices.RemoveListenTimeFromUser(userId, song.Id))
+            {
+                StartRandom(userId);
                 return;
             }
-            int songDuration = _random.Next(90, 360);
-            _classeUI.User.RemainingTime -= songDuration;
-            _classeUI.User.ListenTime += songDuration;
-            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
-            {
-                _classeUI.User.RemainingTime = 0;
-            }
-            //
-
 
             _currentSong = song;
             song.Rating += 1;
@@ -47,36 +53,27 @@ namespace SpotifyClone.MediaPLayers
             Console.WriteLine($"\rNow Playing {song.Title}");
         }
 
-        private void StartRandom()
+        private void StartRandom(int userId)
         {
-            Song song = _classeUI.User.AllSongs[_random.Next(0, _classeUI.User.AllSongs.Length - 1)];
+            SongDTO song = _userServices.GetRandomUserSong(userId);
             _currentSong = song;
             _isPlaying = true;
             _isPLaylist = false;
-            _classeUI.User.ListenTime += _random.Next(90, 360);
         }
 
-        public void Start(IPlaylist playlist)
+        public void Start(IPlaylist playlist, int userId)
         {
-            // TODO
-            // fare request a backend per rimuovere tempo di ascolto all'utente e sapere se ha finito il tempo
-            if (_classeUI.User.RemainingTime == 0)
-            {
-                StartRandom();
-                return;
-            }
-            int songDuration = _random.Next(90, 360);
-            _classeUI.User.RemainingTime -= songDuration;
-            _classeUI.User.ListenTime += songDuration;
-            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
-            {
-                _classeUI.User.RemainingTime = 0;
-            }
-            //
             _currentIndex = 0;
             _currentPlaylist = (ISongPlaylist)playlist;
             _currentSong = _currentPlaylist.Songs[_currentIndex];
             _currentSong.Rating += 1;
+
+            if (!_userServices.RemoveListenTimeFromUser(userId, _currentSong.Id))
+            {
+                StartRandom(userId);
+                return;
+            }
+
             _isPlaying = true;
             _isPLaylist = true;
             playlist.UpdateScore();
@@ -113,7 +110,7 @@ namespace SpotifyClone.MediaPLayers
             Console.WriteLine($"Stopped {_currentSong.Title}, to restart press \"p\"");
         }
 
-        public void Next()
+        public void Next(int userId)
         {
             if (!_isPLaylist)
             {
@@ -121,24 +118,16 @@ namespace SpotifyClone.MediaPLayers
                 return;
             }
 
-            // TODO
-            // fare request a backend per rimuovere tempo di ascolto all'utente e sapere se ha finito il tempo
-            if (_classeUI.User.RemainingTime == 0)
-            {
-                StartRandom();
-                return;
-            }
-            int songDuration = _random.Next(90, 360);
-            _classeUI.User.RemainingTime -= songDuration;
-            _classeUI.User.ListenTime += songDuration;
-            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
-            {
-                _classeUI.User.RemainingTime = 0;
-            }
-            // 
+            
 
             if (_currentIndex >= _currentPlaylist.Songs.Length - 1)
                 _currentIndex = -1;// restarts playlist
+
+            if (!_userServices.RemoveListenTimeFromUser(userId, _currentPlaylist.Songs[_currentIndex + 1].Id))
+            {
+                StartRandom(userId);
+                return;
+            }
 
             _currentSong = _currentPlaylist.Songs[_currentIndex + 1];
             _currentSong.Rating += 1;
@@ -148,41 +137,28 @@ namespace SpotifyClone.MediaPLayers
             
         }
 
-        public void Previous()
+        public void Previous(int userId)
         {
             if (!_isPLaylist)
             {
                 Console.WriteLine("Please select a playlist with \"g\"");
                 return;
             }
-            // TODO
-            // fare request a backend per rimuovere tempo di ascolto all'utente e sapere se ha finito il tempo 
-            if (_classeUI.User.RemainingTime == 0)
-            {
-                StartRandom();
-                return;
-            }
-            int songDuration = _random.Next(90, 360);
-            _classeUI.User.RemainingTime -= songDuration;
-            _classeUI.User.ListenTime += songDuration;
-            if (_classeUI.User.RemainingTime <= 0 && _classeUI.User.MembershipType != MembershipTypeEnum.GOLD)
-            {
-                _classeUI.User.RemainingTime = 0;
-            }
-            //
 
             if (_currentIndex <= 0)
                 _currentIndex = _currentPlaylist.Songs.Length;// goes to the end of playlist
+
+            if (!_userServices.RemoveListenTimeFromUser(userId, _currentPlaylist.Songs[_currentIndex - 1].Id))
+            {
+                StartRandom(userId);
+                return;
+            }
 
             _currentSong = _currentPlaylist.Songs[_currentIndex - 1];
             _currentSong.Rating += 1;
             _currentIndex--;
 
-            Console.WriteLine($"Now Playing {_currentSong.Title}");
-
-            
-            
-        }
+            Console.WriteLine($"Now Playing {_currentSong.Title}");        }
 
         private bool IsSongSelected()
         {
@@ -192,11 +168,6 @@ namespace SpotifyClone.MediaPLayers
                 return false;
             }
             else return true;
-        }
-
-        public void SetClasseUI(ClasseUI classe)
-        {
-            _classeUI = classe;
         }
     }
 }

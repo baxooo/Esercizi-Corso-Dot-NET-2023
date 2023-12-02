@@ -1,6 +1,6 @@
-﻿using SpotifyClone.Interfaces;
-using SpotifyClone.MediaModels;
-using SpotifyClone.ModelsDTO;
+﻿using SpotiServicesLibrary;
+using SpotiServicesLibrary.Interfaces;
+using SpotiServicesLibrary.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +12,34 @@ namespace SpotifyClone.MediaPLayers
     internal class MovieMediaPlayer : IMediaPlayer 
     {
         protected IMoviePlaylist _currentPlaylist;
-        protected Movie _currentMovie;
+        protected MovieDTO _currentMovie;
 
         protected int _currentIndex;
         protected bool _isPlaying;
         protected bool _isPLaylist;
-        protected static ClasseUI _classeUI;
+        private UserServices _userServices;
+        private static readonly object _lockObject = new object();
 
-        
-        public void Next()
+
+        private static MovieMediaPlayer _instance;
+        public static MovieMediaPlayer Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    lock (_lockObject) 
+                        if (_instance == null)
+                            _instance = new MovieMediaPlayer();
+                return _instance;
+            }
+        }
+
+        private MovieMediaPlayer()
+        {
+            _userServices = UserServices.Instance;// TODO remove UserServices and create a UserMovieServices
+        }
+
+        public void Next(int userId)
         {
             if (!_isPLaylist)
             {
@@ -38,7 +57,7 @@ namespace SpotifyClone.MediaPLayers
             Console.WriteLine($"Now Playing {_currentMovie.Title}");
         }
 
-        public void Previous()
+        public void Previous(int userId)
         {
             if (!_isPLaylist)
             {
@@ -77,9 +96,9 @@ namespace SpotifyClone.MediaPLayers
             }
         }
 
-        public void Start(IRating media)//single movie
+        public void Start(IRating media, int userId)//single movie
         {
-            Movie movie = media as Movie;
+            MovieDTO movie = media as MovieDTO;
 
             _currentMovie = movie;
             movie.Rating += 1;
@@ -88,7 +107,7 @@ namespace SpotifyClone.MediaPLayers
             Console.WriteLine($"\rNow Playing {movie.Title}");
         }
 
-        public void Start(IPlaylist playlist)// movie playlist
+        public void Start(IPlaylist playlist, int userId)// movie playlist
         {
             _currentIndex = 0;
             _currentPlaylist = (IMoviePlaylist)playlist;
@@ -117,11 +136,6 @@ namespace SpotifyClone.MediaPLayers
                 return false;
             }
             return true;
-        }
-
-        public void SetClasseUI(ClasseUI classe)
-        {
-            _classeUI = classe;
         }
     }
 }

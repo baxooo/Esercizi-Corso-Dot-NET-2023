@@ -10,6 +10,7 @@ namespace SpotiServicesLibrary.ModelsDTO
 {
     public class SongDTO : IRating
     {
+        public int Id { get; set; }
         public string Title {  get; set; }
         public int Rating { get; set; }
 
@@ -17,6 +18,7 @@ namespace SpotiServicesLibrary.ModelsDTO
         {
             Title = song.Title;
             Rating = song.Rating;
+            Id = song.Id;
         }
     }
 }

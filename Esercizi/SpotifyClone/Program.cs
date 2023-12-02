@@ -1,11 +1,8 @@
-﻿using SpotifyClone.MediaModels;
-using SpotifyClone.UserModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SpotiLogLibrary;
-using SpotifyClone.ModelsDTO;
 
 namespace SpotifyClone
 {

@@ -32,7 +32,7 @@ namespace SpotiBackEnd.DbContext
 
             return CreateObject<T>(File.ReadAllLines(path).ToList(),logger);
         }
-        public static List<T> CreateObject<T>(List<string> file, Logger log) where T : class, new()
+        private static List<T> CreateObject<T>(List<string> file, Logger log) where T : class, new()
         {
             List<T> list = new List<T>();
             string[] headers = file.ElementAt(0).Split(',');

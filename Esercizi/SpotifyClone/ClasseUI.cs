@@ -98,21 +98,21 @@ namespace SpotifyClone
                 case 'n'://next
                     Console.Clear();
                     CreateMenu(_currentColor, _currentSelectionArray);
-                    _player.Next();
+                    _player.Next(_user.Id);
                     return true;
                 case 'b'://previous
                     Console.Clear();
                     CreateMenu(_currentColor, _currentSelectionArray);
-                    _player.Previous();
+                    _player.Previous(_user.Id);
                     return true;
                 case 'g'://select whole playlist
                     Console.Clear();
                     CreateMenu(_currentColor, _currentSelectionArray);
 
                     if (_currentSelectedPlaylist != null)
-                        _player.Start(_currentSelectedPlaylist);
+                        _player.Start(_currentSelectedPlaylist, _user.Id);
                     else if (_currentSelectedAlbum != null)
-                        _player.Start(_currentSelectedAlbum);
+                        _player.Start(_currentSelectedAlbum, _user.Id);
 
                     return true;
                 case var _ when char.IsDigit(input):
@@ -130,7 +130,7 @@ namespace SpotifyClone
                             CreateMenu(_currentColor, array);
                             if (_isMedia)
                             {
-                                _player.Start(array[i - 1]);
+                                _player.Start(array[i - 1], _user.Id);
                                 _isMedia = false;
                             }
 
@@ -285,8 +285,7 @@ namespace SpotifyClone
                 {
                     case 'm':
                         _isMusic = true;
-                        _player = new MusicMediaPlayer();
-                        _player.SetClasseUI(this);
+                        _player = MusicMediaPlayer.Instance;
                         Console.Clear();
                         CreateDefaultMenu();
                         while (GetInputFromUser()); // non mi aggrada questo while nel while
@@ -296,8 +295,7 @@ namespace SpotifyClone
                     case 'v':
                         _isMusic = false;
                         Console.Clear();
-                        _player = new MovieMediaPlayer();
-                        _player.SetClasseUI(this);
+                        _player = MovieMediaPlayer.Instance;// TODO - fare movieMedia singleton
                         CreateDefaultMenu();
                         while (GetInputFromUser());
                         validInput = true;
