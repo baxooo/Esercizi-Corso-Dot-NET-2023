@@ -10,7 +10,7 @@ namespace SpotifyClone.MediaPLayers
         protected ISongPlaylist _currentPlaylist;
         protected SongDTO _currentSong;
         private static MusicMediaPlayer _instance;
-        private static UserServices _userServices;
+        private static UserMovieServices _userServices;
 
         protected int _currentIndex;
         protected bool _isPlaying;
@@ -34,7 +34,7 @@ namespace SpotifyClone.MediaPLayers
 
         private MusicMediaPlayer()
         {
-            _userServices = UserServices.Instance;
+            _userServices = UserMovieServices.Instance;
         }
 
         public void Start(IRating media,int userId)

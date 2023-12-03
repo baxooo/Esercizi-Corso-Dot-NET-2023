@@ -20,7 +20,7 @@ namespace SpotifyClone
         private AlbumDTO _currentSelectedAlbum;
         private Logger _logger;
         private CultureInfo _culture;
-        UserServices _userServices;
+        UserMovieServices _userServices;
         private bool _isMusic;
         private bool _isMedia;
 
@@ -29,7 +29,7 @@ namespace SpotifyClone
         {
             _logger = Logger.Instance;
 
-            _userServices = UserServices.Instance;
+            _userServices = UserMovieServices.Instance;
             if (_logger.FilePath == null)
                 _logger.FilePath = @"D:/Log.txt";
         }

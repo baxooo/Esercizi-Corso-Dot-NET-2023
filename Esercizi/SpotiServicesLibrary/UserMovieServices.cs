@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary
 {
-    public class UserServices
+    public class UserMovieServices
     {
         private static SpotifyDbContext _context;
-        private static UserServices _instance;
+        private static UserMovieServices _instance;
         private static readonly object _lockObject = new object();
         private readonly string _path = @"D:\db\";
 
-        public static UserServices Instance 
+        public static UserMovieServices Instance 
         {
             get
             {
@@ -27,13 +27,13 @@ namespace SpotiServicesLibrary
                     lock (_lockObject)
                     {
                         if (_instance == null)
-                            _instance = new UserServices();
+                            _instance = new UserMovieServices();
                     }
                 }
                 return _instance;
             }
         }
-        private UserServices()
+        private UserMovieServices()
         {
             _context = new SpotifyDbContext(_path);
         }
