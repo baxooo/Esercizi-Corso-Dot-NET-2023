@@ -9,19 +9,9 @@ namespace SpotiBackEnd.Models.MediaModels
 {
     public class Movie 
     {
-        public string Title { get; private set; }
-        public int Rating { get; private set; }
-        public int[] Resolution { get; private set; }
-
-        public Movie(int rating, int[] resolution, string title)
-        {
-            if (resolution.Length != 2)
-            {
-                throw new ArgumentException("resolution int[] must be made of 2 elements");
-            }
-            Title = title;
-            Rating = rating;
-            Resolution = resolution;
-        }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public int Rating { get; set; }
+        public int[] Resolution { get; set; }
     }
 }

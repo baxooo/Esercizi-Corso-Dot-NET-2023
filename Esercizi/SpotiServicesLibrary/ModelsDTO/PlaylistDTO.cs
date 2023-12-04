@@ -11,6 +11,7 @@ namespace SpotiServicesLibrary.ModelsDTO
 {
     public class PlaylistDTO : IRating
     {
+        public int PlaylistId { get; set; }
         public int Rating { get; set; }
         public string Name { get; set; }
         public SongDTO[] Songs { get; set; }

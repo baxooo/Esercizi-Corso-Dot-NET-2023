@@ -20,7 +20,7 @@ namespace SpotifyClone
         private AlbumDTO _currentSelectedAlbum;
         private Logger _logger;
         private CultureInfo _culture;
-        UserMovieServices _userServices;
+        UserSongServices _userServices;
         private bool _isMusic;
         private bool _isMedia;
 
@@ -29,7 +29,7 @@ namespace SpotifyClone
         {
             _logger = Logger.Instance;
 
-            _userServices = UserMovieServices.Instance;
+            _userServices = UserSongServices.Instance;
             if (_logger.FilePath == null)
                 _logger.FilePath = @"D:/Log.txt";
         }
@@ -337,7 +337,7 @@ namespace SpotifyClone
                     continue;
                 }
 
-                UserDTO user = au.Login(credentials[0], credentials[1]);//TODO - aggiungere corretto tipo di ritorno al metodo Login
+                UserDTO user = au.Login(credentials[0], credentials[1]);
                 if (user != null)
                 {
                     loggedIn= true;

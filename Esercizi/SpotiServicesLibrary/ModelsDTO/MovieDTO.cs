@@ -10,6 +10,7 @@ namespace SpotiServicesLibrary.ModelsDTO
 {
     public class MovieDTO : IRating
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public int Rating { get; set; }
         public int[] Resolution { get; set; }

@@ -17,7 +17,7 @@ namespace SpotifyClone.MediaPLayers
         protected int _currentIndex;
         protected bool _isPlaying;
         protected bool _isPLaylist;
-        private UserMovieServices _userServices;
+        private UserSongServices _userServices;
         private static readonly object _lockObject = new object();
 
 
@@ -36,7 +36,7 @@ namespace SpotifyClone.MediaPLayers
 
         private MovieMediaPlayer()
         {
-            _userServices = UserMovieServices.Instance;// TODO remove UserServices and create a UserMovieServices
+            _userServices = UserMovieServices.Instance;
         }
 
         public void Next(int userId)
