@@ -17,7 +17,7 @@ namespace SpotifyClone.MediaPLayers
         protected int _currentIndex;
         protected bool _isPlaying;
         protected bool _isPLaylist;
-        private UserSongServices _userServices;
+        private UserMovieServices _userServices;
         private static readonly object _lockObject = new object();
 
 

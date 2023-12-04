@@ -20,7 +20,7 @@ namespace SpotiServicesLibrary.ModelsDTO
         {
             Alias = artist.Alias;
             Rating = artist.Rating;
-            Albums = artist.Albums.Cast<AlbumDTO>().ToArray(); // TODO - controllare se funzia
+            Albums = artist.Albums.Cast<AlbumDTO>().ToArray();
             Genre = artist.Genre;
         }
     }

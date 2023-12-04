@@ -21,6 +21,7 @@ namespace SpotifyClone
         private Logger _logger;
         private CultureInfo _culture;
         UserSongServices _userServices;
+        UserMovieServices _userMovieServices;
         private bool _isMusic;
         private bool _isMedia;
 
@@ -60,15 +61,15 @@ namespace SpotifyClone
                     Console.Clear();
                     if (_isMusic)
                         CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
-                    //else
-                        //CreateMenu(ConsoleColor.Magenta, _user.PlaylistMovie); // TODO 
+                    else
+                        CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMoviePlaylists()); 
                     return true;
                 case 'd' ://albums or all movies
                     Console.Clear();
                     if (_isMusic)
                         CreateMenu(ConsoleColor.Red, _userServices.GetUserAlbumsArray(_user.Id));
-                  //  else
-                       // CreateMenu(ConsoleColor.Magenta, _user.AllMovies); // TODO
+                    else
+                       CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMovies());
                     return true;
                 case 'l'://playlist
                     if (!_isMusic)  return true;
@@ -295,7 +296,7 @@ namespace SpotifyClone
                     case 'v':
                         _isMusic = false;
                         Console.Clear();
-                        _player = MovieMediaPlayer.Instance;// TODO - fare movieMedia singleton
+                        _player = MovieMediaPlayer.Instance;
                         CreateDefaultMenu();
                         while (GetInputFromUser());
                         validInput = true;
