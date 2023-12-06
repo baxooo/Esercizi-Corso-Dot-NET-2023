@@ -20,7 +20,6 @@ namespace SpotifyClone.MediaPLayers
         private UserMovieServices _userServices;
         private static readonly object _lockObject = new object();
 
-
         private static MovieMediaPlayer _instance;
         public static MovieMediaPlayer Instance
         {
