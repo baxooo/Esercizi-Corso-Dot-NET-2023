@@ -14,8 +14,8 @@ namespace SpotiServicesLibrary.Services
 {
     public class UserSongServices
     {
-        private readonly MediaRepository<Song, SongDTO, SongDTO> _songContext;
-        private readonly UserRepository<UserListener,UserDTO, UserDTO> _userRepository;
+        private readonly MediaRepository<Song, SongDTO, SongDTO> _songRepository;
+        private readonly UserRepository<UserListener, UserResponseDTO, UserDTO> _userRepository;
         private static UserSongServices _instance;
         private static readonly object _lockObject = new object();
         private readonly string _path = @"D:\db\";
@@ -37,28 +37,29 @@ namespace SpotiServicesLibrary.Services
         }
         private UserSongServices()
         {
-            _songContext = new MediaRepository<Song, SongDTO, SongDTO>(_path);
+            _songRepository = new MediaRepository<Song, SongDTO, SongDTO>(_path);
+            _userRepository = new UserRepository<UserListener, UserResponseDTO, UserDTO>(_path);
         }
 
         public TimeSpan GetUserListenTime(int userId)
         {
-            if (_songContext.Get)
+            var user = _userRepository.GetUserById(userId);
+            if (user == null)
                 throw new ArgumentException($"user does not exist");
 
-            var listenTime = _context.UserListeners.Where(u => u.Id == userId).Select(u => u.RemainingTime);
-            return TimeSpan.FromSeconds(listenTime.First());
+            return TimeSpan.FromSeconds(user.RemainingTime);
         }
 
         public PlaylistDTO[] GetUserPlaylistsArray(int userId)
         {
-            var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-
-            return user.Playlists.Cast<PlaylistDTO>().OrderByDescending(r => r.Rating).ToArray();
+            var user = _userRepository.GetUserById(userId); 
+            // TODO - sort of "playlistRepo" to get playlists from Ids
+            return user.PlaylistsId.OrderByDescending(r => r.Rating).ToArray();
         }
         public AlbumDTO[] GetUserAlbumsArray(int userId)
         {
-            var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.Albums.Cast<AlbumDTO>().OrderByDescending(r => r.Rating).ToArray();
+            var user = _userRepository.GetUserById(userId);
+            return user.AlbumsId.OrderByDescending(r => r.Rating).ToArray();
         }
         public ArtistDTO[] GetUserArtistArray(int userId)
         {

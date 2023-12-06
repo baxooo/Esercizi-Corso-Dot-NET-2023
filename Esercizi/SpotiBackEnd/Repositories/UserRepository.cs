@@ -1,6 +1,5 @@
 ﻿using SpotiBackEnd.DbContext;
 using SpotiBackEnd.Interfaces;
-using SpotiBackEnd.Models.ModelsDTO;
 using SpotiBackEnd.Models.UserModels;
 using System;
 using System.Collections.Generic;
@@ -23,12 +22,19 @@ namespace SpotiBackEnd.Repositories
         {
             //fake login
             if(string.IsNullOrEmpty(username)|| string.IsNullOrEmpty(password))
-                throw new ArgumentNullException("Invalid credentials");
+                return null;
 
             if (username == "user" && password == "user")
                 return _context.Data.Where(u => u.Id == 1).FirstOrDefault();
             else 
                 return null;
+        }
+        public Rs GetUserById(int id)
+        {
+            if (string.IsNullOrEmpty(id.ToString()))
+                return null;
+
+            return _context.Data.Where(u =>u.Id == id).FirstOrDefault();    
         }
     }
 }

@@ -10,14 +10,14 @@ namespace SpotiBackEnd.Models.UserModels
 {
     public sealed class UserListener : User
     {
-        public Playlist[] Playlists { get; set; }
-        public Playlist Favorites { get; set; }
-        public Radio[] RadioFavorites { get; set; }
-        public Artist[] Artists { get; set; }
-        public Album[] Albums { get; set; }
-        public MoviePlaylist[] PlaylistMovie { get; set; }
-        public Song[] AllSongs { get; set; }
-        public Movie[] AllMovies { get; set; }
+        public int[] PlaylistsId { get; set; }
+        public int FavoritesPlaylistId { get; set; }
+        public int[] RadioFavoritesId { get; set; }
+        public int[] ArtistsId { get; set; }
+        public int[] AlbumsId { get; set; }
+        public int[] PlaylistMovieId { get; set; }
+        public int[] AllUserSongsId { get; set; }
+        public int[] AllMoviesId { get; set; }
         public int RemainingTime { get; set; }
         public int ListenTime { get; set; }
         public MembershipTypeEnum MembershipType { get; set; } 
