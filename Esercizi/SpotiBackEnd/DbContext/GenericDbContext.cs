@@ -13,7 +13,7 @@ namespace SpotiBackEnd.DbContext
 {
     internal class GenericDbContext<T, Rs> : DbContext
         where T : class, new()
-        where Rs : IRating
+        where Rs : class,new()
     {
         public List<Rs> Data { get; set; }
 

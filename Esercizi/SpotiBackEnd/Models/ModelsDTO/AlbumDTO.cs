@@ -20,7 +20,7 @@ namespace SpotiBackEnd.Models.ModelsDTO
         {
             AlbumTitle = album.AlbumName;
             Artist = new ArtistDTO(album.Artist);
-            Songs = album.Songs.Cast<SongDTO>().ToArray();
+            Songs = album.Songs.Cast<SongDTO>().ToArray();// TODO Change
             Rating = album.Rating;
         }
     }

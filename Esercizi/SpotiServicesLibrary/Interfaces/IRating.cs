@@ -8,7 +8,6 @@ namespace SpotiServicesLibrary.Interfaces
 {
     public interface IRating
     {
-        int Id { get; set; }
         int Rating { get; set; }
     }
 }

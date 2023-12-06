@@ -1,7 +1,9 @@
 ﻿using SpotiBackEnd.DbContext;
 using SpotiBackEnd.Interfaces;
+using SpotiBackEnd.Models.MediaModels;
 using SpotiBackEnd.Models.UserModels;
 using SpotiBackEnd.Repository;
+using SpotiServicesLibrary.Interfaces;
 using SpotiServicesLibrary.ModelsDTO;
 using System;
 using System.Collections.Generic;
@@ -11,24 +13,24 @@ using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary
 {
-    public class UserMovieServices
+    public class UserMovieServices 
     {
-        private static MediaRepository<UserListener,MovieDTO,dynamic> _movieContext;
+        private readonly MediaRepository<Movie, MovieDTO, MovieDTO> _movieContext;// TODO movieRequestDto && movieResponseDTO
         private static UserMovieServices _instance;
         private static readonly object _lockObject = new object();
         private readonly string _path = @"D:\db\";
 
         private UserMovieServices()
         {
-            _context = new GenericDbContext(_path);
+            _movieContext = new MediaRepository<Movie, MovieDTO, MovieDTO>(_path);
         }
         public static UserMovieServices Instance
         {
             get
             {
                 if (_instance == null)
-                    lock (_lockObject) 
-                        if(_instance == null)
+                    lock (_lockObject)
+                        if (_instance == null)
                             _instance = new UserMovieServices();
 
                 return _instance;
@@ -37,22 +39,32 @@ namespace SpotiServicesLibrary
 
         public MovieDTO GetMovieById(int id)
         {
-            return _context.Movies.Where(m=> new MovieDTO(m)).FirstOrDefault();
+            return _movieContext.GetById(id);
         }
 
         public MovieDTO[] GetAllUserMovies()
         {
-            return _context.Movies.Cast<MovieDTO>().ToArray();
+            return _movieContext.GetAll().ToArray();
         }
 
-        public MoviePlaylistDTO GetPlaylistById(int id)
+        public bool UpdateMedia(MovieDTO movie)
         {
-            return _context.Playlists.Cast<MoviePlaylistDTO>().Where(m => m.PlaylistId == id).FirstOrDefault();
+            return _movieContext.Update(movie);
         }
 
-        public MoviePlaylistDTO[] GetAllUserMoviePlaylists()
+        public MovieDTO[] GetAllMedia()
         {
-            return _context.Movies.Cast<MoviePlaylistDTO>().ToArray();
+            return _movieContext.GetAll().ToArray();
+        }
+
+        public MovieDTO GetMediaById(int id)
+        {
+            return _movieContext.GetById(id);
+        }
+
+        public bool DeleteMedia(int id)
+        {
+            return _movieContext.DeleteById(id);
         }
     }
 }

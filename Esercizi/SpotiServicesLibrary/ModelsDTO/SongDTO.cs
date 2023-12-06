@@ -1,4 +1,5 @@
-﻿using SpotiBackEnd.Models.MediaModels;
+﻿using SpotiBackEnd.Models;
+using SpotiBackEnd.Models.MediaModels;
 using SpotiServicesLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.ModelsDTO
 {
-    public class SongDTO : IRating
+    public class SongDTO : Media,IRating
     {
-        public int Id { get; set; }
         public string Title {  get; set; }
         public int Rating { get; set; }
 
