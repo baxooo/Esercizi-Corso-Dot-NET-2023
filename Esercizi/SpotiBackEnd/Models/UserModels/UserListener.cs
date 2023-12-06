@@ -10,6 +10,7 @@ namespace SpotiBackEnd.Models.UserModels
 {
     public sealed class UserListener : User
     {
+        public Playlist[] Playlists { get; set; }
         public Playlist Favorites { get; set; }
         public Radio[] RadioFavorites { get; set; }
         public Artist[] Artists { get; set; }
@@ -18,7 +19,8 @@ namespace SpotiBackEnd.Models.UserModels
         public Song[] AllSongs { get; set; }
         public Movie[] AllMovies { get; set; }
         public int RemainingTime { get; set; }
-        public MembershipTypeEnum MembershipType { get; set; } 
         public int ListenTime { get; set; }
+        public MembershipTypeEnum MembershipType { get; set; } 
+        
     }
 }

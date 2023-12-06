@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace SpotiBackEnd.Models.ModelsDTO
 {
-    internal class SongDTO : RatingClas
+    internal class SongDTO : Media , IRating
     {
-        public int Id { get; set; }
         public string Title {  get; set; }
         public int Rating { get; set; }
 

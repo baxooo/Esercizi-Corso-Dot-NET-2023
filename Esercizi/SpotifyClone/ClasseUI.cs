@@ -7,6 +7,7 @@ using SpotiLogLibrary;
 using SpotiServicesLibrary;
 using SpotiServicesLibrary.ModelsDTO;
 using SpotiServicesLibrary.Interfaces;
+using SpotiServicesLibrary.Services;
 
 namespace SpotifyClone
 {
@@ -40,7 +41,7 @@ namespace SpotifyClone
             if(_isMusic)
                 CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
             else
-                CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
+                CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMoviePlaylists());
         }
 
         private bool GetInputFromUser()

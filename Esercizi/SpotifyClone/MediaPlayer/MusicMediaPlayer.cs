@@ -1,6 +1,6 @@
-﻿using SpotiServicesLibrary;
-using SpotiServicesLibrary.Interfaces;
+﻿using SpotiServicesLibrary.Interfaces;
 using SpotiServicesLibrary.ModelsDTO;
+using SpotiServicesLibrary.Services;
 using System;
 
 namespace SpotifyClone.MediaPLayers

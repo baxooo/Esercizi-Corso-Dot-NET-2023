@@ -1,19 +1,11 @@
-﻿using SpotiBackEnd.DbContext;
-using SpotiBackEnd.Interfaces;
-using SpotiBackEnd.Models.MediaModels;
-using SpotiBackEnd.Models.UserModels;
-using SpotiBackEnd.Repository;
-using SpotiServicesLibrary.Interfaces;
+﻿using SpotiBackEnd.Models.MediaModels;
+using SpotiBackEnd.Repositories;
 using SpotiServicesLibrary.ModelsDTO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SpotiServicesLibrary
+namespace SpotiServicesLibrary.Services
 {
-    public class UserMovieServices 
+    public class UserMovieServices
     {
         private readonly MediaRepository<Movie, MovieDTO, MovieDTO> _movieContext;// TODO movieRequestDto && movieResponseDTO
         private static UserMovieServices _instance;
@@ -65,6 +57,10 @@ namespace SpotiServicesLibrary
         public bool DeleteMedia(int id)
         {
             return _movieContext.DeleteById(id);
+        }
+        public MoviePlaylistDTO[] GetAllUserMoviePlaylists()
+        {
+            throw new NotImplementedException();
         }
     }
 }

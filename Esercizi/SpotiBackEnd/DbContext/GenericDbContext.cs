@@ -1,5 +1,4 @@
 ﻿using SpotiBackEnd.Interfaces;
-using SpotiBackEnd.M;
 using SpotiBackEnd.Models.MediaModels;
 using SpotiBackEnd.Models.UserModels;
 using SpotiLogLibrary;

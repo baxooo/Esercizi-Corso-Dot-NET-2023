@@ -2,6 +2,7 @@
 using SpotiBackEnd.Models;
 using SpotiBackEnd.Models.MediaModels;
 using SpotiBackEnd.Models.UserModels;
+using SpotiBackEnd.Repositories;
 using SpotiServicesLibrary.ModelsDTO;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotiServicesLibrary
+namespace SpotiServicesLibrary.Services
 {
     public class UserSongServices
     {
-        private static SpotifyDbContext _context;
+        private readonly MediaRepository<Song, SongDTO, SongDTO> _songContext;
+        private readonly UserRepository<UserListener,UserDTO, UserDTO> _userRepository;
         private static UserSongServices _instance;
         private static readonly object _lockObject = new object();
         private readonly string _path = @"D:\db\";
 
-        public static UserSongServices Instance 
+        public static UserSongServices Instance
         {
             get
             {
@@ -35,20 +37,19 @@ namespace SpotiServicesLibrary
         }
         private UserSongServices()
         {
-            _context = new SpotifyDbContext(_path);
+            _songContext = new MediaRepository<Song, SongDTO, SongDTO>(_path);
         }
 
-        public TimeSpan GetUserListenTime(int id)
+        public TimeSpan GetUserListenTime(int userId)
         {
-            if (_context.UserListeners.Where(u => u.Id == id) == null ||
-                _context.UserListeners.Where(u => u.Id == id).Count() == 0)
+            if (_songContext.Get)
                 throw new ArgumentException($"user does not exist");
 
-            var listenTime = _context.UserListeners.Where(u => u.Id == id).Select(u => u.RemainingTime);
+            var listenTime = _context.UserListeners.Where(u => u.Id == userId).Select(u => u.RemainingTime);
             return TimeSpan.FromSeconds(listenTime.First());
         }
 
-        public PlaylistDTO[] GetUserPlaylistsArray(int userId) 
+        public PlaylistDTO[] GetUserPlaylistsArray(int userId)
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
 
@@ -59,23 +60,23 @@ namespace SpotiServicesLibrary
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
             return user.Albums.Cast<AlbumDTO>().OrderByDescending(r => r.Rating).ToArray();
         }
-        public ArtistDTO[] GetUserArtistArray(int userId) 
+        public ArtistDTO[] GetUserArtistArray(int userId)
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.Artists.Cast<ArtistDTO>().OrderByDescending(r=> r.Rating).ToArray();
+            return user.Artists.Cast<ArtistDTO>().OrderByDescending(r => r.Rating).ToArray();
         }
-        public RadioDTO[] GetUserRadioArray(int userId) 
+        public RadioDTO[] GetUserRadioArray(int userId)
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
             return user.RadioFavorites.Cast<RadioDTO>().OrderByDescending(r => r.Rating).ToArray();
         }
 
-        public PlaylistDTO GetUserFavoritesPlaylist(int userId) 
+        public PlaylistDTO GetUserFavoritesPlaylist(int userId)
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
             return new PlaylistDTO(user.Favorites);
         }
-        public SongDTO[] GetUserAllSongsArray(int userId) 
+        public SongDTO[] GetUserAllSongsArray(int userId)
         {
             var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
             return user.AllSongs.Cast<SongDTO>().OrderByDescending(r => r.Rating).ToArray();
@@ -91,9 +92,9 @@ namespace SpotiServicesLibrary
         {   // pesco utente e canzone cosi da poter rimuovere la durata della canzone dal tempo rimasto all'utente
             // per ora non ho durate sulle canzoni quindi farò in modo randomico
             var user = _context.UserListeners.Where(u => u.Id == userId).FirstOrDefault();
-            var song = _context.Songs.Where(s  => s.Id == songId).FirstOrDefault();
+            var song = _context.Songs.Where(s => s.Id == songId).FirstOrDefault();
 
-            if(user.MembershipType == MembershipTypeEnum.GOLD)
+            if (user.MembershipType == MembershipTypeEnum.GOLD)
                 return true;
             else if (user.RemainingTime < 0)
                 return false;
@@ -104,7 +105,7 @@ namespace SpotiServicesLibrary
 
             user.RemainingTime = user.RemainingTime -= rnd.Next(90, 300);
             _context.UserListeners.Add(user); //riaggiungo user con nuovo TimeRemaining, non egregio ma per ora va bene
-            
+
             _context.Songs.Remove(song);
             song.Rating++;
             _context.Songs.Add(song);

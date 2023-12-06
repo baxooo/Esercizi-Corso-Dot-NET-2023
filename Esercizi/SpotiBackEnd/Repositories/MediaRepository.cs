@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpotiBackEnd.Repository
+namespace SpotiBackEnd.Repositories
 {
     public class MediaRepository<T, Rs, Rq> : IRepository<T, Rs, Rq>
-        where T : class, new() // TODO - better constrains
+        where T  : class, new()   // TODO - better constraints
         where Rs : Media, new() 
         where Rq : Media, new()
     {
@@ -42,7 +42,7 @@ namespace SpotiBackEnd.Repository
                 return false;
 
             _context.Data.Remove(GetById(media.Id));
-            _context.Data.Add();
+            //_context.Data.Add(null);
             return true;
         }
     }

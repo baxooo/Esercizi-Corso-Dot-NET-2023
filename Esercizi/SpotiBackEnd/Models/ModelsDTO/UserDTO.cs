@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace SpotiBackEnd.Models.ModelsDTO
 {
-    internal class UserDTO
+    public class UserDTO
     {
         public int Id { get; set; }
         public UserDTO(UserListener user)
         {
             Id = user.Id;
+        }
+        public UserDTO()
+        {
+            
         }
     }
 }

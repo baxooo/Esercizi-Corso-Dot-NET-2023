@@ -20,5 +20,9 @@ namespace SpotiServicesLibrary.ModelsDTO
             Rating = song.Rating;
             Id = song.Id;
         }
+        public SongDTO()
+        {
+            
+        }
     }
 }

@@ -11,6 +11,5 @@ namespace SpotiBackEnd.Models.UserModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Playlist[] Playlists { get; set; }
     }
 }
