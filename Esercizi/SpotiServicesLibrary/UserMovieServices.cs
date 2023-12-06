@@ -1,4 +1,7 @@
 ﻿using SpotiBackEnd.DbContext;
+using SpotiBackEnd.Interfaces;
+using SpotiBackEnd.Models.UserModels;
+using SpotiBackEnd.Repository;
 using SpotiServicesLibrary.ModelsDTO;
 using System;
 using System.Collections.Generic;
@@ -10,14 +13,14 @@ namespace SpotiServicesLibrary
 {
     public class UserMovieServices
     {
-        private static NetflixDbContext _context;
+        private static MediaRepository<UserListener,MovieDTO,dynamic> _movieContext;
         private static UserMovieServices _instance;
         private static readonly object _lockObject = new object();
         private readonly string _path = @"D:\db\";
 
         private UserMovieServices()
         {
-            _context = new NetflixDbContext(_path);
+            _context = new GenericDbContext(_path);
         }
         public static UserMovieServices Instance
         {
@@ -34,7 +37,7 @@ namespace SpotiServicesLibrary
 
         public MovieDTO GetMovieById(int id)
         {
-            return _context.Movies.Cast<MovieDTO>().Where(m=> m.Id == id).FirstOrDefault();
+            return _context.Movies.Where(m=> new MovieDTO(m)).FirstOrDefault();
         }
 
         public MovieDTO[] GetAllUserMovies()

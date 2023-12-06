@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using SpotiBackEnd.Models.UserModels;
+﻿using SpotiBackEnd.Models.UserModels;
 
 namespace SpotiBackEnd.Models.MediaModels
 {

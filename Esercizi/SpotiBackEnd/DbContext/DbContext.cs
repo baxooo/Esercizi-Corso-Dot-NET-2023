@@ -22,7 +22,7 @@ namespace SpotiBackEnd.DbContext
                 
         }
 
-        protected static List<T> ReadDataFromCsv<T>(string path, Logger logger) where T : class, new()
+        protected virtual List<T> ReadDataFromCsv<T>(string path, Logger logger) where T : class, new()
         {
             if (!File.Exists(path))
             {

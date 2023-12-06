@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.Interfaces
 {
-    public interface IRating
+    internal interface IServices<T, Rs>
     {
-        int Id { get; set; }
-        int Rating { get; set; }
+        public Rs Update();
+        public Rs GetAll();
+        public Rs GetById(int id);
+        public Rs Delete(int id);
     }
 }

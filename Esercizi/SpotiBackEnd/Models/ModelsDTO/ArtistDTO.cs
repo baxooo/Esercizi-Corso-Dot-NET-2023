@@ -1,14 +1,12 @@
-﻿using SpotiServicesLibrary.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SpotiBackEnd.Interfaces;
 using SpotiBackEnd.Models.UserModels;
 
-namespace SpotiServicesLibrary.ModelsDTO
+namespace SpotiBackEnd.Models.ModelsDTO
 {
-    public class ArtistDTO : IRating
+    internal class ArtistDTO : IRating
     {
         public string Alias { get; set; }
         public int Rating { get; set; }

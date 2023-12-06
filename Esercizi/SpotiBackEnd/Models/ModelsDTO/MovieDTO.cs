@@ -1,14 +1,14 @@
-﻿using SpotiBackEnd.Models.MediaModels;
-using SpotiServicesLibrary.Interfaces;
+﻿using SpotiBackEnd.Interfaces;
+using SpotiBackEnd.Models.MediaModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotiServicesLibrary.ModelsDTO
+namespace SpotiBackEnd.Models.ModelsDTO
 {
-    public class MovieDTO : IRating
+    internal class MovieDTO : IRating
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -20,6 +20,5 @@ namespace SpotiServicesLibrary.ModelsDTO
             Rating = movie.Rating;
             Resolution = movie.Resolution;
         }
-        public MovieDTO() { }   
     }
 }

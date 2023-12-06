@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotiServicesLibrary.Interfaces
+namespace SpotiBackEnd.Interfaces
 {
     public interface IRating
     {
-        int Id { get; set; }
-        int Rating { get; set; }
+        public int Id { get; set; }
+        public int Rating { get; set; }
     }
 }
