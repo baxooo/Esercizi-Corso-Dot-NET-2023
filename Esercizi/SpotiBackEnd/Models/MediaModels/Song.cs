@@ -2,9 +2,8 @@
 
 namespace SpotiBackEnd.Models.MediaModels
 {
-    public class Song
+    public class Song : Media
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public Artist Artist { get; set; }
         public Album Album { get; set; }

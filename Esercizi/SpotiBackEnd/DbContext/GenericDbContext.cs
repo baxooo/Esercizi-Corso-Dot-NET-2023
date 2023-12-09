@@ -1,12 +1,7 @@
-﻿using SpotiBackEnd.Interfaces;
-using SpotiBackEnd.Models.MediaModels;
-using SpotiBackEnd.Models.UserModels;
-using SpotiLogLibrary;
+﻿using SpotiLogLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpotiBackEnd.DbContext
 {

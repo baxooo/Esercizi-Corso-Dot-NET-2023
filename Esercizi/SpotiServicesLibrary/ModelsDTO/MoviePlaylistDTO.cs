@@ -1,14 +1,12 @@
-﻿using SpotiBackEnd.Models.MediaModels;
+﻿using SpotiBackEnd.Models;
+using SpotiBackEnd.Models.MediaModels;
 using SpotiServicesLibrary.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.ModelsDTO
 {
-    public class MoviePlaylistDTO : IRating
+    public class MoviePlaylistDTO : Media, IRating
     {
         public int Id { get; set; } 
         public int PlaylistId { get; set; }

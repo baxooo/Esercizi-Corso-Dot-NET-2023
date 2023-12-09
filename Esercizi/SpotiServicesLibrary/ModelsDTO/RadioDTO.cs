@@ -1,15 +1,11 @@
-﻿using SpotiBackEnd.Models.MediaModels;
+﻿using SpotiBackEnd.Models;
+using SpotiBackEnd.Models.MediaModels;
 using SpotiServicesLibrary.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace SpotiServicesLibrary.ModelsDTO
 {
-    public class RadioDTO : IRating
+    public class RadioDTO : Media, IRating
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -21,6 +17,10 @@ namespace SpotiServicesLibrary.ModelsDTO
             Name = radio.Name;
             OnAirPlaylist = new PlaylistDTO(radio.OnAirPlaylist);
             Rating = radio.Rating;
+        }
+        public RadioDTO()
+        {
+            
         }
     }
 }

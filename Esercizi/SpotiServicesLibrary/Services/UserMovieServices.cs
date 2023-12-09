@@ -2,6 +2,7 @@
 using SpotiBackEnd.Repositories;
 using SpotiServicesLibrary.ModelsDTO;
 using System;
+using System.Linq;
 
 namespace SpotiServicesLibrary.Services
 {
@@ -34,14 +35,14 @@ namespace SpotiServicesLibrary.Services
             return _movieContext.GetById(id);
         }
 
-        public MovieDTO[] GetAllUserMovies()
+        public MovieDTO[] GetAllUserMovies(int userId)
         {
-            return _movieContext.GetAll().ToArray();
+            return _movieContext.GetAll().Where(m => m.Id == userId).ToArray();
         }
 
-        public bool UpdateMedia(MovieDTO movie)
+        public bool UpdateMovie(MovieDTO movie)
         {
-            return _movieContext.Update(movie);
+            return _movieContext.UpdateMedia(movie);
         }
 
         public MovieDTO[] GetAllMedia()
@@ -57,10 +58,6 @@ namespace SpotiServicesLibrary.Services
         public bool DeleteMedia(int id)
         {
             return _movieContext.DeleteById(id);
-        }
-        public MoviePlaylistDTO[] GetAllUserMoviePlaylists()
-        {
-            throw new NotImplementedException();
         }
     }
 }

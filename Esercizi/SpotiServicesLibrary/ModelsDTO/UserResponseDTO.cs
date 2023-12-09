@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpotiBackEnd.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,9 @@ namespace SpotiServicesLibrary.ModelsDTO
         public int[] PlaylistsId { get; set; }
         public int[] AlbumsId { get; set; }
         public int[] ArtistsId { get; set; }
+        public int[] RadiosId { get; set; }
+        public int[] SongsId { get; set; }
+        public PlaylistDTO Favorite { get; set; }
+        public MembershipTypeEnum MembershipType { get; set; }
     }
 }

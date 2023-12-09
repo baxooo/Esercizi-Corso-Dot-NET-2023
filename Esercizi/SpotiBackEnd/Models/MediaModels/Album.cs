@@ -2,7 +2,7 @@
 
 namespace SpotiBackEnd.Models.MediaModels
 {
-    public class Album
+    public class Album : Media
     {
         public string AlbumName { get; set; }
         public Artist Artist { get; set; }

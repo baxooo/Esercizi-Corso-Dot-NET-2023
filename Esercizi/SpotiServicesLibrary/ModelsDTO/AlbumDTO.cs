@@ -1,4 +1,5 @@
-﻿using SpotiBackEnd.Models.MediaModels;
+﻿using SpotiBackEnd.Models;
+using SpotiBackEnd.Models.MediaModels;
 using SpotiServicesLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.ModelsDTO
 {
-    public class AlbumDTO : IRating
+    public class AlbumDTO : Media , IRating
     {
         public string AlbumTitle { get; set; }
         public ArtistDTO Artist { get; set; }
@@ -22,6 +23,10 @@ namespace SpotiServicesLibrary.ModelsDTO
             Artist = new ArtistDTO(album.Artist);
             Songs = album.Songs.Cast<SongDTO>().ToArray();
             Rating = album.Rating;
+        }
+        public AlbumDTO()
+        {
+            
         }
     }
 }

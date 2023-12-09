@@ -36,5 +36,39 @@ namespace SpotiBackEnd.Repositories
 
             return _context.Data.Where(u =>u.Id == id).FirstOrDefault();    
         }
+
+        /// <summary>
+        /// removes the user with the specific id from the Context<T>.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>
+        /// true if user is correctly removed; otherwise, false.
+        /// </returns>
+        public bool RemoveUser(int userId)
+        {
+            if(userId == 0|| !_context.Data.Contains(GetUserById(userId)))
+                return false;
+
+            if(_context.Data.Remove(GetUserById(userId)))
+                return true;
+            else return false;
+        }
+
+        public bool AddUser(Rs user)
+        { // TODO - change rs to rq
+            if(user == null) return false;
+
+            _context.Data.Add(user);
+            return true;
+        }
+        public bool UpdateUser(Rs user)
+        { // TODO - change rs to rq
+            if (user == null) return false;
+
+            _context.Data[user.Id] = user;
+            return true;
+        }
+
+
     }
 }

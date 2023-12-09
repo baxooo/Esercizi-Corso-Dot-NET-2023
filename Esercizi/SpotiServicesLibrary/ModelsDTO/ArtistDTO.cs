@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SpotiBackEnd.Models.UserModels;
+using SpotiBackEnd.Models;
 
 namespace SpotiServicesLibrary.ModelsDTO
 {
-    public class ArtistDTO : IRating
+    public class ArtistDTO : Media,IRating
     {
         public string Alias { get; set; }
         public int Rating { get; set; }
@@ -23,6 +22,10 @@ namespace SpotiServicesLibrary.ModelsDTO
             Rating = artist.Rating;
             Albums = artist.Albums.Cast<AlbumDTO>().ToArray();
             Genre = artist.Genre;
+        }
+        public ArtistDTO()
+        {
+                
         }
     }
 }

@@ -15,6 +15,10 @@ namespace SpotiServicesLibrary.Services
     public class UserSongServices
     {
         private readonly MediaRepository<Song, SongDTO, SongDTO> _songRepository;
+        private readonly MediaRepository<Album, AlbumDTO, AlbumDTO> _albumRepository;
+        private readonly MediaRepository<Artist, ArtistDTO, ArtistDTO> _artistRepository;
+        private readonly MediaRepository<Playlist, PlaylistDTO, PlaylistDTO> _playlistRepository;
+        private readonly MediaRepository<Radio, RadioDTO, RadioDTO> _radioRepository;
         private readonly UserRepository<UserListener, UserResponseDTO, UserDTO> _userRepository;
         private static UserSongServices _instance;
         private static readonly object _lockObject = new object();
@@ -39,6 +43,10 @@ namespace SpotiServicesLibrary.Services
         {
             _songRepository = new MediaRepository<Song, SongDTO, SongDTO>(_path);
             _userRepository = new UserRepository<UserListener, UserResponseDTO, UserDTO>(_path);
+            _albumRepository = new MediaRepository<Album, AlbumDTO, AlbumDTO>(_path);
+            _artistRepository = new MediaRepository<Artist, ArtistDTO, ArtistDTO>(_path);
+            _playlistRepository = new MediaRepository<Playlist, PlaylistDTO, PlaylistDTO>(_path);
+            _radioRepository = new MediaRepository<Radio,RadioDTO, RadioDTO>(_path);    
         }
 
         public TimeSpan GetUserListenTime(int userId)
@@ -53,34 +61,53 @@ namespace SpotiServicesLibrary.Services
         public PlaylistDTO[] GetUserPlaylistsArray(int userId)
         {
             var user = _userRepository.GetUserById(userId); 
-            // TODO - sort of "playlistRepo" to get playlists from Ids
-            return user.PlaylistsId.OrderByDescending(r => r.Rating).ToArray();
+            var playlists = _playlistRepository.GetAll()
+                                               .Where(p => user.PlaylistsId
+                                               .Contains(p.Id));
+
+            return playlists.ToArray();
         }
         public AlbumDTO[] GetUserAlbumsArray(int userId)
         {
             var user = _userRepository.GetUserById(userId);
-            return user.AlbumsId.OrderByDescending(r => r.Rating).ToArray();
+            var albums = _albumRepository.GetAll()
+                                         .Where(a => user.AlbumsId
+                                         .Contains(a.Id));
+
+            return albums.ToArray() ;
         }
         public ArtistDTO[] GetUserArtistArray(int userId)
         {
-            var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.Artists.Cast<ArtistDTO>().OrderByDescending(r => r.Rating).ToArray();
+            var user = _userRepository.GetUserById(userId);
+            var artists = _artistRepository.GetAll()
+                                           .Where(a => user.ArtistsId
+                                           .Contains(a.Id));
+
+            return artists.ToArray();
         }
         public RadioDTO[] GetUserRadioArray(int userId)
         {
-            var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.RadioFavorites.Cast<RadioDTO>().OrderByDescending(r => r.Rating).ToArray();
+            var user = _userRepository.GetUserById(userId);
+            var radios = _radioRepository.GetAll()
+                                         .Where(a => user.RadiosId
+                                         .Contains(a.Id));
+
+            return radios.ToArray() ;
         }
 
         public PlaylistDTO GetUserFavoritesPlaylist(int userId)
         {
-            var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return new PlaylistDTO(user.Favorites);
+            var user = _userRepository.GetUserById(userId);
+
+            return user.Favorite;
         }
-        public SongDTO[] GetUserAllSongsArray(int userId)
+        public SongDTO[] GetAllUserSongsArray(int userId)
         {
-            var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
-            return user.AllSongs.Cast<SongDTO>().OrderByDescending(r => r.Rating).ToArray();
+            var user = _userRepository.GetUserById(userId);
+            var songs = _songRepository.GetAll()
+                                       .Where(s => user.SongsId
+                                       .Contains(s.Id));    
+            return songs.ToArray();
         }
 
         /// <summary>
@@ -92,8 +119,8 @@ namespace SpotiServicesLibrary.Services
         public bool RemoveListenTimeFromUser(int userId, int songId)
         {   // pesco utente e canzone cosi da poter rimuovere la durata della canzone dal tempo rimasto all'utente
             // per ora non ho durate sulle canzoni quindi farò in modo randomico
-            var user = _context.UserListeners.Where(u => u.Id == userId).FirstOrDefault();
-            var song = _context.Songs.Where(s => s.Id == songId).FirstOrDefault();
+            var user = _userRepository.GetUserById(userId);
+            var song = _songRepository.GetById(songId);
 
             if (user.MembershipType == MembershipTypeEnum.GOLD)
                 return true;
@@ -102,23 +129,23 @@ namespace SpotiServicesLibrary.Services
 
             Random rnd = new Random();
 
-            _context.UserListeners.Remove(user); //rimuovo user con vecchio TimeRemaining
 
             user.RemainingTime = user.RemainingTime -= rnd.Next(90, 300);
-            _context.UserListeners.Add(user); //riaggiungo user con nuovo TimeRemaining, non egregio ma per ora va bene
+            _userRepository.UpdateUser(user);
 
-            _context.Songs.Remove(song);
             song.Rating++;
-            _context.Songs.Add(song);
+            _songRepository.UpdateMedia(song);
 
             return true;
         }
 
         public SongDTO GetRandomUserSong(int userId)
         {
-            var user = _context.UserListeners.Where(u => u.Id != userId).FirstOrDefault();
+            var user = _userRepository.GetUserById(userId);
+            var allUserSongs = GetAllUserSongsArray(userId);
             Random rnd = new Random();
-            return new SongDTO(user.AllSongs[rnd.Next(0, user.AllSongs.Length - 1)]);
+
+            return allUserSongs[rnd.Next(0, allUserSongs.Length)];
         }
     }
 }

@@ -41,8 +41,8 @@ namespace SpotiBackEnd.Repositories
             if (!_context.Data.Any(a => a.Id == media.Id))
                 return false;
 
-            _context.Data.Remove(GetById(media.Id));
-            //_context.Data.Add(null);
+            var rsMedia = _context.Data.Where(m => m.Id == media.Id).FirstOrDefault();
+            _context.Data[media.Id] = rsMedia;
             return true;
         }
     }

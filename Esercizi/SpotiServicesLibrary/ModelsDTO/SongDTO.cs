@@ -2,10 +2,6 @@
 using SpotiBackEnd.Models.MediaModels;
 using SpotiServicesLibrary.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.ModelsDTO
 {

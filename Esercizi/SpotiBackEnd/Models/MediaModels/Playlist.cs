@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpotiBackEnd.Models.MediaModels
 {
-    public class Playlist
+    public class Playlist : Media
     {
         public string Name { get; set; }
         public Song[] Songs { get; set; }

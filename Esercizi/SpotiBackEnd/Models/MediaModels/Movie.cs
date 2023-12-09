@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SpotiBackEnd.Models.MediaModels
 {
-    public class Movie 
+    public class Movie : Media
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public int Rating { get; set; }
         public int[] Resolution { get; set; }
