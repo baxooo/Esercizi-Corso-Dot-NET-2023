@@ -41,7 +41,7 @@ namespace SpotifyClone
             if(_isMusic)
                 CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
             else
-                CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMoviePlaylists());
+                CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMoviePlaylists(_user.Id));
         }
 
         private bool GetInputFromUser()
@@ -63,14 +63,14 @@ namespace SpotifyClone
                     if (_isMusic)
                         CreateMenu(ConsoleColor.Magenta, _userServices.GetUserArtistArray(_user.Id));
                     else
-                        CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMoviePlaylists()); 
+                        CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMoviePlaylists(_user.Id)); 
                     return true;
                 case 'd' ://albums or all movies
                     Console.Clear();
                     if (_isMusic)
                         CreateMenu(ConsoleColor.Red, _userServices.GetUserAlbumsArray(_user.Id));
                     else
-                       CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMovies());
+                       CreateMenu(ConsoleColor.Magenta, _userMovieServices.GetAllUserMovies(_user.Id));
                     return true;
                 case 'l'://playlist
                     if (!_isMusic)  return true;
@@ -311,7 +311,7 @@ namespace SpotifyClone
 
         public void LogMenu()
         {
-            AuthenticationServices au = AuthenticationServices.Instance;
+            
             string[] credentials = new string[2];
             bool loggedIn = false;
             do
@@ -339,7 +339,7 @@ namespace SpotifyClone
                     continue;
                 }
 
-                UserDTO user = au.Login(credentials[0], credentials[1]);
+                UserDTO user = _userServices.Login(credentials[0], credentials[1]);
                 if (user != null)
                 {
                     loggedIn= true;

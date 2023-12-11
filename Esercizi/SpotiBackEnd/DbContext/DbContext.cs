@@ -22,7 +22,8 @@ namespace SpotiBackEnd.DbContext
                 
         }
 
-        protected virtual List<T> ReadDataFromCsv<T>(string path, Logger logger) where T : class, new()
+        protected virtual List<T> ReadDataFromCsv<T>(string path, Logger logger) 
+            where T  : class, new()
         {
             if (!File.Exists(path))
             {
@@ -32,7 +33,8 @@ namespace SpotiBackEnd.DbContext
 
             return CreateObject<T>(File.ReadAllLines(path).ToList(),logger);
         }
-        private static List<T> CreateObject<T>(List<string> file, Logger log) where T : class, new()
+        private static List<T> CreateObject<T>(List<string> file, Logger log) 
+            where T : class, new()
         {
             List<T> list = new List<T>();
             string[] headers = file.ElementAt(0).Split(',');
@@ -53,7 +55,6 @@ namespace SpotiBackEnd.DbContext
             }
             if (isDataset)
             {
-                file.RemoveAt(0);
                 foreach (var line in file)
                 {
                     entry = new T();
@@ -63,7 +64,11 @@ namespace SpotiBackEnd.DbContext
 
                     foreach (var col in columns)
                     {
-                        if (col == null || col == string.Empty) continue;
+                        if (col == null || col == string.Empty)
+                        {
+                            j++;
+                            continue;
+                        }
                         try
                         {
                             entry.GetType()
@@ -71,9 +76,9 @@ namespace SpotiBackEnd.DbContext
                                  .SetValue(entry, Convert.ChangeType(col, entry.GetType().GetProperty(headers[j])
                                  .PropertyType));
                         }
-                        catch
+                        catch(Exception ex)
                         {
-                            throw;
+                            log.Log(LogTypeEnum.ERROR, ex.Message + "\n" + ex.InnerException);
                         }
                         j++;
                     }

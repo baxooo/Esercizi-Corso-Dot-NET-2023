@@ -17,5 +17,10 @@ namespace SpotiServicesLibrary.ModelsDTO
         public int[] SongsId { get; set; }
         public PlaylistDTO Favorite { get; set; }
         public MembershipTypeEnum MembershipType { get; set; }
+
+        public UserResponseDTO() 
+        {
+            
+        }
     }
 }

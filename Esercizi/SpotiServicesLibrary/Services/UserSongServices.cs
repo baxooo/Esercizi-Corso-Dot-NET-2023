@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.Services
 {
+    /// <summary>
+    /// Service class responsible for managing user-specific song-related operations.
+    /// </summary>
     public class UserSongServices
     {
         private readonly MediaRepository<Song, SongDTO, SongDTO> _songRepository;
@@ -39,6 +42,7 @@ namespace SpotiServicesLibrary.Services
                 return _instance;
             }
         }
+
         private UserSongServices()
         {
             _songRepository = new MediaRepository<Song, SongDTO, SongDTO>(_path);
@@ -49,6 +53,17 @@ namespace SpotiServicesLibrary.Services
             _radioRepository = new MediaRepository<Radio,RadioDTO, RadioDTO>(_path);    
         }
 
+        public UserDTO Login(string username, string password)
+        {
+            return _userRepository.GetUser(username, password);
+        }
+
+        /// <summary>
+        /// Retrieves the remaining listen time for a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <returns>The remaining listen time for the user as a TimeSpan.</returns>
+        /// <exception cref="ArgumentException">Thrown if the user does not exist.</exception>
         public TimeSpan GetUserListenTime(int userId)
         {
             var user = _userRepository.GetUserById(userId);
@@ -58,6 +73,10 @@ namespace SpotiServicesLibrary.Services
             return TimeSpan.FromSeconds(user.RemainingTime);
         }
 
+        /// <summary>
+        /// Retrieves an array of PlaylistDTO objects associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
         public PlaylistDTO[] GetUserPlaylistsArray(int userId)
         {
             var user = _userRepository.GetUserById(userId); 
@@ -67,6 +86,11 @@ namespace SpotiServicesLibrary.Services
 
             return playlists.ToArray();
         }
+
+        /// <summary>
+        /// Retrieves an array of AlbumDTO objects associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
         public AlbumDTO[] GetUserAlbumsArray(int userId)
         {
             var user = _userRepository.GetUserById(userId);
@@ -76,6 +100,11 @@ namespace SpotiServicesLibrary.Services
 
             return albums.ToArray() ;
         }
+
+        /// <summary>
+        /// Retrieves an array of ArtistDTO objects associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
         public ArtistDTO[] GetUserArtistArray(int userId)
         {
             var user = _userRepository.GetUserById(userId);
@@ -85,6 +114,11 @@ namespace SpotiServicesLibrary.Services
 
             return artists.ToArray();
         }
+
+        /// <summary>
+        /// Retrieves an array of RadioDTO objects associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
         public RadioDTO[] GetUserRadioArray(int userId)
         {
             var user = _userRepository.GetUserById(userId);
@@ -95,12 +129,20 @@ namespace SpotiServicesLibrary.Services
             return radios.ToArray() ;
         }
 
+        /// <summary>
+        /// Retrieves a PlaylistDTO associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
         public PlaylistDTO GetUserFavoritesPlaylist(int userId)
         {
             var user = _userRepository.GetUserById(userId);
 
             return user.Favorite;
         }
+        /// <summary>
+        /// Retrieves an array of SongDTO objects associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
         public SongDTO[] GetAllUserSongsArray(int userId)
         {
             var user = _userRepository.GetUserById(userId);
@@ -111,34 +153,45 @@ namespace SpotiServicesLibrary.Services
         }
 
         /// <summary>
-        /// removes time from user and returns a bool, true if he still has time, false if the user does not have any time left.
+        /// Removes time from user and returns a bool.
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="songId"></param>
-        /// <returns></returns>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <param name="songId">The unique identifier of the song.</param>
+        /// <returns>
+        ///   <c>true</c> if the listen time is successfully removed; 
+        ///   <c>false</c> if the user has insufficient remaining time.
+        /// </returns>
         public bool RemoveListenTimeFromUser(int userId, int songId)
-        {   // pesco utente e canzone cosi da poter rimuovere la durata della canzone dal tempo rimasto all'utente
-            // per ora non ho durate sulle canzoni quindi farò in modo randomico
+        {
             var user = _userRepository.GetUserById(userId);
             var song = _songRepository.GetById(songId);
 
+            // Check if the user has a GOLD membership, in which case, listen time is not deducted
             if (user.MembershipType == MembershipTypeEnum.GOLD)
                 return true;
+
+            // Check if the user has sufficient remaining time to listen to the song
             else if (user.RemainingTime < 0)
                 return false;
 
+            // Deduct a random duration between 90 and 300 seconds from the user's remaining time
             Random rnd = new Random();
+            user.RemainingTime -= rnd.Next(90, 300);
 
-
-            user.RemainingTime = user.RemainingTime -= rnd.Next(90, 300);
             _userRepository.UpdateUser(user);
 
             song.Rating++;
-            _songRepository.UpdateMedia(song);
+            _songRepository.Update(song);
 
+            // Return true to indicate successful listen time removal
             return true;
         }
 
+        /// <summary>
+        /// Retrieves a random SongDTO object associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <returns>A random SongDTO object associated with the user, or null if the user has no songs.</returns>
         public SongDTO GetRandomUserSong(int userId)
         {
             var user = _userRepository.GetUserById(userId);

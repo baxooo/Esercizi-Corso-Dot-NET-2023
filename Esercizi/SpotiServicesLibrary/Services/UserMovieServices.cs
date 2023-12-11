@@ -40,9 +40,14 @@ namespace SpotiServicesLibrary.Services
             return _movieContext.GetAll().Where(m => m.Id == userId).ToArray();
         }
 
+        public MoviePlaylistDTO[] GetAllUserMoviePlaylists(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool UpdateMovie(MovieDTO movie)
         {
-            return _movieContext.UpdateMedia(movie);
+            return _movieContext.Update(movie);
         }
 
         public MovieDTO[] GetAllMedia()
