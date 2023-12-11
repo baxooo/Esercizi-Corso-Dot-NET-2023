@@ -150,28 +150,30 @@ namespace SpotifyClone
 
         private IRating[] GetNestedArray(object o)
         {
-            switch (o)
-            {
-                case AlbumDTO album:
-                    _currentSelectedAlbum = album;
-                    return album.Songs;
-                case PlaylistDTO playlist:
-                    _currentSelectedPlaylist = playlist;
-                    return playlist.Songs;
-                case ArtistDTO artist:
-                    return artist.Albums;
-                case RadioDTO radio:
-                    return radio.OnAirPlaylist.Songs;
-                case SongDTO:
-                    _isMedia = true;
-                    return _currentSelectionArray;
-                case MoviePlaylistDTO mp:
-                    return mp.Movies;
-                case MovieDTO:
-                    _isMedia = true;
-                    return _currentSelectionArray;
-            }
+            //switch (o)
+            //{
+            //    case AlbumDTO album:
+            //        _currentSelectedAlbum = album;
+            //        return album.SongsId;
+            //    case PlaylistDTO playlist:
+            //        _currentSelectedPlaylist = playlist;
+            //        return playlist.Songs;
+            //    case ArtistDTO artist:
+            //        return artist.AlbumsID;
+            //    case RadioDTO radio:
+            //        return radio.OnAirPlaylistId.Songs;
+            //    case SongDTO:
+            //        _isMedia = true;
+            //        return _currentSelectionArray;
+            //    case MoviePlaylistDTO mp:
+            //        return mp.MoviesId;
+            //    case MovieDTO:
+            //        _isMedia = true;
+            //        return _currentSelectionArray;
+            //}
             return null;
+
+            // TODO fix
         }
 
         private void CreateMenu(ConsoleColor consoleColor, IRating[] array)

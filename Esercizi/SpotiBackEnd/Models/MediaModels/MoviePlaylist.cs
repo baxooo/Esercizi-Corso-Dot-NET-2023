@@ -9,7 +9,11 @@ namespace SpotiBackEnd.Models.MediaModels
     public class MoviePlaylist : Media
     {
         public int Rating { get;  set; }
-        public Movie[] Movies { get; set; }
+        public int[] MoviesId { get; set; }
         public string PlaylistName { get; set; }
+        public MoviePlaylist()
+        {
+            
+        }
     }
 }

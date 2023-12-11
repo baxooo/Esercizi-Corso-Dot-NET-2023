@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace SpotiServicesLibrary.Services
 {
+    // TODO - sumary
     public class UserMovieServices
     {
         private readonly MediaRepository<Movie, MovieDTO, MovieDTO> _movieContext;// TODO movieRequestDto && movieResponseDTO
@@ -30,36 +31,43 @@ namespace SpotiServicesLibrary.Services
             }
         }
 
+        // TODO - sumary
         public MovieDTO GetMovieById(int id)
         {
             return _movieContext.GetById(id);
         }
 
+        // TODO - sumary
         public MovieDTO[] GetAllUserMovies(int userId)
         {
             return _movieContext.GetAll().Where(m => m.Id == userId).ToArray();
         }
 
+        // TODO - method and summary
         public MoviePlaylistDTO[] GetAllUserMoviePlaylists(int userId)
         {
             throw new NotImplementedException();
         }
 
+        // TODO - sumary
         public bool UpdateMovie(MovieDTO movie)
         {
             return _movieContext.Update(movie);
         }
 
+        // TODO - sumary
         public MovieDTO[] GetAllMedia()
         {
             return _movieContext.GetAll().ToArray();
         }
 
+        // TODO - sumary
         public MovieDTO GetMediaById(int id)
         {
             return _movieContext.GetById(id);
         }
 
+        // TODO - sumary
         public bool DeleteMedia(int id)
         {
             return _movieContext.DeleteById(id);

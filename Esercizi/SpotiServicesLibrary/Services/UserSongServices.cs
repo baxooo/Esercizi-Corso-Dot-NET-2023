@@ -2,6 +2,7 @@
 using SpotiBackEnd.Models;
 using SpotiBackEnd.Models.MediaModels;
 using SpotiBackEnd.Models.UserModels;
+using SpotiBackEnd.Models.UserModelsResponse;
 using SpotiBackEnd.Repositories;
 using SpotiServicesLibrary.ModelsDTO;
 using System;
@@ -74,9 +75,10 @@ namespace SpotiServicesLibrary.Services
         }
 
         /// <summary>
-        /// Retrieves an array of PlaylistDTO objects associated with a specific user.
+        /// Retrieves an array of <typeparamref name="PlaylistDTO"/> objects associated with a specific user.
         /// </summary>
         /// <param name="userId">The unique identifier of the user.</param>
+        /// <typeparam name="PlaylistDTO"></typeparam>
         public PlaylistDTO[] GetUserPlaylistsArray(int userId)
         {
             var user = _userRepository.GetUserById(userId); 
@@ -133,12 +135,13 @@ namespace SpotiServicesLibrary.Services
         /// Retrieves a PlaylistDTO associated with a specific user.
         /// </summary>
         /// <param name="userId">The unique identifier of the user.</param>
-        public PlaylistDTO GetUserFavoritesPlaylist(int userId)
-        {
-            var user = _userRepository.GetUserById(userId);
+        //public PlaylistDTO GetUserFavoritesPlaylist(int userId)
+        //{
+        //    var user = _userRepository.GetUserById(userId);
 
-            return user.Favorite;
-        }
+        //    return user.Favorite;
+        //}
+
         /// <summary>
         /// Retrieves an array of SongDTO objects associated with a specific user.
         /// </summary>

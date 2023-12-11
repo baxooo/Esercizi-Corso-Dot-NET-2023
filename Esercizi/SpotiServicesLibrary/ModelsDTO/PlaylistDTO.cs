@@ -21,7 +21,7 @@ namespace SpotiServicesLibrary.ModelsDTO
         {
             Rating = playlist.Rating;
             Name = playlist.Name;
-            Songs = playlist.Songs.Cast<SongDTO>().ToArray();
+           // Songs = playlist.Songs.Cast<SongDTO>().ToArray(); // TODO correct
         }
 
         public PlaylistDTO()

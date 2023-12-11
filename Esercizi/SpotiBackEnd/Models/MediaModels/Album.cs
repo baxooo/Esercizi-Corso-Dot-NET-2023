@@ -1,14 +1,16 @@
-﻿using SpotiBackEnd.Models.UserModels;
-
-namespace SpotiBackEnd.Models.MediaModels
+﻿namespace SpotiBackEnd.Models.MediaModels
 {
     public class Album : Media
     {
         public string AlbumName { get; set; }
-        public Artist Artist { get; set; }
-        public Song[] Songs { get; set; }
+        public int ArtistId { get; set; }
+        public string SongsId { get; set; }
         public string ReleaseDate { get; set; }
         public string Genre { get; set; }
         public int Rating { get; set; }
+        public Album()
+        {
+            
+        }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using System.ComponentModel;
 using System.Linq;
-using SpotiBackEnd.Models.MediaModels;
 
-namespace SpotiBackEnd.Models.UserModels
+namespace SpotiBackEnd.Models.MediaModels
 {
 
-    public class Artist 
+    public class Artist : Media
     {
         public string Alias { get; set; }
-        public Album[] Albums { get; set; }
+        public string AlbumsId { get; set; }
         public string Genre { get; set; }
         public int Rating { get; set; }
+        public Artist()
+        {
+            
+        }
     }
 }

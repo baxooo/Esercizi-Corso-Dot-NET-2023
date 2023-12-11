@@ -55,6 +55,11 @@ namespace SpotiBackEnd.Repositories
             return _context.Data.Where(o => o.Id == id ).FirstOrDefault();
         }
 
+        public TResponse[] GetManyById(int[] ids)
+        {
+            return _context.Data.Where(o => ids.Contains(o.Id)).ToArray();
+        }
+
         public bool Update(TRequest media)
         {
             if (!_context.Data.Any(a => a.Id == media.Id))

@@ -7,15 +7,14 @@ namespace SpotiServicesLibrary.ModelsDTO
 {
     public class RadioDTO : Media, IRating
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public PlaylistDTO OnAirPlaylist { get; set; }
-        public int Rating { get { return OnAirPlaylist.Rating; } set { OnAirPlaylist.Rating = value; } }
+        public int OnAirPlaylistId { get; set; }
+        public int Rating { get; set; }
 
         public RadioDTO(Radio radio)
         {
             Name = radio.Name;
-            OnAirPlaylist = new PlaylistDTO(radio.OnAirPlaylist);
+            OnAirPlaylistId = int.Parse(radio.OnAirPlaylistId);
             Rating = radio.Rating;
         }
         public RadioDTO()

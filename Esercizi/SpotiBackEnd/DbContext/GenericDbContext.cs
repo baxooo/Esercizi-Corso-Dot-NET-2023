@@ -16,7 +16,7 @@ namespace SpotiBackEnd.DbContext
             Logger logger = Logger.Instance;
             var dataFromCsv = ReadDataFromCsv<T>(path + typeof(T).Name.ToString() + ".csv", logger);
 
-            Data = dataFromCsv.Select(o => (TResponse)Activator.CreateInstance(typeof(TResponse), o)).Cast<TResponse>().ToList();
+            Data = dataFromCsv.Select(o => Activator.CreateInstance(typeof(TResponse), o)).Cast<TResponse>().ToList();
         }
     }
 

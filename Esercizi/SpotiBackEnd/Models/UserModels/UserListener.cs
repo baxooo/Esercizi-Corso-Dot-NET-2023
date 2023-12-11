@@ -8,16 +8,16 @@ using SpotiBackEnd.Models;
 
 namespace SpotiBackEnd.Models.UserModels
 {
-    public sealed class UserListener : User
+    public class UserListener : User
     {
-        public Playlist[] Playlists { get; set; }
-        public Playlist FavoritesPlaylist { get; set; }
-        public Radio[] RadioFavorites { get; set; }
-        public Artist[] Artists { get; set; }
-        public Album[] Albums { get; set; }
-        public MoviePlaylist[] PlaylistMovie { get; set; }
-        public Song[] AllUserSongs { get; set; }
-        public Movie[] AllMovies { get; set; }
+        public string PlaylistsId { get; set; }
+        public string FavoritesPlaylistId { get; set; }
+        public string RadioFavoritesId { get; set; }
+        public string ArtistsId { get; set; }
+        public string AlbumsId { get; set; }
+        public string PlaylistMovieId { get; set; }
+        public string AllUserSongsId { get; set; }
+        public string AllMoviesId { get; set; }
         public int RemainingTime { get; set; }
         public int ListenTime { get; set; }
         public MembershipTypeEnum MembershipType { get; set; } 

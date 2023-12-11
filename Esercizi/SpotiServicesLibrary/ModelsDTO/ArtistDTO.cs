@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SpotiBackEnd.Models.UserModels;
 using SpotiBackEnd.Models;
+using SpotiBackEnd.Models.MediaModels;
 
 namespace SpotiServicesLibrary.ModelsDTO
 {
@@ -12,15 +12,14 @@ namespace SpotiServicesLibrary.ModelsDTO
         public string Alias { get; set; }
         public int Rating { get; set; }
 
-        public AlbumDTO[] Albums { get; set; }
+        public int[] AlbumsId { get; set; }
         public string Genre { get; set; }
-        public int Id { get; set; }
 
         public ArtistDTO(Artist artist)
         {
             Alias = artist.Alias;
             Rating = artist.Rating;
-            Albums = artist.Albums.Cast<AlbumDTO>().ToArray();
+            AlbumsId = artist.AlbumsId.Split('|').Select(s => Int32.Parse(s)).ToArray();
             Genre = artist.Genre;
         }
         public ArtistDTO()

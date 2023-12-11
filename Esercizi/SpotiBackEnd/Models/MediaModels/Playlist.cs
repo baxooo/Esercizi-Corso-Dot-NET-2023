@@ -10,7 +10,11 @@ namespace SpotiBackEnd.Models.MediaModels
     public class Playlist : Media
     {
         public string Name { get; set; }
-        public Song[] Songs { get; set; }
+        public string SongsId { get; set; }
         public int Rating { get; set; }
+        public Playlist()
+        {
+            
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using SpotiBackEnd.DbContext;
 using SpotiBackEnd.Interfaces;
+using SpotiBackEnd.Models.MediaModels;
 using SpotiBackEnd.Models.UserModels;
 using System;
 using System.Collections.Generic;
@@ -7,18 +8,20 @@ using System.Linq;
 
 namespace SpotiBackEnd.Repositories
 {
-    public class UserRepository<T, Rs, Rq> : IUserRepository<T, Rs, Rq>
-        where T  : User, new()
-        where Rs : User, new() // TODO - better constraints
-        where Rq : User, new()
+    public class UserRepository<T, TResponse, TRequest> : IUserRepository<T, TResponse, TRequest>
+        where T  : UserListener, new()
+        where TResponse : User, new() // TODO - better constraints
+        where TRequest : User, new()
     {
-        private readonly GenericDbContext<T, Rs> _context;
+        private readonly GenericDbContext<T, TResponse> _context;
+        private MediaRepository<Artist, Artist, Artist> _artistsRepository;
         public UserRepository(string path)
         {
-            _context = new GenericDbContext<T, Rs>(path);
+            _context = new GenericDbContext<T, TResponse>(path);
+            //_artistsRepository = new MediaRepository<Artist, Artist, Artist>(path);
         }
 
-        public Rs GetUser(string username, string password)
+        public TResponse GetUser(string username, string password)
         {
             //fake login
             if(string.IsNullOrEmpty(username)|| string.IsNullOrEmpty(password))
@@ -29,7 +32,8 @@ namespace SpotiBackEnd.Repositories
             else 
                 return null;
         }
-        public Rs GetUserById(int id)
+
+        public TResponse GetUserById(int id)
         {
             if (string.IsNullOrEmpty(id.ToString()))
                 return null;
@@ -38,9 +42,10 @@ namespace SpotiBackEnd.Repositories
         }
 
         /// <summary>
-        /// removes the user with the specific id from the Context<T>.
+        /// Removes the user with the specific id from the Context<T>.
         /// </summary>
         /// <param name="userId"></param>
+        /// <typeparamtef name="Context<T>"/>
         /// <returns>
         /// true if user is correctly removed; otherwise, false.
         /// </returns>
@@ -54,21 +59,20 @@ namespace SpotiBackEnd.Repositories
             else return false;
         }
 
-        public bool AddUser(Rs user)
+        public bool AddUser(TResponse user)
         { // TODO - change rs to rq
             if(user == null) return false;
 
             _context.Data.Add(user);
             return true;
         }
-        public bool UpdateUser(Rs user)
+
+        public bool UpdateUser(TResponse user)
         { // TODO - change rs to rq
             if (user == null) return false;
 
             _context.Data[user.Id] = user;
             return true;
         }
-
-
     }
 }

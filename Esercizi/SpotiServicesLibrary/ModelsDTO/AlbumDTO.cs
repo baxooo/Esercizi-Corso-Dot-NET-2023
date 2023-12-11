@@ -12,16 +12,15 @@ namespace SpotiServicesLibrary.ModelsDTO
     public class AlbumDTO : Media , IRating
     {
         public string AlbumTitle { get; set; }
-        public ArtistDTO Artist { get; set; }
-        public SongDTO[] Songs { get; set; }
+        public int ArtistId { get; set; }
+        public int[] SongsId { get; set; }
         public int Rating { get; set; }
-        public int Id { get; set; }
 
         public AlbumDTO(Album album)
         {
             AlbumTitle = album.AlbumName;
-            Artist = new ArtistDTO(album.Artist);
-            Songs = album.Songs.Cast<SongDTO>().ToArray();
+            ArtistId = album.ArtistId;
+            SongsId = album.SongsId.Split('|').Select(s => int.Parse(s)).ToArray();
             Rating = album.Rating;
         }
         public AlbumDTO()

@@ -12,5 +12,9 @@ namespace SpotiBackEnd.Models.MediaModels
         public string Title { get; set; }
         public int Rating { get; set; }
         public int[] Resolution { get; set; }
+        public Movie()
+        {
+            
+        }
     }
 }
