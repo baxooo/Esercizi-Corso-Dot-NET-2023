@@ -15,13 +15,14 @@ namespace SpotiServicesLibrary.ModelsDTO
         public int PlaylistId { get; set; }
         public int Rating { get; set; }
         public string Name { get; set; }
-        public SongDTO[] Songs { get; set; }
+        public int[] Songs { get; set; }
 
         public PlaylistDTO(Playlist playlist)
         {
+            Id = playlist.Id;
             Rating = playlist.Rating;
             Name = playlist.Name;
-           // Songs = playlist.Songs.Cast<SongDTO>().ToArray(); // TODO correct
+            Songs = playlist.SongsId.Split('|').Select(s => int.Parse(s)).ToArray(); // TODO correct
         }
 
         public PlaylistDTO()

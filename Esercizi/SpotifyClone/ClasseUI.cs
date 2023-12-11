@@ -149,28 +149,28 @@ namespace SpotifyClone
         }
 
         private IRating[] GetNestedArray(object o)
-        {
-            //switch (o)
-            //{
-            //    case AlbumDTO album:
-            //        _currentSelectedAlbum = album;
-            //        return album.SongsId;
-            //    case PlaylistDTO playlist:
-            //        _currentSelectedPlaylist = playlist;
-            //        return playlist.Songs;
-            //    case ArtistDTO artist:
-            //        return artist.AlbumsID;
-            //    case RadioDTO radio:
-            //        return radio.OnAirPlaylistId.Songs;
-            //    case SongDTO:
-            //        _isMedia = true;
-            //        return _currentSelectionArray;
-            //    case MoviePlaylistDTO mp:
-            //        return mp.MoviesId;
-            //    case MovieDTO:
-            //        _isMedia = true;
-            //        return _currentSelectionArray;
-            //}
+        {// TODO - services for each type
+            switch (o)
+            {
+                case AlbumDTO album:
+                    _currentSelectedAlbum = album;
+                    return album.SongsId;
+                case PlaylistDTO playlist:
+                    _currentSelectedPlaylist = playlist;
+                    return playlist.Songs;
+                case ArtistDTO artist:
+                    return artist.AlbumsID;
+                case RadioDTO radio:
+                    return radio.OnAirPlaylistId.Songs;
+                case SongDTO:
+                    _isMedia = true;
+                    return _currentSelectionArray;
+                case MoviePlaylistDTO mp:
+                    return mp.MoviesId;
+                case MovieDTO:
+                    _isMedia = true;
+                    return _currentSelectionArray;
+            }
             return null;
 
             // TODO fix
@@ -345,6 +345,7 @@ namespace SpotifyClone
                 if (user != null)
                 {
                     loggedIn= true;
+                    _user = user;
                     _logger.Log(LogTypeEnum.INFO, "successfull log in attempt from user");
                 }
                 else

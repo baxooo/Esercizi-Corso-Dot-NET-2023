@@ -1,4 +1,5 @@
-﻿using SpotiLogLibrary;
+﻿using SpotiBackEnd.Models;
+using SpotiLogLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -71,14 +72,21 @@ namespace SpotiBackEnd.DbContext
                         }
                         try
                         {
-                            entry.GetType()
-                                 .GetProperty(headers[j])
-                                 .SetValue(entry, Convert.ChangeType(col, entry.GetType().GetProperty(headers[j])
-                                 .PropertyType));
+                            var CurrentProp = entry.GetType().GetProperty(headers[j]).PropertyType;
+                            if(CurrentProp.IsEnum)
+                            {
+                                object enumValue = Enum.Parse(CurrentProp, col);
+                                entry.GetType().GetProperty(headers[j]).SetValue(entry, enumValue);
+                            }
+                            else
+                                entry.GetType()
+                                    .GetProperty(headers[j])
+                                    .SetValue(entry, Convert.ChangeType(col, entry.GetType().GetProperty(headers[j])
+                                    .PropertyType));
                         }
                         catch(Exception ex)
                         {
-                            log.Log(LogTypeEnum.ERROR, ex.Message + "\n" + ex.InnerException);
+                            log.Log(LogTypeEnum.ERROR, ex.Message + "\n" + ex.StackTrace);
                         }
                         j++;
                     }

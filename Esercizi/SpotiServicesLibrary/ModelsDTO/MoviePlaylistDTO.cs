@@ -14,6 +14,7 @@ namespace SpotiServicesLibrary.ModelsDTO
         public string PlaylistName { get; set; }
         public MoviePlaylistDTO(MoviePlaylist playlist)
         {
+            Id = playlist.Id;
             Rating = playlist.Rating;
             MoviesId = playlist.MoviesId;
             PlaylistName = playlist.PlaylistName;

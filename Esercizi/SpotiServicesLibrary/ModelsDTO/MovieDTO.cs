@@ -16,6 +16,7 @@ namespace SpotiServicesLibrary.ModelsDTO
         public int[] Resolution { get; set; }
         public MovieDTO(Movie movie)
         {
+            Id = movie.Id;
             Title = movie.Title;
             Rating = movie.Rating;
             Resolution = movie.Resolution;

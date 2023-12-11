@@ -17,6 +17,7 @@ namespace SpotiServicesLibrary.ModelsDTO
 
         public ArtistDTO(Artist artist)
         {
+            Id = artist.Id;
             Alias = artist.Alias;
             Rating = artist.Rating;
             AlbumsId = artist.AlbumsId.Split('|').Select(s => Int32.Parse(s)).ToArray();

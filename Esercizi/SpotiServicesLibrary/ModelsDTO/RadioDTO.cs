@@ -13,6 +13,7 @@ namespace SpotiServicesLibrary.ModelsDTO
 
         public RadioDTO(Radio radio)
         {
+            Id = radio.Id;
             Name = radio.Name;
             OnAirPlaylistId = int.Parse(radio.OnAirPlaylistId);
             Rating = radio.Rating;

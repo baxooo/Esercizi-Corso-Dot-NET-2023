@@ -9,7 +9,7 @@
         public int Duration { get; set; }
         public string Genre { get; set; }
         public int Rating { get; set; }
-        public int? PlaylistId { get; set; }
+        public int PlaylistId { get; set; }
         public Song()
         {
             
