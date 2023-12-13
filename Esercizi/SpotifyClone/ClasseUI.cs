@@ -152,24 +152,24 @@ namespace SpotifyClone
         {// TODO - services for each type
             switch (o)
             {
-                case AlbumDTO album:
-                    _currentSelectedAlbum = album;
-                    return album.SongsId;
-                case PlaylistDTO playlist:
-                    _currentSelectedPlaylist = playlist;
-                    return playlist.Songs;
-                case ArtistDTO artist:
-                    return artist.AlbumsID;
-                case RadioDTO radio:
-                    return radio.OnAirPlaylistId.Songs;
-                case SongDTO:
-                    _isMedia = true;
-                    return _currentSelectionArray;
-                case MoviePlaylistDTO mp:
-                    return mp.MoviesId;
-                case MovieDTO:
-                    _isMedia = true;
-                    return _currentSelectionArray;
+                //case AlbumDTO album:
+                //    _currentSelectedAlbum = album;
+                //    return album.SongsId;
+                //case PlaylistDTO playlist:
+                //    _currentSelectedPlaylist = playlist;
+                //    return playlist.Songs;
+                //case ArtistDTO artist:
+                //    return artist.AlbumsID;
+                //case RadioDTO radio:
+                //    return radio.OnAirPlaylistId.Songs;
+                //case SongDTO:
+                //    _isMedia = true;
+                //    return _currentSelectionArray;
+                //case MoviePlaylistDTO mp:
+                //    return mp.MoviesId;
+                //case MovieDTO:
+                //    _isMedia = true;
+                //    return _currentSelectionArray;
             }
             return null;
 

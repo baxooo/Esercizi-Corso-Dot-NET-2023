@@ -17,7 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotiLogLibrary", "SpotiLog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotiBackEnd", "SpotiBackEnd\SpotiBackEnd.csproj", "{9C835B90-F352-46B6-A7A3-17DDBEEEF624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotiServicesLibrary", "SpotiServicesLibrary\SpotiServicesLibrary.csproj", "{9A412EC3-F159-4F1B-8972-8CDB1E010298}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotiServicesLibrary", "SpotiServicesLibrary\SpotiServicesLibrary.csproj", "{9A412EC3-F159-4F1B-8972-8CDB1E010298}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{E6E588EE-A0EA-45DD-92E3-9310C4C8E9FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientServiceLayer", "ClientServiceLayer\ClientServiceLayer.csproj", "{E6080B9C-D74F-49A2-B5BD-077963B8A46F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientDataLayer", "ClientDataLayer\ClientDataLayer.csproj", "{54EF79C8-7CE3-44A8-BB99-BDA92F40B025}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +63,18 @@ Global
 		{9A412EC3-F159-4F1B-8972-8CDB1E010298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A412EC3-F159-4F1B-8972-8CDB1E010298}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A412EC3-F159-4F1B-8972-8CDB1E010298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6E588EE-A0EA-45DD-92E3-9310C4C8E9FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6E588EE-A0EA-45DD-92E3-9310C4C8E9FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6E588EE-A0EA-45DD-92E3-9310C4C8E9FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6E588EE-A0EA-45DD-92E3-9310C4C8E9FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6080B9C-D74F-49A2-B5BD-077963B8A46F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6080B9C-D74F-49A2-B5BD-077963B8A46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6080B9C-D74F-49A2-B5BD-077963B8A46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6080B9C-D74F-49A2-B5BD-077963B8A46F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54EF79C8-7CE3-44A8-BB99-BDA92F40B025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54EF79C8-7CE3-44A8-BB99-BDA92F40B025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54EF79C8-7CE3-44A8-BB99-BDA92F40B025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54EF79C8-7CE3-44A8-BB99-BDA92F40B025}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

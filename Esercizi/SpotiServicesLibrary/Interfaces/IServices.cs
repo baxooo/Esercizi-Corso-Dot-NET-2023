@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.Interfaces
 {
-    internal interface IServices<T, Rs>
+    internal interface IServices<T, TResponse>
     {
-        public Rs Update();
-        public Rs GetAll();
-        public Rs GetById(int id);
-        public Rs Delete(int id);
+        public TResponse Update();
+        public TResponse GetAll();
+        public TResponse GetById(int id);
+        public TResponse Delete(int id);
     }
 }

@@ -1,40 +1,39 @@
-﻿using SpotiBackEnd.Models;
-using SpotiLogLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using SpotiLogLibrary;
+using Microsoft.Extensions.Configuration;
 
-namespace SpotiBackEnd.DbContext
+namespace ClientDataLayer
 {
-    public abstract class DbContext
+    internal abstract class DbContext
     {
         string _config;
-        protected DbContext(string config)
+        protected DbContext(IConfiguration config)
         {
-            _config = config;
+            _config = config.GetConnectionString("DefaultConnection");
         }
 
         public DbContext()
         {
-                
+
         }
 
-        protected virtual List<T> ReadDataFromCsv<T>(string path, Logger logger) 
-            where T  : class, new()
+        protected virtual List<T> ReadDataFromCsv<T>(string path, Logger logger)
+            where T : class, new()
         {
             if (!File.Exists(path))
             {
-                logger.Log(LogTypeEnum.WARNING, "csv file does not exist");
+                logger.Log(path, LogTypeEnum.WARNING, "csv file does not exist");
                 return null;
             }
 
-            return CreateObject<T>(File.ReadAllLines(path).ToList(),logger);
+            return CreateObject<T>(File.ReadAllLines(path).ToList(), logger);
         }
-        private static List<T> CreateObject<T>(List<string> file, Logger log) 
+        private static List<T> CreateObject<T>(List<string> file, Logger log)
             where T : class, new()
         {
             List<T> list = new List<T>();
@@ -73,7 +72,7 @@ namespace SpotiBackEnd.DbContext
                         try
                         {
                             var CurrentProp = entry.GetType().GetProperty(headers[j]).PropertyType;
-                            if(CurrentProp.IsEnum)
+                            if (CurrentProp.IsEnum)
                             {
                                 object enumValue = Enum.Parse(CurrentProp, col);
                                 entry.GetType().GetProperty(headers[j]).SetValue(entry, enumValue);
@@ -84,7 +83,7 @@ namespace SpotiBackEnd.DbContext
                                     .SetValue(entry, Convert.ChangeType(col, entry.GetType().GetProperty(headers[j])
                                     .PropertyType));
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             log.Log(LogTypeEnum.ERROR, ex.Message + "\n" + ex.StackTrace);
                         }
@@ -99,39 +98,44 @@ namespace SpotiBackEnd.DbContext
             return list;
         }
 
-        public void WriteData<T>(IEnumerable<T> data)
+        public void WriteData<T>(IEnumerable<T> data) where T : class,new()
         {
-
+            T entry = new T();
             List<string> list = new List<string>();
             StringBuilder sb = new StringBuilder();
-            var cols = data.GetEnumerator().GetType().GetProperties();
+            var obj = data.Select(s => s.GetType().GetProperties());
 
             if (File.Exists(_config))
             {
                 File.Delete(_config);
+                File.Create(_config);
             }
-            foreach (var col in cols)
-            {
-                sb.Append(col.Name);
-                sb.Append(',');
-            }
+            foreach (var cols in obj)
+                foreach (var col in cols)
+                {
+
+                    sb.Append(col.Name);
+                    sb.Append(',');
+                }
+            
 
             list.Add(sb.ToString().Substring(0, sb.Length - 1));
             foreach (var row in data)
             {
 
                 sb = new StringBuilder();
-                foreach (var col in cols)
-                {
+                foreach (var cols in obj)
+                    foreach (var col in cols)
+                    {
+                        sb.Append(col.GetValue(row));
+                        sb.Append(',');
 
-                    sb.Append(col.GetValue(row));
-                    sb.Append(',');
-
-
-                }
+                    }
                 list.Add(sb.ToString().Substring(0, sb.Length - 1));
             }
-            File.AppendAllLines(_config, list);
+
+            list.RemoveAt(0);
+            File.AppendAllLines(_config + entry.GetType().Name +".csv", list);
         }
     }
 }
