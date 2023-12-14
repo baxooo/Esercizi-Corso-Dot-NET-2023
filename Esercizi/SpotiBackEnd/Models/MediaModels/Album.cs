@@ -1,6 +1,8 @@
-﻿namespace SpotiBackEnd.Models.MediaModels
+﻿using SpotiBackEnd.Interfaces;
+
+namespace SpotiBackEnd.Models.MediaModels
 {
-    public class Album : Media
+    public class Album : Media,IRating
     {
         public string AlbumName { get; set; }
         public int ArtistId { get; set; }

@@ -71,7 +71,7 @@ namespace SpotiBackEnd.Repositories
         { // TODO - change rs to rq
             if (user == null) return false;
 
-            _context.Data[user.Id] = user;
+            _context.Data[user.Id - 1] = user;
             return true;
         }
     }

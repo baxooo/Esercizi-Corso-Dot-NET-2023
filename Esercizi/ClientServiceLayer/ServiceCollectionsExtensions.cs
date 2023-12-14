@@ -1,8 +1,5 @@
 ﻿using ClientDataLayer;
-using ClientDataLayer.Interfaces;
-using ClientDataLayer.Repositories;
 using ClientServiceLayer.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ClientServiceLayer
@@ -10,8 +7,8 @@ namespace ClientServiceLayer
     public static class ServiceCollectionsExtensions
     {
         public static IServiceCollection RegisterDbServices<T,TResponse>(this IServiceCollection services)
-            where T : class,new()
-            where TResponse : class,new()
+            where T : class, new()
+            where TResponse : class, new()
         {
             services.AddDataLayerServices<T, TResponse>();
             services.AddTransient<OrderService>();

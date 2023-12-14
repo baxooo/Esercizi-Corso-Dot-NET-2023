@@ -66,7 +66,7 @@ namespace SpotiBackEnd.Repositories
                 return false;
 
             var rsMedia = _context.Data.Where(m => m.Id == media.Id).FirstOrDefault();
-            _context.Data[media.Id] = rsMedia;
+            _context.Data[media.Id - 1] = rsMedia;
             return true;
         }
     }

@@ -1,15 +1,10 @@
-﻿using SpotiBackEnd.DbContext;
-using SpotiBackEnd.Models;
+﻿using SpotiBackEnd.Models;
 using SpotiBackEnd.Models.MediaModels;
 using SpotiBackEnd.Models.UserModels;
-using SpotiBackEnd.Models.UserModelsResponse;
 using SpotiBackEnd.Repositories;
 using SpotiServicesLibrary.ModelsDTO;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpotiServicesLibrary.Services
 {
@@ -104,6 +99,21 @@ namespace SpotiServicesLibrary.Services
         }
 
         /// <summary>
+        /// Retrieves an array of AlbumDTO objects that match the specified album IDs and are associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <param name="albumsId">An array of album IDs to filter the requested albums.</param>
+        public AlbumDTO[] GetRequiredUserAlbumsArray(int userId, int[] albumsId)
+        {
+            var user = _userRepository.GetUserById(userId);
+            var albums = _albumRepository.GetAll()
+                                         .Where(a => user.AlbumsId
+                                         .Contains(a.Id));
+            var requiredAlbums = albums.Where(a => albumsId.Contains(a.Id));
+            return requiredAlbums.ToArray();
+        }
+
+        /// <summary>
         /// Retrieves an array of ArtistDTO objects associated with a specific user.
         /// </summary>
         /// <param name="userId">The unique identifier of the user.</param>
@@ -153,6 +163,23 @@ namespace SpotiServicesLibrary.Services
                                        .Where(s => user.SongsId
                                        .Contains(s.Id));    
             return songs.ToArray();
+        }
+
+        /// <summary>
+        /// Retrieves an array of SongDTO objects that match the specified song IDs and are associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <param name="songsId">An array of song IDs to filter the requested songs.</param>
+        /// <returns>An array of SongDTO objects associated with the user and matching the specified song IDs.</returns>
+
+        public SongDTO[] GetAllRequestedSongsArray(int userId, int[] songsId)
+        {
+            var user = _userRepository.GetUserById(userId);
+            var songs = _songRepository.GetAll()
+                                       .Where(s => user.SongsId
+                                       .Contains(s.Id));
+            var selectedSongs = songs.Where(s => songsId.Contains(s.Id));
+            return selectedSongs.ToArray();
         }
 
         /// <summary>
