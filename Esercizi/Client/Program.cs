@@ -6,6 +6,9 @@ using ClientServiceLayer.Interfaces;
 using ClientServiceLayer.Models;
 using ClientServiceLayer.Models.ResponseDTO;
 using ClientServiceLayer;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using System.Reflection.Emit;
 
 namespace Client
 {
@@ -32,6 +35,12 @@ namespace Client
                                 op.Password = mailConf.Password;
                                 op.Security = mailConf.Security;
                             });
+
+            services.AddLogging(options =>
+            {
+                options.AddConfiguration(conf);
+                options.AddConsole();
+            });
 
             /* registra l'oggetto IConfiguration nel container DI come singleton.
             *  Questo significa che una singola istanza di IConfiguration verrà condivisa

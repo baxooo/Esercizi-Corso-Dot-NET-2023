@@ -4,14 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.IO;
-using SpotiLogLibrary;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace ClientDataLayer
 {
     internal abstract class DbContext
     {
         string _config;
+        protected static ILogger _logger;
         protected DbContext(IConfiguration config)
         {
             _config = config.GetConnectionString("DefaultConnection");
@@ -22,18 +23,18 @@ namespace ClientDataLayer
 
         }
 
-        protected virtual List<T> ReadDataFromCsv<T>(string path, Logger logger)
+        protected virtual List<T> ReadDataFromCsv<T>(string path)
             where T : class, new()
         {
             if (!File.Exists(path))
             {
-                logger.Log(path, LogTypeEnum.WARNING, "csv file does not exist");
+                _logger.LogWarning("csv file does not exist");
                 return null;
             }
 
-            return CreateObject<T>(File.ReadAllLines(path).ToList(), logger);
+            return CreateObject<T>(File.ReadAllLines(path).ToList());
         }
-        private static List<T> CreateObject<T>(List<string> file, Logger log)
+        private static List<T> CreateObject<T>(List<string> file)
             where T : class, new()
         {
             List<T> list = new List<T>();
@@ -85,7 +86,7 @@ namespace ClientDataLayer
                         }
                         catch (Exception ex)
                         {
-                            log.Log(LogTypeEnum.ERROR, ex.Message + "\n" + ex.StackTrace);
+                            _logger.LogError(ex.Message + "\n" + ex.StackTrace);
                         }
                         j++;
                     }
@@ -93,7 +94,7 @@ namespace ClientDataLayer
                     list.Add(entry);
                 }
             }
-            else log.Log(LogTypeEnum.ERROR, "Oggetto e File Csv hanno Dataset diversi!");
+            else _logger.LogError("Oggetto e File Csv hanno Dataset diversi!");
 
             return list;
         }
