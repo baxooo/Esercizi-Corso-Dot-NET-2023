@@ -26,11 +26,6 @@ namespace ClientServiceLayer.Services
             return _orderRepository.GetAll();
         }
 
-        public OrderModelResDTO GetById(int id)
-        {
-            return _orderRepository.GetById(id);
-        }
-
         public bool SaveNewOrder(OrderModel orderModel)
         {
             if (orderModel == null )

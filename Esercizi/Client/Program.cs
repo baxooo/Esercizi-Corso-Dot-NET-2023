@@ -1,11 +1,8 @@
 ﻿using System;
-using ClientDataLayer.Repositories;
-using ClientDataLayer.Interfaces;
 using ClientServiceLayer.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ClientServiceLayer.Interfaces;
-using ClientDataLayer.Models;
 using ClientServiceLayer.Models;
 using ClientServiceLayer.Models.ResponseDTO;
 using ClientServiceLayer;
@@ -54,14 +51,11 @@ namespace Client
              * potresti voler considerare AddSingleton  
             */ 
             services.AddTransient<INotifier, MailNotificationClient>();
-            services.AddSingleton<IOrderRepository<OrderModel, OrderModelResDTO>, 
-                OrderRepository<OrderModel, OrderModelResDTO>>();
             services.AddTransient<IMailTemplate, MailTemplate>();
             services.AddTransient<INotificationService, MailNotificationService>();
-            services.AddTransient<OrderService>();
 
 
-            services.RegisterDbServices<OrderModel,OrderModelResDTO>(conf);//peggio di prima?
+            services.RegisterDbServices<OrderModel,OrderModelResDTO>();
 
             var serviceProvider = services.BuildServiceProvider();
 

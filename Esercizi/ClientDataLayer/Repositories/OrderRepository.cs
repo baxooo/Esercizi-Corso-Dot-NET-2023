@@ -12,7 +12,7 @@ namespace ClientDataLayer.Repositories
 {
     public class OrderRepository<T, TResponse> : IOrderRepository<T, TResponse>
         where T : class, new()
-        where TResponse : Order, new() // TODO - better constrains
+        where TResponse : class, new()
     {
         private IDbContext<T, TResponse> _context;
         public OrderRepository(IServiceProvider service)
@@ -24,14 +24,6 @@ namespace ClientDataLayer.Repositories
         public List<TResponse> GetAll()
         {
             return _context.Data.ToList();
-        }
-
-        public TResponse GetById(int id)
-        {
-            var order = _context.Data.Where(u => u.Id == id).FirstOrDefault();
-            if (order is null)
-                return null;
-            return order;
         }
 
         public bool StoreOrder(T item)

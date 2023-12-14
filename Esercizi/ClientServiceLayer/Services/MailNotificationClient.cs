@@ -2,6 +2,7 @@
 using System.Net;
 using Microsoft.Extensions.Configuration;
 using ClientServiceLayer.Interfaces;
+using ClientServiceLayer.Models;
 using Microsoft.Extensions.Options;
 using ClientDataLayer.Models;
 
