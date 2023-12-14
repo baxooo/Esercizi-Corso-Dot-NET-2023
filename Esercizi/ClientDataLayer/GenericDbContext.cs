@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ClientDataLayer.Interfaces;
+using Microsoft.Extensions.Configuration;
 using SpotiLogLibrary;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClientDataLayer
 {
-    internal class GenericDbContext<T, TResponse> : DbContext
+    internal class GenericDbContext<T, TResponse> : DbContext, IDbContext<T, TResponse>
         where T : class, new()
         where TResponse : class, new()
     {

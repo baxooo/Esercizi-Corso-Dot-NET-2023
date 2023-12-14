@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClientDataLayer.Interfaces;
 using ClientDataLayer.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClientDataLayer.Repositories
 {
@@ -13,10 +14,10 @@ namespace ClientDataLayer.Repositories
         where T : class, new()
         where TResponse : Order, new() // TODO - better constrains
     {
-        private GenericDbContext<T, TResponse> _context;
-        public OrderRepository(IConfiguration conf)
+        private IDbContext<T, TResponse> _context;
+        public OrderRepository(IServiceProvider service)
         {
-            _context = new GenericDbContext<T, TResponse>(conf);
+            _context = service.GetRequiredService<IDbContext<T, TResponse>>();
         }
 
         

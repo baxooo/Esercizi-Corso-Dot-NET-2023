@@ -8,6 +8,7 @@ using ClientServiceLayer.Interfaces;
 using ClientDataLayer.Models;
 using ClientServiceLayer.Models;
 using ClientServiceLayer.Models.ResponseDTO;
+using ClientServiceLayer;
 
 namespace Client
 {
@@ -59,6 +60,8 @@ namespace Client
             services.AddTransient<INotificationService, MailNotificationService>();
             services.AddTransient<OrderService>();
 
+
+            services.RegisterDbServices<OrderModel,OrderModelResDTO>(conf);//peggio di prima?
 
             var serviceProvider = services.BuildServiceProvider();
 
