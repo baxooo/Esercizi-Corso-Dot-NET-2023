@@ -4,8 +4,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientDataLayer
 {
@@ -15,11 +13,16 @@ namespace ClientDataLayer
     {
         public List<TResponse> Data { get; set; }
 
-        public GenericDbContext(IConfiguration config,ILogger<GenericDbContext<T,TResponse>> logger) : base(config)
+        public GenericDbContext(IConfiguration config,ILogger<GenericDbContext<T,TResponse>> logger) : base(config,logger)
         {
             _logger = logger;
             var dataFromCsv = ReadDataFromCsv<T>(config.GetConnectionString("DefaultConnection") + typeof(T).Name.ToString() + ".csv");
 
+            if(dataFromCsv == null )
+            {
+                _logger.LogError("No data from DB!");
+                return;
+            }
             Data = dataFromCsv.Select(o => Activator.CreateInstance(typeof(TResponse), o)).Cast<TResponse>().ToList();
         }
     }

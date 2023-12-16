@@ -13,8 +13,9 @@ namespace ClientDataLayer
     {
         string _config;
         protected static ILogger _logger;
-        protected DbContext(IConfiguration config)
+        protected DbContext(IConfiguration config,ILogger logger)
         {
+            _logger = logger;
             _config = config.GetConnectionString("DefaultConnection");
         }
 

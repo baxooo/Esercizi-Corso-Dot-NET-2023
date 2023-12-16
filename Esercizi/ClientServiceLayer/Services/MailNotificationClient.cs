@@ -18,10 +18,8 @@ namespace ClientServiceLayer.Services
 
         public void SendNotification(string toAddress, string subject, string body)
         {
-
             var FromAddress = new MailAddress(_mailConf.Username, "CORSONET 2023");
             var ToAddress = new MailAddress(toAddress);
-
 
             var smtp = new SmtpClient
             {

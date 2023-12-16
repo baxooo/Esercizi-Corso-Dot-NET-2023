@@ -6,9 +6,9 @@ using ClientServiceLayer.Interfaces;
 using ClientServiceLayer.Models;
 using ClientServiceLayer.Models.ResponseDTO;
 using ClientServiceLayer;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using System.Reflection.Emit;
+using Serilog;
 
 namespace Client
 {
@@ -22,53 +22,25 @@ namespace Client
                             .AddEnvironmentVariables()
                             .Build();
 
-            var mailConf = new MailConf();
-            conf.GetSection("EmailConfiguration").Bind(mailConf);
-
-
-            var services = new ServiceCollection()
-                            .Configure<MailConf>(op =>
-                            {
-                                op.Host = mailConf.Host;
-                                op.Port = mailConf.Port;
-                                op.Username = mailConf.Username;
-                                op.Password = mailConf.Password;
-                                op.Security = mailConf.Security;
-                            });
-
-            services.AddLogging(options =>
+            IHost host;
+            try
             {
-                options.AddConfiguration(conf);
-                options.AddConsole();
-            });
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Console()
+                    .WriteTo.File(conf.GetConnectionString("DefaultConnection"))
+                    .ReadFrom
+                    .Configuration(conf)
+                    .CreateLogger();
 
-            /* registra l'oggetto IConfiguration nel container DI come singleton.
-            *  Questo significa che una singola istanza di IConfiguration verrà condivisa
-            * in tutta l'applicazione. 
-            */
-            services.AddSingleton<IConfiguration>(conf);
-            /* questa linea di codice fa in modo di passare la configurazione che abbiamo creato
-             * con il ConfigurationBuilder ad un eventuale classe che ne necessita, in questo
-             * modo per esempio possiamo avere accesso ai dati del json che in questo caso contengono
-             * il path per i file .csv
-            */
+                host = CreateHostBuilder(args, conf).Build();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
 
-
-            /* La scelta di AddTransient implica una nuova istanza ad ogni richiesta.
-             * Assicurati che questo comportamento sia adatto per il tuo EmailSender. 
-             * Se, per esempio, EmailSender mantenesse stato o risorse (come una connessione di rete),
-             * potresti voler considerare AddSingleton  
-            */ 
-            services.AddTransient<INotifier, MailNotificationClient>();
-            services.AddTransient<IMailTemplate, MailTemplate>();
-            services.AddTransient<INotificationService, MailNotificationService>();
-
-
-            services.RegisterDbServices<OrderModel,OrderModelResDTO>();
-
-            var serviceProvider = services.BuildServiceProvider();
-
-            var orderService = serviceProvider.GetRequiredService<OrderService>();
+            var orderService = host.Services.GetRequiredService<OrderService>();
             
 
             OrderModel order = new OrderModel()
@@ -83,6 +55,32 @@ namespace Client
 
             orderService.SaveNewOrder(order);
 
+        }
+
+        private static IHostBuilder CreateHostBuilder(string[] args, IConfigurationRoot conf)
+        {
+            var mailConf = new MailConf();
+            conf.GetSection("EmailConfiguration").Bind(mailConf);
+
+            return Host.CreateDefaultBuilder(args)
+                .UseSerilog()
+                .ConfigureServices(services =>
+                {
+                    services.AddTransient<INotifier, MailNotificationClient>();
+                    services.AddSingleton<IConfiguration>(conf);
+                    services.AddTransient<INotifier, MailNotificationClient>();
+                    services.AddTransient<IMailTemplate, MailTemplate>();
+                    services.AddTransient<INotificationService, MailNotificationService>();
+                    services.RegisterDbServices<OrderModel, OrderModelResDTO>();
+                    services.Configure<MailConf>(op =>
+                    {
+                        op.Host = mailConf.Host;
+                        op.Port = mailConf.Port;
+                        op.Username = mailConf.Username;
+                        op.Password = mailConf.Password;
+                        op.Security = mailConf.Security;
+                    });
+                });
         }
     }
 }
