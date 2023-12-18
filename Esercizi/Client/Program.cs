@@ -7,7 +7,6 @@ using ClientServiceLayer.Models;
 using ClientServiceLayer.Models.ResponseDTO;
 using ClientServiceLayer;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace Client
