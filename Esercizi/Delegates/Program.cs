@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using static Delegates.Program;
 
 namespace Delegates
@@ -7,7 +8,9 @@ namespace Delegates
     {
         public delegate int SommaDelegate(int a, int b);
         public delegate int ExecuteDelegate(SommaDelegate sumFunction);
-
+        
+        private static int _x = 3;
+        private static int _y = 5;
         static void Main()
         {
             SommaDelegate sumFunction = Somma;
@@ -16,8 +19,12 @@ namespace Delegates
 
             EseguiTutto(exeDelegate);
 
+            DelegatesSecondoEsercizio.DelegateSecondoEsercizio(_x,_y,6);
+
+
             Console.ReadLine();
         }
+        
 
         public static void EseguiTutto(ExecuteDelegate exeDelegate)
         {
@@ -30,10 +37,9 @@ namespace Delegates
         }
         public static int Esegui(SommaDelegate funzioneSomma)
         {
-            int risultato = funzioneSomma(3,5);
+            int risultato = funzioneSomma(_x,_y);
             Console.WriteLine(risultato);
             return risultato;
         }
-
     }
 }
