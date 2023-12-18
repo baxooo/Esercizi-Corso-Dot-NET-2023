@@ -25,8 +25,6 @@ namespace Client
             try
             {
                 Log.Logger = new LoggerConfiguration()
-                    .WriteTo.Console()
-                    .WriteTo.File(conf.GetConnectionString("DefaultConnection"))
                     .ReadFrom
                     .Configuration(conf)
                     .CreateLogger();

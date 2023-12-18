@@ -13,7 +13,7 @@ namespace ClientDataLayer
     {
         public List<TResponse> Data { get; set; }
 
-        public GenericDbContext(IConfiguration config,ILogger<GenericDbContext<T,TResponse>> logger) : base(config,logger)
+        public GenericDbContext(IConfiguration config,ILogger<GenericDbContext<T,TResponse>> logger) : base(config)
         {
             _logger = logger;
             var dataFromCsv = ReadDataFromCsv<T>(config.GetConnectionString("DefaultConnection") + typeof(T).Name.ToString() + ".csv");
