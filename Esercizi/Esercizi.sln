@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotiAPI", "SpotiAPI\SpotiA
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2C305D79-E9A1-4390-86D8-BC33683ACAAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "..\Events\Events.csproj", "{C9BF64A7-0FAD-47AC-8331-3D8665B4C073}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "Events\Events.csproj", "{A88455F8-355E-40F1-A6B1-37C8B191B315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,10 +95,10 @@ Global
 		{2C305D79-E9A1-4390-86D8-BC33683ACAAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C305D79-E9A1-4390-86D8-BC33683ACAAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C305D79-E9A1-4390-86D8-BC33683ACAAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9BF64A7-0FAD-47AC-8331-3D8665B4C073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9BF64A7-0FAD-47AC-8331-3D8665B4C073}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9BF64A7-0FAD-47AC-8331-3D8665B4C073}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9BF64A7-0FAD-47AC-8331-3D8665B4C073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88455F8-355E-40F1-A6B1-37C8B191B315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88455F8-355E-40F1-A6B1-37C8B191B315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88455F8-355E-40F1-A6B1-37C8B191B315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88455F8-355E-40F1-A6B1-37C8B191B315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
