@@ -12,6 +12,8 @@
 *.yml
 *.json
 *.txt
+*.dockerignore
+*.dcproj
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
