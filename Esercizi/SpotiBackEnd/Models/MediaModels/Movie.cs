@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpotiBackEnd.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpotiBackEnd.Models.MediaModels
 {
-    public class Movie : Media
+    public class Movie : Media, IRating
     {
         public string Title { get; set; }
         public int Rating { get; set; }
