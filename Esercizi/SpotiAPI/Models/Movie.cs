@@ -11,6 +11,7 @@ namespace SpotiAPI.Models
         public string Title { get; set; }
         public int? Rating { get; set; }
         public string Resolution { get; set; }
+        public int? MoviePlaylistId { get; set; }
 
         public virtual MoviePlaylist MoviePlaylist { get; set; }
     }

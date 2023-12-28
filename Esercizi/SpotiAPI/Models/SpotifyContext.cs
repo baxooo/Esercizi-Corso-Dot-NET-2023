@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Logging;
 
 #nullable disable
 
@@ -9,15 +8,13 @@ namespace SpotiAPI.Models
 {
     public partial class SpotifyContext : DbContext
     {
-        ILogger<SpotifyContext> _logger;
         public SpotifyContext()
         {
         }
 
-        public SpotifyContext(DbContextOptions<SpotifyContext> options, ILogger<SpotifyContext> logger )
+        public SpotifyContext(DbContextOptions<SpotifyContext> options)
             : base(options)
         {
-            _logger = logger;
         }
 
         public virtual DbSet<Album> Albums { get; set; }
@@ -34,7 +31,7 @@ namespace SpotiAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=Spotify;User id=sa;password=Password.123;Trusted_Connection=False");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=Spotify; User id = sa ; password = Password.123;Trusted_Connection=False");
             }
         }
 
@@ -66,6 +63,11 @@ namespace SpotiAPI.Models
                 entity.ToTable("Movie");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.MoviePlaylist)
+                    .WithMany(p => p.Movies)
+                    .HasForeignKey(d => d.MoviePlaylistId)
+                    .HasConstraintName("FK__Movie__MoviePlay__3E52440B");
             });
 
             modelBuilder.Entity<MoviePlaylist>(entity =>
@@ -73,12 +75,6 @@ namespace SpotiAPI.Models
                 entity.ToTable("MoviePlaylist");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.MoviePlaylist)
-                    .HasForeignKey<MoviePlaylist>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MoviePlaylis__Id__3E52440B");
             });
 
             modelBuilder.Entity<Playlist>(entity =>

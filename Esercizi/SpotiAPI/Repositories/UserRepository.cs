@@ -52,8 +52,8 @@ namespace SpotiAPI.Repositories
         {
             try
             {
-                _logger.LogInformation($"Updating user {entity.Id}"); 
-                _context.Entry(entity).State = EntityState.Modified; 
+                _logger.LogInformation($"Updating user {entity.Id}");
+                _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return entity;
             }
