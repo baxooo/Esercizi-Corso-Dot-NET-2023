@@ -12,7 +12,6 @@ namespace SpotiAPI.Models.ModelsDTO
             Genre = artist.Genre;
             Rating = artist.Rating;
             Albums = artist.Albums.ToList();
-            Songs = artist.Songs.ToList();
         }
 
         public int Id { get; set; }
@@ -21,6 +20,5 @@ namespace SpotiAPI.Models.ModelsDTO
         public int? Rating { get; set; }
 
         public List<Album> Albums { get; set; }
-        public List<Song> Songs { get; set; }
     }
 }
