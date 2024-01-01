@@ -6,10 +6,12 @@ using SpotiAPI.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
+using SpotiAPI.Models.ModelsDTO;
 
 namespace SpotiAPI.Repositories
 {
-    public class MoviePlaylistRepository : IRepository<MoviePlaylist>
+    public class MoviePlaylistRepository : IPlaylistsRepository<MoviePlaylist, MoviePlaylistDTO>
     {
         private readonly SpotifyContext _context;
         private readonly ILogger<MoviePlaylistRepository> _logger;
@@ -20,11 +22,20 @@ namespace SpotiAPI.Repositories
             _logger = logger;
         }
 
-        public async Task<IEnumerable<MoviePlaylist>> GetAllAsync()
+        public async Task<IEnumerable<MoviePlaylistDTO>> GetAllAsync()
         {
             try
             {
-                return await _context.MoviePlaylists.ToListAsync();
+                var moviePlaylists = await _context.MoviePlaylists.ToListAsync();
+                var moviePlaylistDTOs = moviePlaylists.Select(m => new MoviePlaylistDTO(m));
+
+                if(!moviePlaylistDTOs.Any())
+                {
+                    _logger.LogInformation("No MoviePlaylists found");
+                    return null;    
+                }
+
+                return moviePlaylistDTOs;
             }
             catch (Exception ex)
             {
@@ -33,11 +44,18 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<MoviePlaylist> GetByIdAsync(int id)
+        public async Task<MoviePlaylistDTO> GetByIdAsync(int id)
         {
             try
             {
-                return await _context.MoviePlaylists.FirstOrDefaultAsync(a => a.Id == id);
+                var moviePlaylist = await _context.MoviePlaylists.FirstOrDefaultAsync(a => a.Id == id);
+                if (moviePlaylist == null)
+                {
+                    _logger.LogInformation($"No MoviePlaylist with id: {id}");
+                    return null;
+                }
+
+                return new MoviePlaylistDTO(moviePlaylist);
             }
             catch (Exception ex)
             {
@@ -46,16 +64,21 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<ActionResult<MoviePlaylist>> AddNewAsync(MoviePlaylist moviePlaylist)
+        public async Task<MoviePlaylistDTO> AddNewAsync(MoviePlaylist moviePlaylist)
         {
             try
             {
+                if(moviePlaylist == null)
+                {
+                    _logger.LogInformation($"MoviePlaylist incomplete");
+                    return null;
+                }
                 await _context.MoviePlaylists.AddAsync(moviePlaylist);
                 int changes = await _context.SaveChangesAsync();
                 if (changes > 0)
                 {
                     _logger.LogInformation($"Added new entity to MoviePlaylist tables, id: {moviePlaylist.Id}");
-                    return moviePlaylist;
+                    return new MoviePlaylistDTO(moviePlaylist);
                 }
                 else
                 {
@@ -71,7 +94,7 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<ActionResult<MoviePlaylist>> UpdateAsync(int id, MoviePlaylist entity)
+        public async Task<MoviePlaylistDTO> UpdateAsync(int id, MoviePlaylist mp)
         {
             try
             {
@@ -81,12 +104,12 @@ namespace SpotiAPI.Repositories
                     _logger.LogInformation($"No MoviePlaylist with id: {id}");
                     return null;
                 }
-                _context.Entry(existingEntity).CurrentValues.SetValues(entity);
+                _context.Entry(existingEntity).CurrentValues.SetValues(mp);
                 int changes = await _context.SaveChangesAsync();
                 if (changes > 0)
                 {
                     _logger.LogInformation($"Updated MoviePlaylist entity with id: {id} successfully");
-                    return entity;
+                    return new MoviePlaylistDTO(mp);
                 }
                 else
                 {
@@ -101,23 +124,23 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<ActionResult<MoviePlaylist>> DeleteAsync(int id)
+        public async Task<MoviePlaylistDTO> DeleteAsync(int id)
         {
             try
             {
-                var entity = await _context.MoviePlaylists.FirstOrDefaultAsync(a => a.Id == id);
-                if (entity == null)
+                var mp = await _context.MoviePlaylists.FirstOrDefaultAsync(a => a.Id == id);
+                if (mp == null)
                 {
                     _logger.LogInformation($"No MoviePlaylist with id: {id}");
                     return null;
                 }
 
-                _context.MoviePlaylists.Remove(entity); // no need for an await keyword due to it being a synchronous operation
+                _context.MoviePlaylists.Remove(mp); // no need for an await keyword due to it being a synchronous operation
                 int changes = await _context.SaveChangesAsync();
                 if (changes > 0)
                 {
                     _logger.LogInformation($"Successfully deleted MoviePlaylist {id} from table");
-                    return entity;
+                    return new MoviePlaylistDTO(mp);
                 }
                 else
                 {

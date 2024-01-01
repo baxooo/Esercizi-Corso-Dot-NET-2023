@@ -6,6 +6,10 @@ namespace SpotiAPI.Models.ModelsDTO
 {
     public class AlbumDTO
     {
+        public AlbumDTO()
+        {
+            
+        }
         public AlbumDTO(Album album)
         {
             Id = album.Id;
@@ -13,8 +17,7 @@ namespace SpotiAPI.Models.ModelsDTO
             ReleaseDate = album.ReleaseDate;
             Genre = album.Genre;
             Rating = album.Rating;
-            Artist = album.Artist;
-            Songs = album.Songs.ToList();
+            Songs = album.Songs.Select(s => new SongDTO(s)).ToList();
         }
 
         public int Id { get; set; }
@@ -22,7 +25,6 @@ namespace SpotiAPI.Models.ModelsDTO
         public DateTime ReleaseDate { get; set; }
         public string Genre { get; set; }
         public int? Rating { get; set; }
-        public Artist Artist { get; set; }
-        public List<Song> Songs { get; set; }
+        public List<SongDTO> Songs { get; set; }
     }
 }

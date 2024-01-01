@@ -10,6 +10,9 @@ using Serilog;
 using Serilog.Events;
 using Microsoft.EntityFrameworkCore;
 using System;
+using SpotiAPI.Interfaces;
+using SpotiAPI.Models.ModelsDTO;
+using SpotiAPI.Repositories;
 
 namespace SpotiAPI
 {
@@ -35,12 +38,22 @@ namespace SpotiAPI
                 loggingBuilder.AddSerilog(logger);
             });
 
-            services.AddDbContext<SpotifyContext>(o => o.UseSqlServer(Environment.GetEnvironmentVariable("DefaultConnection")));
+            services.AddDbContext<SpotifyContext>(o =>   o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))     /* o.UseSqlServer(Environment.GetEnvironmentVariable("DefaultConnection"))*/);
             services.AddControllers();
+
+            //services.AddTransient<IPlaylistsRepository<Playlist, PlaylistDTO>,GenericPlaylistRepository<Playlist, PlaylistDTO>>();
+            //services.AddTransient<IPlaylistsRepository<MoviePlaylist, MoviePlaylistDTO>, GenericPlaylistRepository<MoviePlaylist, MoviePlaylistDTO>>();
+            services.AddTransient<IBasicRepository<ArtistDTO>, ArtistRepository>();
+            //services.AddTransient<IBasicRepository<MovieDTO>, GenericBasicRepository<Movie, MovieDTO>>();
+            services.AddTransient<IBasicRepository<AlbumDTO>, AlbumRepository>();
+            services.AddTransient<IBasicRepository<RadioDTO>, RadioRepository>();
+            //services.AddTransient<IBasicRepository<SongDTO>, GenericBasicRepository<Song, SongDTO>>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpotiAPI", Version = "v1" });
             });
+            services.AddAutoMapper(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

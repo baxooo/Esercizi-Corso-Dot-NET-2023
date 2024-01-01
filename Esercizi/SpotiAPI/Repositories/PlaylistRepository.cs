@@ -5,10 +5,13 @@ using SpotiAPI.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using SpotiAPI.Models.ModelsDTO;
+using SpotiAPI.Interfaces;
+using System.Linq;
 
 namespace SpotiAPI.Repositories
 {
-    public class PlaylistRepository
+    public class PlaylistRepository : IPlaylistsRepository<Playlist,PlaylistDTO>
     {
         private readonly SpotifyContext _context;
         private readonly ILogger<PlaylistRepository> _logger;
@@ -19,11 +22,18 @@ namespace SpotiAPI.Repositories
             _logger = logger;
         }
 
-        public async Task<IEnumerable<Playlist>> GetAllAsync()
+        public async Task<IEnumerable<PlaylistDTO>> GetAllAsync()
         {
             try
             {
-                return await _context.Playlists.ToListAsync();
+                var playlists = await _context.Playlists.ToListAsync();
+                if (!playlists.Any())
+                {
+                    _logger.LogInformation("No playlists found");
+                    return null;
+                }
+
+                return playlists.Select(p => new PlaylistDTO(p));
             }
             catch (Exception ex)
             {
@@ -32,11 +42,18 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<Playlist> GetByIdAsync(int id)
+        public async Task<PlaylistDTO> GetByIdAsync(int id)
         {
             try
             {
-                return await _context.Playlists.FirstOrDefaultAsync(a => a.Id == id);
+                var playlist = await _context.Playlists.FirstOrDefaultAsync(a => a.Id == id);
+                if (playlist == null)
+                {
+                    _logger.LogInformation($"No Playlist with id: {id}");
+                    return null;
+                }
+
+                return new PlaylistDTO(playlist);
             }
             catch (Exception ex)
             {
@@ -45,7 +62,7 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<ActionResult<Playlist>> AddNewAsync(Playlist playlist)
+        public async Task<PlaylistDTO> AddNewAsync(Playlist playlist)
         {
             try
             {
@@ -54,7 +71,7 @@ namespace SpotiAPI.Repositories
                 if (changes > 0)
                 {
                     _logger.LogInformation($"Added new entity to Playlist tables, id: {playlist.Id}");
-                    return playlist;
+                    return new PlaylistDTO(playlist);
                 }
                 else
                 {
@@ -70,7 +87,7 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<ActionResult<Playlist>> UpdateAsync(int id, Playlist entity)
+        public async Task<PlaylistDTO> UpdateAsync(int id, Playlist entity)
         {
             try
             {
@@ -85,7 +102,7 @@ namespace SpotiAPI.Repositories
                 if (changes > 0)
                 {
                     _logger.LogInformation($"Updated Playlist entity with id: {id} successfully");
-                    return entity;
+                    return new PlaylistDTO(entity);
                 }
                 else
                 {
@@ -100,7 +117,7 @@ namespace SpotiAPI.Repositories
             }
         }
 
-        public async Task<ActionResult<Playlist>> DeleteAsync(int id)
+        public async Task<PlaylistDTO> DeleteAsync(int id)
         {
             try
             {
@@ -116,7 +133,7 @@ namespace SpotiAPI.Repositories
                 if (changes > 0)
                 {
                     _logger.LogInformation($"Successfully deleted Playlist {id} from table");
-                    return entity;
+                    return new PlaylistDTO(entity);
                 }
                 else
                 {

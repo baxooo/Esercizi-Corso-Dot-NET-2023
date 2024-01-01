@@ -16,23 +16,15 @@ namespace SpotiAPI.Models
         }
 
         public virtual DbSet<Album> Albums { get; set; }
-
         public virtual DbSet<Artist> Artists { get; set; }
-
         public virtual DbSet<Movie> Movies { get; set; }
-
         public virtual DbSet<MoviePlaylist> MoviePlaylists { get; set; }
-
         public virtual DbSet<Playlist> Playlists { get; set; }
-
         public virtual DbSet<Radio> Radios { get; set; }
-
         public virtual DbSet<Song> Songs { get; set; }
-
         public virtual DbSet<UserListener> UserListeners { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
             => optionsBuilder.UseSqlServer("Server=localhost;Database=Spotify; User id = sa ; password = Password.123;Trusted_Connection=False;TrustServerCertificate=True;");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

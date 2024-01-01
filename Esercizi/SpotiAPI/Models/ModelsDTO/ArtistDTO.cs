@@ -5,13 +5,17 @@ namespace SpotiAPI.Models.ModelsDTO
 {
     public class ArtistDTO
     {
+        public ArtistDTO()
+        {
+            
+        }
         public ArtistDTO(Artist artist)
         {
             Id = artist.Id;
             Alias = artist.Alias;
             Genre = artist.Genre;
             Rating = artist.Rating;
-            Albums = artist.Albums.ToList();
+            Albums = artist.Albums.Select(a => new AlbumDTO(a)).ToList();
         }
 
         public int Id { get; set; }
@@ -19,6 +23,6 @@ namespace SpotiAPI.Models.ModelsDTO
         public string Genre { get; set; }
         public int? Rating { get; set; }
 
-        public List<Album> Albums { get; set; }
+        public List<AlbumDTO> Albums { get; set; }
     }
 }

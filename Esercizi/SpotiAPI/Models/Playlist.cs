@@ -7,7 +7,7 @@ namespace SpotiAPI.Models
     public partial class Playlist
     {
         public int Id { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; }
         public int Rating { get; set; }
         public int UserListenerId { get; set; }
 
